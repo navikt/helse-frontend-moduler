@@ -1,0 +1,40 @@
+{
+  "name": "helse-frontend-moduler",
+  "author": "Stephen Ramthun <stephen.ramthun@nav.no>",
+  "version": "1.0.0",
+  "license": "MIT",
+  "description": "React-komponenter for interne flater i PO Helse",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/navikt/helse-frontend-moduler.git"
+  },
+  "bugs": {
+    "url": "https://github.com/navikt/helse-frontend-moduler/issues"
+  },
+  "homepage": "https://github.com/navikt/helse-frontend-moduler#readme",
+  "main": "index.js",
+  "scripts": {
+    "storybook": "start-storybook"
+  },
+  "dependencies": {
+    "@emotion/styled": "^10.0.27",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.8.3",
+    "@babel/core": "^7.8.3",
+    "@emotion/babel-preset-css-prop": "^10.0.27",
+    "@storybook/addon-info": "^5.3.9",
+    "@storybook/react": "^5.3.9",
+    "@types/events": "^3.0.0",
+    "@types/react": "^16.9.19",
+    "@types/react-dom": "^16.9.5",
+    "awesome-typescript-loader": "^5.2.1",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-emotion": "^10.0.27",
+    "prettier": "^1.19.1",
+    "react-docgen-typescript-loader": "^3.6.0",
+    "typescript": "^3.7.5"
+  }
+}

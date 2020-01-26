@@ -1,9 +1,13 @@
 import * as React from 'react';
 import { IconProps } from './types';
 
-const IkonPlaster = ({ color = "#b7b1a9" }: IconProps) => {
+const IkonSyk = ({
+    color = "#b7b1a9",
+    width = 16,
+    height = 16
+}: IconProps) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.14 24.15">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24.14 24.15" width={width} height={height} >
             <g fill={color}>
                 <path
                     d="M10.24,1.75A6,6,0,1,0,1.46,9.93l0.3,0.3L4.93,13.4l8.48-8.48ZM3.52,5.63a0.5,0.5,0,1,1,0,.71,0.5,0.5,0,0,1,0-.71h0ZM4.57,8.81A0.49,0.49,0,0,1,4.22,9,0.52,0.52,0,1,1,4.57,8.81Zm1.06-5.3a0.5,0.5,0,0,1,.71,0h0a0.5,0.5,0,0,1,0,.71h0a0.5,0.5,0,0,1-.71,0h0a0.5,0.5,0,0,1,0-.71h0ZM6,6a0.5,0.5,0,0,1,.71.71,0.49,0.49,0,0,1-.35.15A0.5,0.5,0,0,1,6,6ZM7.05,9.16a0.5,0.5,0,1,1,.14-0.34A0.5,0.5,0,0,1,7.05,9.16Zm1.06-5.3a0.5,0.5,0,1,1,0,.71,0.5,0.5,0,0,1,0-.71h0ZM9.17,7a0.5,0.5,0,0,1-.71,0h0A0.5,0.5,0,1,1,9.17,7Z"
@@ -19,4 +23,4 @@ const IkonPlaster = ({ color = "#b7b1a9" }: IconProps) => {
     );
 };
 
-export default IkonPlaster;
+export default IkonSyk;

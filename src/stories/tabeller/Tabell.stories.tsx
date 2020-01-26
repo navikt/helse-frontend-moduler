@@ -1,5 +1,5 @@
-import * as React from "react";
-import Tabell from '../components/Tabell/Tabell';
+import React from "react";
+import Tabell from '../../components/Tabell/Tabell';
 
 export default { title: 'Tabeller/Tabell' }
 

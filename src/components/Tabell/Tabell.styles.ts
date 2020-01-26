@@ -32,9 +32,9 @@ export const Container = styled("div")`
   color: ${greyDark};
   display: grid;
   grid-template-columns: repeat(
-    ${(props: ContainerProps) => props.columns},
+    ${(props: ContainerProps) => props.columns - 1},
     max-content
-  );
+  ) auto;
 
   > * {
     ${cell}
