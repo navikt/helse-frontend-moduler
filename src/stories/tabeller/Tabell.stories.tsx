@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabell, { Body, Footer, Header } from '../../components/Tabell/Tabell'
+import Tabell, { Body, Footer, Header } from '../../components/Tabell/Tabell';
 
 export default { title: 'Tabeller/Tabell' };
 

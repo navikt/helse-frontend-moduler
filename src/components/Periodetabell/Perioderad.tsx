@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Kilde, Dagtype } from './Periodetabell';
-import { Cell, Gradering, Kildelenke, Sykmeldingsperiode } from './Perioderad.styles'
+import { Cell, Gradering, Kildelenke, Sykmeldingsperiode } from './Perioderad.styles';
 import IkonEgenmelding from './icons/IkonEgenmelding';
 import IkonFerie from './icons/IkonFerie';
 import IkonSyk from './icons/IkonSyk';
@@ -35,7 +35,8 @@ interface GraderingProps extends CommonProps {
     gradering?: number;
 }
 
-const kildelenke = (kilde?: Kilde) => kilde?.link ? <Kildelenke href={kilde.link}>{kilde.label}</Kildelenke> : <Kildelenke>{kilde?.label}</Kildelenke>;
+const kildelenke = (kilde?: Kilde) =>
+    kilde?.link ? <Kildelenke href={kilde.link}>{kilde.label}</Kildelenke> : <Kildelenke>{kilde?.label}</Kildelenke>;
 
 const Perioderad = {
     Sykmeldingsperiode: ({ type, dato, kilde }: SykmeldingsperiodeProps) => (
@@ -48,7 +49,7 @@ const Perioderad = {
             <Cell>{kilde && kildelenke(kilde)}</Cell>
         </Sykmeldingsperiode>
     ),
-    Gradering: ({ type, gradering, kilde}: GraderingProps) => (
+    Gradering: ({ type, gradering, kilde }: GraderingProps) => (
         <Gradering dagtype={type}>
             {gradering && <Cell>{`${gradering}%`}</Cell>}
             {kilde && kildelenke(kilde)}

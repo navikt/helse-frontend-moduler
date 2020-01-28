@@ -1,7 +1,7 @@
 import React from 'react';
 import Tabell from '../Tabell';
-import { Body, Header } from '../Tabell/Tabell'
-import Perioderad from './Perioderad'
+import { Body, Header } from '../Tabell/Tabell';
+import Perioderad from './Perioderad';
 
 export type Kilde = {
     label: 'SM' | 'IM' | 'SØ';
