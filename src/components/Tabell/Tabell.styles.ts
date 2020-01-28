@@ -48,4 +48,8 @@ export const Table = styled('table')`
     ${thead}
     ${tbody}
     ${tfoot}
+    
+    tr > td:last-child {
+        width: 100%;
+    }
 `;
