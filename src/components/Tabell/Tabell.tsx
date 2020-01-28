@@ -1,19 +1,41 @@
-import React, { ReactNode } from "react";
-import { Container } from "./Tabell.styles";
+import React, { ReactElement, ReactNode } from 'react';
+import { Table } from './Tabell.styles';
 
-interface TabellProps {
-  children: ReactNode | ReactNode[];
-  columns: number;
-  header?: boolean;
-  footer?: boolean;
-}
+type Children = { children: ReactNode[] };
 
-const Tabell = ({ children, columns, header, footer }: TabellProps) => {
-  return (
-    <Container columns={columns} header={header} footer={footer}>
-      {children}
-    </Container>
-  );
+export const Header = ({ children }: Children) => (
+    <thead>
+        <tr>
+            {children.map((node, i) => (
+                <th key={i}>{node}</th>
+            ))}
+        </tr>
+    </thead>
+);
+
+export const Footer = ({ children }: Children) => (
+    <tfoot>
+        <tr>
+            {children.map((node, i) => (
+                <td key={i}>{node}</td>
+            ))}
+        </tr>
+    </tfoot>
+);
+
+export const Body = ({ children }: Children) => {
+    const rows = children.map((row: ReactElement, i) => {
+        const cells = row.props.children;
+        return (
+            <tr key={i}>{Array.isArray(cells) ? cells.map((cell, j) => <td key={j}>{cell}</td>) : <td>{cells}</td>}</tr>
+        );
+    });
+
+    return <tbody>{rows}</tbody>;
+};
+
+const Tabell = ({ children }: Children) => {
+    return <Table>{children}</Table>;
 };
 
 export default Tabell;

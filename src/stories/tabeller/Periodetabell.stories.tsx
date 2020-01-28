@@ -14,7 +14,7 @@ export const enkelPeriodetabell = () => {
         { type: Dagtype.Syk, dato: '25.02.2019', gradering: 100, kilde: { label: 'SM' } },
         { type: Dagtype.Syk, dato: '26.02.2019', gradering: 100, kilde: { label: 'SM' } },
         { type: Dagtype.Ferie, dato: '27.02.2019', gradering: 100, kilde: { label: 'IM' } },
-        { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM' } },
+        { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM' } }
     ];
 
     return <Periodetabell dager={dager} />;
@@ -31,7 +31,7 @@ export const medAktiveKildelenker = () => {
         { type: Dagtype.Syk, dato: '25.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' } },
         { type: Dagtype.Syk, dato: '26.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' } },
         { type: Dagtype.Ferie, dato: '27.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } },
-        { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } },
+        { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
     return <Periodetabell dager={dager} />;

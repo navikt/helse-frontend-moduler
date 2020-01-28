@@ -1,16 +1,16 @@
-import styled from "@emotion/styled";
-import { Dagtype } from "./Periodetabell";
+import styled from '@emotion/styled';
+import { Dagtype } from './Periodetabell';
 
 interface DisabledProps {
-  dagtype?: Dagtype;
+    dagtype?: Dagtype;
 }
 
 interface AnchorProps {
-  href?: string;
+    href?: string;
 }
 
-const blå = "#0067c5";
-const blåMørk = "#005B82";
+const blå = '#0067c5';
+const blåMørk = '#005B82';
 
 const cellContent = `
   display: flex;
@@ -20,49 +20,49 @@ const cellContent = `
 
 const disabled = () => (props: DisabledProps) => `
     background: ${
-      props.dagtype === Dagtype.Helg
-        ? `repeating-linear-gradient(
+        props.dagtype === Dagtype.Helg
+            ? `repeating-linear-gradient(
             110deg,
             #e7e9e9,
             #e7e9e9 1px,
             #ffffff 1px,
             #ffffff 5px
           );`
-        : "transparent"
+            : 'transparent'
     };
 `;
 
-export const Sykmeldingsperiode = styled("div")`
-  display: flex;
-  ${disabled()}
+export const Sykmeldingsperiode = styled('div')`
+    display: flex;
+    ${disabled()}
 
-  > * {
-    ${cellContent}
-    &:nth-child(1) {
-      width: 10rem;
+    > * {
+        ${cellContent}
+        &:nth-child(1) {
+            width: 10rem;
+        }
+        &:nth-child(2) {
+            width: 2.25rem;
+        }
+        &:nth-child(3) {
+            width: 10rem;
+        }
+        &:nth-child(4) {
+            width: 3rem;
+        }
     }
-    &:nth-child(2) {
-      width: 2.25rem;
-    }
-    &:nth-child(3) {
-      width: 10rem;
-    }
-    &:nth-child(4) {
-      width: 3rem;
-    }
-  }
 `;
 
-export const Gradering = styled("div")`
-  display: flex;
-  align-items: center;
-  ${disabled()}
+export const Gradering = styled('div')`
+    display: flex;
+    align-items: center;
+    ${disabled()}
 
-  > * {
-    &:nth-child(1) {
-      width: 5rem;
+    > * {
+        &:nth-child(1) {
+            width: 5rem;
+        }
     }
-  }
 `;
 
 const ikonEksternLenke = (color: string = blå) => `
@@ -73,21 +73,21 @@ const ikonEksternLenke = (color: string = blå) => `
   </svg>
 `;
 
-export const Kilde = styled("a")`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 0.8rem;
-  line-height: 1rem;
-  padding: 0 0.25rem;
-  min-width: 1.25rem;
-  height: max-content;
-  border-radius: 0.25rem;
-  text-decoration: none;
+export const Kildelenke = styled('a')`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    line-height: 1rem;
+    padding: 0 0.25rem;
+    min-width: 1.25rem;
+    height: max-content;
+    border-radius: 0.25rem;
+    text-decoration: none;
 
-  ${(props: AnchorProps) =>
-    props.href
-      ? `
+    ${(props: AnchorProps) =>
+        props.href
+            ? `
         color: ${blå};
         box-shadow: 0 0 0 1px ${blå};
         width: 1.75rem;
@@ -96,9 +96,7 @@ export const Kilde = styled("a")`
           background: ${blå};
           color: white;
           &:after {
-            background-image: url("data:image/svg+xml;utf8, ${encodeURIComponent(
-              ikonEksternLenke("white")
-            )}");
+            background-image: url("data:image/svg+xml;utf8, ${encodeURIComponent(ikonEksternLenke('white'))}");
           }
         }
         
@@ -110,15 +108,13 @@ export const Kilde = styled("a")`
           content: '';
           width: 8px;
           height: 8px;
-          background-image: url("data:image/svg+xml;utf8, ${encodeURIComponent(
-            ikonEksternLenke()
-          )}");
+          background-image: url("data:image/svg+xml;utf8, ${encodeURIComponent(ikonEksternLenke())}");
         }
       `
-      : `
+            : `
         color: #59514b;
         box-shadow: 0 0 0 1px #59514b;
       `}
 `;
 
-export const Cell = styled("span")``;
+export const Cell = styled('span')``;

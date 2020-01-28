@@ -1,11 +1,12 @@
 import React from 'react';
 import Tabell from '../Tabell';
-import Perioderad from './Perioderad';
+import { Body, Header } from '../Tabell/Tabell'
+import Perioderad from './Perioderad'
 
-type Kilde = {
+export type Kilde = {
     label: 'SM' | 'IM' | 'SØ';
     link?: string;
-}
+};
 
 export enum Dagtype {
     Syk = 'Syk',
@@ -29,10 +30,21 @@ interface PeriodetabellProps {
 }
 
 const Periodetabell = ({ dager }: PeriodetabellProps) => {
+    console.log(dager);
     return (
-        <Tabell columns={2} header>
-            <p>Sykmeldingsperiode</p><p>Gradering</p>
-            {dager.map(dag => <Perioderad key={dag.dato} {...dag} />)}
+        <Tabell>
+            <Header>
+                <p>Sykmeldingsperiode</p>
+                <p>Gradering</p>
+            </Header>
+            <Body>
+                {dager.map((dag, i) => (
+                    <React.Fragment key={i}>
+                        <Perioderad.Sykmeldingsperiode {...dag} />
+                        <Perioderad.Gradering {...dag} />
+                    </React.Fragment>
+                ))}
+            </Body>
         </Tabell>
     );
 };

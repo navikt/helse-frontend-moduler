@@ -14,8 +14,9 @@
   "homepage": "https://github.com/navikt/helse-frontend-moduler#readme",
   "main": "index.js",
   "scripts": {
-    "storybook": "start-storybook",
-    "deploy-storybook": "storybook-to-ghpages"
+    "storybook": "start-storybook --port 2468",
+    "deploy-storybook": "storybook-to-ghpages",
+    "prettier": "prettier-next-lppedd --write \"src/**/*.{ts,tsx}\""
   },
   "dependencies": {
     "@emotion/styled": "^10.0.27",
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@babel/cli": "^7.8.3",
     "@babel/core": "^7.8.3",
+    "@babel/preset-typescript": "^7.8.3",
     "@emotion/babel-preset-css-prop": "^10.0.27",
     "@storybook/addon-info": "^5.3.9",
     "@storybook/react": "^5.3.9",
@@ -39,19 +41,19 @@
     "babel-plugin-emotion": "^10.0.27",
     "eslint": "^6.8.0",
     "husky": "^4.2.1",
-    "prettier": "^1.19.1",
+    "prettier": "npm:prettier-next-lppedd@^99.1.24",
     "react-docgen-typescript-loader": "^3.6.0",
     "typescript": "^3.7.5"
   },
   "lint-staged": {
     "*.{ts,tsx}": [
       "eslint --fix",
-      "prettier --write",
+      "prettier-next-lppedd --write",
       "git add"
     ],
     "*.{less}": [
       "stylelint --fix",
-      "prettier --write",
+      "prettier-next-lppedd --write",
       "git add"
     ]
   },
