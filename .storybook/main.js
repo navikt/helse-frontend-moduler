@@ -13,6 +13,14 @@ module.exports = {
         }
       ]
     });
+    config.module.rules.push({
+      test: /\.(less)$/,
+      use: [
+          { loader: require.resolve("style-loader") },
+          { loader: require.resolve("css-loader") },
+          { loader: require.resolve("less-loader") }
+      ]
+    });
     config.resolve.extensions.push(".ts", ".tsx");
     return config;
   }
