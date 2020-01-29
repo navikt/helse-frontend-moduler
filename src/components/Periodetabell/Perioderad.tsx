@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Kilde, Dagtype } from './Periodetabell';
+import { Dagtype, Kilde } from './Periodetabell';
 import { Cell, Gradering, Kildelenke, Sykmeldingsperiode } from './Perioderad.styles';
 import IkonEgenmelding from './icons/IkonEgenmelding';
 import IkonFerie from './icons/IkonFerie';
@@ -40,7 +40,7 @@ const kildelenke = (kilde?: Kilde) =>
 
 const Perioderad = {
     Sykmeldingsperiode: ({ type, dato, kilde }: SykmeldingsperiodeProps) => (
-        <Sykmeldingsperiode dagtype={type}>
+        <Sykmeldingsperiode>
             <Cell>{dato}</Cell>
             <Cell>{ikon(type)}</Cell>
             <Cell>
@@ -49,8 +49,8 @@ const Perioderad = {
             <Cell>{kilde && kildelenke(kilde)}</Cell>
         </Sykmeldingsperiode>
     ),
-    Gradering: ({ type, gradering, kilde }: GraderingProps) => (
-        <Gradering dagtype={type}>
+    Gradering: ({ gradering, kilde }: GraderingProps) => (
+        <Gradering>
             {gradering && <Cell>{`${gradering}%`}</Cell>}
             {kilde && kildelenke(kilde)}
         </Gradering>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Tabell from '../Tabell';
-import { Body, Header } from '../Tabell/Tabell';
+import { Body, Header, Rad } from '../Tabell/Tabell'
 import Perioderad from './Perioderad';
 
 export type Kilde = {
@@ -39,10 +39,10 @@ const Periodetabell = ({ dager }: PeriodetabellProps) => {
             </Header>
             <Body>
                 {dager.map((dag, i) => (
-                    <React.Fragment key={i}>
+                    <Rad key={i} disabled={dag.type === Dagtype.Helg}>
                         <Perioderad.Sykmeldingsperiode {...dag} />
                         <Perioderad.Gradering {...dag} />
-                    </React.Fragment>
+                    </Rad>
                 ))}
             </Body>
         </Tabell>

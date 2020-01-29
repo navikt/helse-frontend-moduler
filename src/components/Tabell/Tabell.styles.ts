@@ -53,3 +53,19 @@ export const Table = styled('table')`
         width: 100%;
     }
 `;
+
+interface TableRowProps {
+    disabled?: boolean;
+}
+
+export const TableRow = styled('tr')`
+    background: ${(props: TableRowProps) => props.disabled
+        ? `repeating-linear-gradient(
+            110deg,
+            #e7e9e9,
+            #e7e9e9 1px,
+            #ffffff 1px,
+            #ffffff 5px
+          );`
+        : 'transparent'}
+`;

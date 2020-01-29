@@ -1,7 +1,8 @@
 import React, { ReactElement, ReactNode } from 'react';
-import { Table } from './Tabell.styles';
+import { Table, TableRow } from './Tabell.styles'
 
-type Children = { children: ReactNode[] };
+type Children = { children: ReactNode[]; };
+type Disabled = { disabled?: boolean; }
 
 export const Header = ({ children }: Children) => (
     <thead>
@@ -24,14 +25,16 @@ export const Footer = ({ children }: Children) => (
 );
 
 export const Body = ({ children }: Children) => {
-    const rows = children.map((row: ReactElement, i) => {
-        const cells = row.props.children;
-        return (
-            <tr key={i}>{Array.isArray(cells) ? cells.map((cell, j) => <td key={j}>{cell}</td>) : <td>{cells}</td>}</tr>
-        );
-    });
+    return <tbody>{children}</tbody>;
+};
 
-    return <tbody>{rows}</tbody>;
+export const Rad = ({ children, disabled }: Children & Disabled) => {
+    const cells = children.map((cell, i) => <td key={i}>{cell}</td>)
+    return (
+        <TableRow disabled={disabled}>
+            {cells}
+        </TableRow>
+    );
 };
 
 const Tabell = ({ children }: Children) => {

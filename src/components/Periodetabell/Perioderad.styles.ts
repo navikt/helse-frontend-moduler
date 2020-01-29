@@ -1,9 +1,4 @@
 import styled from '@emotion/styled';
-import { Dagtype } from './Periodetabell';
-
-interface DisabledProps {
-    dagtype?: Dagtype;
-}
 
 interface AnchorProps {
     href?: string;
@@ -18,23 +13,8 @@ const cellContent = `
   margin: 0;
 `;
 
-const disabled = () => (props: DisabledProps) => `
-    background: ${
-        props.dagtype === Dagtype.Helg
-            ? `repeating-linear-gradient(
-            110deg,
-            #e7e9e9,
-            #e7e9e9 1px,
-            #ffffff 1px,
-            #ffffff 5px
-          );`
-            : 'transparent'
-    };
-`;
-
 export const Sykmeldingsperiode = styled('div')`
     display: flex;
-    ${disabled()}
 
     > * {
         ${cellContent}
@@ -56,7 +36,6 @@ export const Sykmeldingsperiode = styled('div')`
 export const Gradering = styled('div')`
     display: flex;
     align-items: center;
-    ${disabled()}
 
     > * {
         &:nth-child(1) {
