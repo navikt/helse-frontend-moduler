@@ -62,6 +62,9 @@ const ikonEksternLenke = (color: string = blå) => `
 export const Oppgavelenke = styled('a')`
     color: ${blå};
     margin-left: 3rem;
+    &:hover {
+        text-decoration: none;
+    }
 `;
 
 export const Kildelenke = styled('a')`

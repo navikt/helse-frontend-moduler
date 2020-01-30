@@ -3,10 +3,7 @@ import Tabell, { Body, Footer, Header, Rad } from '../../components/Tabell/Tabel
 
 export default {
     component: Tabell,
-    title: 'Tabeller/Tabell',
-    parameters: {
-        componentSubtitle: 'Enkel tabell for visning av data'
-    }
+    title: 'Tabeller/Tabell'
 };
 
 export const medToKolonner = () => (
