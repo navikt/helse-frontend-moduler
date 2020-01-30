@@ -70,10 +70,10 @@ export const Kildelenke = styled('a')`
     justify-content: center;
     font-size: 0.8rem;
     line-height: 1rem;
-    padding: 0 0.25rem;
+    padding: 0 1px 1px 1px;
     min-width: 1.25rem;
-    height: max-content;
-    border-radius: 0.25rem;
+    height: 1rem;
+    border-radius: 4px;
     text-decoration: none;
 
     ${(props: AnchorProps) =>

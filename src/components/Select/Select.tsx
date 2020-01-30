@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react';
 import { selectStyle } from './Select.styles';
 import { jsx } from '@emotion/core';
 
-interface SelectProps {
+export interface SelectProps {
     children: ReactNode[];
 }
 

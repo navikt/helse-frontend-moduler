@@ -41,6 +41,11 @@ export const Rad = ({ children, disabled, background }: RadProps) => {
     );
 };
 
+/**
+ * `Tabell` er en wrapper-komponent rundt `table` med minimal styling.
+ * Utseendemessig minner den om [tabellen i designsystemet](https://design.nav.no/components/tabell) til Nav men
+ * tilpasset internflater med lavere radhøyde for å kunne vise flere rader på én gang uten at brukeren må scrolle.
+ */
 const Tabell = ({ children }: Children) => {
     return <Table>{children}</Table>;
 };

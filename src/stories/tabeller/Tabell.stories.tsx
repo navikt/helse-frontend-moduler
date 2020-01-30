@@ -1,7 +1,13 @@
 import React from 'react';
 import Tabell, { Body, Footer, Header, Rad } from '../../components/Tabell/Tabell';
 
-export default { title: 'Tabeller/Tabell' };
+export default {
+    component: Tabell,
+    title: 'Tabeller/Tabell',
+    parameters: {
+        componentSubtitle: 'Enkel tabell for visning av data'
+    }
+};
 
 export const medToKolonner = () => (
     <Tabell>

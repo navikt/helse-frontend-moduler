@@ -5,7 +5,10 @@ import { withKnobs, object } from '@storybook/addon-knobs';
 export default {
     component: Periodetabell,
     title: 'Tabeller/Periodetabell',
-    decorators: [withKnobs]
+    decorators: [withKnobs],
+    parameters: {
+        componentSubtitle: 'Tabell for visning av vedtaksperiode'
+    }
 };
 
 export const enkelPeriodetabell = () => {
@@ -39,7 +42,7 @@ export const medAktiveKildelenker = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={object('Dager', dager)} />;
+    return <Periodetabell dager={object('Dager med aktive kildelenker', dager)} />;
 };
 
 export const medAktivOppgave = () => {
@@ -68,7 +71,7 @@ export const medAktivOppgave = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={object('Dager', dager)} />;
+    return <Periodetabell dager={object('Dager med uløst oppgave', dager)} />;
 };
 
 export const medFerdigOppgave = () => {
@@ -85,5 +88,5 @@ export const medFerdigOppgave = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={object('Dager', dager)} />;
+    return <Periodetabell dager={object('Dager med løst oppgave', dager)} />;
 };
