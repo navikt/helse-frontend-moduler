@@ -18,7 +18,7 @@ export const Status = styled('div')`
     align-items: center;
     justify-content: center;
     margin-right: -1rem !important;
-`
+`;
 
 export const Sykmeldingsperiode = styled('div')`
     display: flex;
@@ -62,7 +62,7 @@ const ikonEksternLenke = (color: string = blå) => `
 export const Oppgavelenke = styled('a')`
     color: ${blå};
     margin-left: 3rem;
-`
+`;
 
 export const Kildelenke = styled('a')`
     display: flex;

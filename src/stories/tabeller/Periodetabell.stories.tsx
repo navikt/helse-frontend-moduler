@@ -1,7 +1,12 @@
 import React from 'react';
 import Periodetabell, { Dag, Dagtype } from '../../components/Periodetabell';
+import { withKnobs, object } from '@storybook/addon-knobs';
 
-export default { title: 'Tabeller/Periodetabell' };
+export default {
+    component: Periodetabell,
+    title: 'Tabeller/Periodetabell',
+    decorators: [withKnobs]
+};
 
 export const enkelPeriodetabell = () => {
     const dager: Dag[] = [
@@ -17,7 +22,7 @@ export const enkelPeriodetabell = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM' } }
     ];
 
-    return <Periodetabell dager={dager} />;
+    return <Periodetabell dager={object('Dager', dager)} />;
 };
 
 export const medAktiveKildelenker = () => {
@@ -34,7 +39,7 @@ export const medAktiveKildelenker = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={dager} />;
+    return <Periodetabell dager={object('Dager', dager)} />;
 };
 
 export const medAktivOppgave = () => {
@@ -45,13 +50,25 @@ export const medAktivOppgave = () => {
         { type: Dagtype.Syk, dato: '22.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' } },
         { type: Dagtype.Helg, dato: '23.02.2019' },
         { type: Dagtype.Helg, dato: '24.02.2019' },
-        { type: Dagtype.Ubestemt, dato: '25.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' }, oppgave: 'advarsel' },
-        { type: Dagtype.Ubestemt, dato: '26.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' }, oppgave: 'advarsel' },
+        {
+            type: Dagtype.Ubestemt,
+            dato: '25.02.2019',
+            gradering: 100,
+            kilde: { label: 'SM', link: '#' },
+            oppgave: 'advarsel'
+        },
+        {
+            type: Dagtype.Ubestemt,
+            dato: '26.02.2019',
+            gradering: 100,
+            kilde: { label: 'SM', link: '#' },
+            oppgave: 'advarsel'
+        },
         { type: Dagtype.Ferie, dato: '27.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } },
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={dager} />;
+    return <Periodetabell dager={object('Dager', dager)} />;
 };
 
 export const medFerdigOppgave = () => {
@@ -68,5 +85,5 @@ export const medFerdigOppgave = () => {
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
 
-    return <Periodetabell dager={dager} />;
+    return <Periodetabell dager={object('Dager', dager)} />;
 };

@@ -61,13 +61,14 @@ export const Table = styled('table')`
 `;
 
 export const TableRow = styled('tr')`
-    ${(props: TableRowProps) => props.disabled
-        ? `background: repeating-linear-gradient(
+    ${(props: TableRowProps) =>
+        props.disabled
+            ? `background: repeating-linear-gradient(
             110deg,
             #e7e9e9,
             #e7e9e9 1px,
             #ffffff 1px,
             #ffffff 5px
           );`
-        : `background: ${props.background};`}
+            : `background: ${props.background};`}
 `;

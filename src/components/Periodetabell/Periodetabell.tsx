@@ -1,6 +1,6 @@
 import React from 'react';
 import Tabell from '../Tabell';
-import { Body, Header, Rad } from '../Tabell/Tabell'
+import { Body, Header, Rad } from '../Tabell/Tabell';
 import Perioderad from './Perioderad';
 
 export type OppgaveStatus = 'ingen' | 'advarsel' | 'løst';
@@ -27,18 +27,21 @@ export interface Dag {
     gradering?: number;
 }
 
-interface PeriodetabellProps {
+export interface PeriodetabellProps {
     dager: Dag[];
 }
 
 const backgroundForRow = (status?: OppgaveStatus) => {
     switch (status) {
-        case 'advarsel': return '#ffe9cc'
-        case 'løst': return '#cde7d8';
+        case 'advarsel':
+            return '#ffe9cc';
+        case 'løst':
+            return '#cde7d8';
         case 'ingen':
-        default: return 'transparent';
+        default:
+            return 'transparent';
     }
-}
+};
 
 const Periodetabell = ({ dager }: PeriodetabellProps) => {
     return (
@@ -50,14 +53,10 @@ const Periodetabell = ({ dager }: PeriodetabellProps) => {
             </Header>
             <Body>
                 {dager.map((dag, i) => (
-                    <Rad
-                        key={i}
-                        disabled={dag.type === Dagtype.Helg}
-                        background={backgroundForRow(dag.oppgave)}
-                    >
-                        <Perioderad.Status status={dag.oppgave}/>
+                    <Rad key={i} disabled={dag.type === Dagtype.Helg} background={backgroundForRow(dag.oppgave)}>
+                        <Perioderad.Status status={dag.oppgave} />
                         <Perioderad.Sykmeldingsperiode {...dag} status={dag.oppgave} />
-                        <Perioderad.Gradering {...dag} />
+                        <Perioderad.Gradering {...dag} status={dag.oppgave} />
                     </Rad>
                 ))}
             </Body>

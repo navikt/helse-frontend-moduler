@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react';
-import { Table, TableRow } from './Tabell.styles'
+import { Table, TableRow } from './Tabell.styles';
 
-type Children = { children: ReactNode[]; };
+type Children = { children: ReactNode[] };
 
 interface RadProps extends Children {
     disabled?: boolean;
@@ -33,7 +33,7 @@ export const Body = ({ children }: Children) => {
 };
 
 export const Rad = ({ children, disabled, background }: RadProps) => {
-    const cells = children.map((cell, i) => <td key={i}>{cell}</td>)
+    const cells = children.map((cell, i) => <td key={i}>{cell}</td>);
     return (
         <TableRow disabled={disabled} background={background}>
             {cells}
