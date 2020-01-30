@@ -3,6 +3,8 @@ import Tabell from '../Tabell';
 import { Body, Header, Rad } from '../Tabell/Tabell'
 import Perioderad from './Perioderad';
 
+export type OppgaveStatus = 'ingen' | 'advarsel' | 'løst';
+
 export type Kilde = {
     label: 'SM' | 'IM' | 'SØ';
     link?: string;
@@ -18,10 +20,10 @@ export enum Dagtype {
 }
 
 export interface Dag {
-    type: Dagtype;
     dato: string;
+    type?: Dagtype;
     kilde?: Kilde;
-    oppgave?: boolean;
+    oppgave?: OppgaveStatus;
     gradering?: number;
 }
 
@@ -29,18 +31,32 @@ interface PeriodetabellProps {
     dager: Dag[];
 }
 
+const backgroundForRow = (status?: OppgaveStatus) => {
+    switch (status) {
+        case 'advarsel': return '#ffe9cc'
+        case 'løst': return '#cde7d8';
+        case 'ingen':
+        default: return 'transparent';
+    }
+}
+
 const Periodetabell = ({ dager }: PeriodetabellProps) => {
-    console.log(dager);
     return (
         <Tabell>
             <Header>
+                <p />
                 <p>Sykmeldingsperiode</p>
                 <p>Gradering</p>
             </Header>
             <Body>
                 {dager.map((dag, i) => (
-                    <Rad key={i} disabled={dag.type === Dagtype.Helg}>
-                        <Perioderad.Sykmeldingsperiode {...dag} />
+                    <Rad
+                        key={i}
+                        disabled={dag.type === Dagtype.Helg}
+                        background={backgroundForRow(dag.oppgave)}
+                    >
+                        <Perioderad.Status status={dag.oppgave}/>
+                        <Perioderad.Sykmeldingsperiode {...dag} status={dag.oppgave} />
                         <Perioderad.Gradering {...dag} />
                     </Rad>
                 ))}

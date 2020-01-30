@@ -13,6 +13,13 @@ const cellContent = `
   margin: 0;
 `;
 
+export const Status = styled('div')`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: -1rem !important;
+`
+
 export const Sykmeldingsperiode = styled('div')`
     display: flex;
 
@@ -51,6 +58,11 @@ const ikonEksternLenke = (color: string = blå) => `
       </g>
   </svg>
 `;
+
+export const Oppgavelenke = styled('a')`
+    color: ${blå};
+    margin-left: 3rem;
+`
 
 export const Kildelenke = styled('a')`
     display: flex;
@@ -95,5 +107,3 @@ export const Kildelenke = styled('a')`
         box-shadow: 0 0 0 1px #59514b;
       `}
 `;
-
-export const Cell = styled('span')``;

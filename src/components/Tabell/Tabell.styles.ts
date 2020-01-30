@@ -1,5 +1,10 @@
 import styled from '@emotion/styled';
 
+interface TableRowProps {
+    disabled?: boolean;
+    background?: string;
+}
+
 const greyDark = '#3e3832';
 const greyNormal = '#59514b';
 const greyLight = '#c6c2bf';
@@ -32,8 +37,9 @@ export const tfoot = `
 
 export const tbody = `
     tbody tr td {
+        height: 2rem;
         border-bottom: 1px solid ${greyLight};
-        padding: 0.375rem 1rem;
+        padding: 0 1rem;
 
         > * {
             margin: 0;
@@ -54,18 +60,14 @@ export const Table = styled('table')`
     }
 `;
 
-interface TableRowProps {
-    disabled?: boolean;
-}
-
 export const TableRow = styled('tr')`
-    background: ${(props: TableRowProps) => props.disabled
-        ? `repeating-linear-gradient(
+    ${(props: TableRowProps) => props.disabled
+        ? `background: repeating-linear-gradient(
             110deg,
             #e7e9e9,
             #e7e9e9 1px,
             #ffffff 1px,
             #ffffff 5px
           );`
-        : 'transparent'}
+        : `background: ${props.background};`}
 `;

@@ -1,8 +1,12 @@
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactNode } from 'react';
 import { Table, TableRow } from './Tabell.styles'
 
 type Children = { children: ReactNode[]; };
-type Disabled = { disabled?: boolean; }
+
+interface RadProps extends Children {
+    disabled?: boolean;
+    background?: string;
+}
 
 export const Header = ({ children }: Children) => (
     <thead>
@@ -28,10 +32,10 @@ export const Body = ({ children }: Children) => {
     return <tbody>{children}</tbody>;
 };
 
-export const Rad = ({ children, disabled }: Children & Disabled) => {
+export const Rad = ({ children, disabled, background }: RadProps) => {
     const cells = children.map((cell, i) => <td key={i}>{cell}</td>)
     return (
-        <TableRow disabled={disabled}>
+        <TableRow disabled={disabled} background={background}>
             {cells}
         </TableRow>
     );
