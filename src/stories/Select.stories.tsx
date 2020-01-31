@@ -1,9 +1,9 @@
-import Select from '../../components/Select';
+import Select from '../components/Select';
 import React from 'react';
 
 export default {
     component: Select,
-    title: 'Select/Select (wip)',
+    title: 'Select (wip)',
     parameters: {
         componentSubtitle: 'Select-komponent for å velge vedtaksperiode.'
     }

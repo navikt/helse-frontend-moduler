@@ -1,10 +1,10 @@
 import React from 'react';
-import Periodetabell, { Dag, Dagtype } from '../../components/Periodetabell';
+import Periodetabell, { Dag, Dagtype } from '../components/Periodetabell';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 export default {
     component: Periodetabell,
-    title: 'Tabeller/Periodetabell',
+    title: 'Periodetabell',
     decorators: [withKnobs],
     parameters: {
         componentSubtitle: 'Tabell for visning av vedtaksperiode'

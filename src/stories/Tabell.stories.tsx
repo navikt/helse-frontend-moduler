@@ -1,9 +1,9 @@
 import React from 'react';
-import Tabell, { Body, Footer, Header, Rad } from '../../components/Tabell/Tabell';
+import Tabell, { Body, Footer, Header, Rad } from '../components/Tabell/Tabell';
 
 export default {
     component: Tabell,
-    title: 'Tabeller/Tabell'
+    title: 'Tabell'
 };
 
 export const medToKolonner = () => (
