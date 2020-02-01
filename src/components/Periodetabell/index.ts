@@ -1,4 +1,5 @@
-import Periodetabell, { Dagtype, Dag } from './Periodetabell';
+import Periodetabell from './Periodetabell';
+import { Dagtype, Dag } from './types';
 
 export { Dagtype, Dag };
 

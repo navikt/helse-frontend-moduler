@@ -22,6 +22,7 @@ export const Status = styled('div')`
 
 export const Sykmeldingsperiode = styled('div')`
     display: flex;
+    align-items: center;
 
     > * {
         ${cellContent}
@@ -32,7 +33,8 @@ export const Sykmeldingsperiode = styled('div')`
             width: 2.25rem;
         }
         &:nth-child(3) {
-            width: 10rem;
+            width: 9.5rem;
+            margin-right: 0.5rem;
         }
         &:nth-child(4) {
             width: 3rem;
@@ -46,8 +48,25 @@ export const Gradering = styled('div')`
 
     > * {
         &:nth-child(1) {
-            width: 5rem;
+            width: 4.5rem;
+            margin-right: 0.5rem;
         }
+    }
+
+    > input:nth-child(1) {
+        width: 4rem;
+        border: 1px solid #78706a;
+        border-radius: 2px;
+        height: 1.125rem;
+        padding-left: 0.25rem;
+    }
+`;
+
+export const Oppgavelenke = styled('a')`
+    color: ${blå};
+    margin-left: 3rem;
+    &:hover {
+        text-decoration: none;
     }
 `;
 
@@ -57,14 +76,6 @@ const ikonEksternLenke = (color: string = blå) => `
           <path d="M16.513.5h7v7M23.513.5l-16 16" />
       </g>
   </svg>
-`;
-
-export const Oppgavelenke = styled('a')`
-    color: ${blå};
-    margin-left: 3rem;
-    &:hover {
-        text-decoration: none;
-    }
 `;
 
 export const Kildelenke = styled('a')`

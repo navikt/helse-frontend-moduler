@@ -1,34 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Tabell from '../Tabell';
 import { Body, Header, Rad } from '../Tabell/Tabell';
 import Perioderad from './Perioderad';
-
-export type OppgaveStatus = 'ingen' | 'advarsel' | 'løst';
-
-export type Kilde = {
-    label: 'SM' | 'IM' | 'SØ';
-    link?: string;
-};
-
-export enum Dagtype {
-    Syk = 'Syk',
-    Helg = 'Helg',
-    Ferie = 'Ferie',
-    Ubestemt = 'Ubestemt',
-    Arbeidsdag = 'Arbeidsdag',
-    Egenmelding = 'Egenmelding'
-}
-
-export interface Dag {
-    dato: string;
-    type?: Dagtype;
-    kilde?: Kilde;
-    oppgave?: OppgaveStatus;
-    gradering?: number;
-}
+import Overstyring from './Overstyring';
+import styled from '@emotion/styled';
+import PeriodeContext from './PeriodeContext';
+import { Dag, Dagtype, OppgaveStatus } from './types';
 
 export interface PeriodetabellProps {
     dager: Dag[];
+    manuellOverstyring?: boolean;
 }
 
 const backgroundForRow = (status?: OppgaveStatus) => {
@@ -43,24 +24,52 @@ const backgroundForRow = (status?: OppgaveStatus) => {
     }
 };
 
-const Periodetabell = ({ dager }: PeriodetabellProps) => {
+const clamp = (value: number, min = 0, max = 100) => Math.max(Math.min(value, max), min);
+
+const PeriodetabellContainer = styled('div')`
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+`;
+
+const Periodetabell = ({ dager, manuellOverstyring }: PeriodetabellProps) => {
+    const [overstyrer, setOverstyrer] = useState(false);
+    const [periode, setPeriode] = useState(dager ?? []);
+
+    const oppdaterGradering = (index: number, nyGradering: number) => {
+        const gradering = clamp(isNaN(nyGradering) ? 0 : nyGradering);
+        setPeriode(periode => periode.map((dag, i) => (i === index ? { ...dag, gradering } : dag)));
+    };
+
+    const oppdaterType = (index: number, nyType: Dagtype) =>
+        setPeriode(periode => periode.map((dag, i) => (i === index ? { ...dag, type: nyType } : dag)));
+
     return (
-        <Tabell>
-            <Header>
-                <p />
-                <p>Sykmeldingsperiode</p>
-                <p>Gradering</p>
-            </Header>
-            <Body>
-                {dager.map((dag, i) => (
-                    <Rad key={i} disabled={dag.type === Dagtype.Helg} background={backgroundForRow(dag.oppgave)}>
-                        <Perioderad.Status status={dag.oppgave} />
-                        <Perioderad.Sykmeldingsperiode {...dag} status={dag.oppgave} />
-                        <Perioderad.Gradering {...dag} status={dag.oppgave} />
-                    </Rad>
-                ))}
-            </Body>
-        </Tabell>
+        <PeriodeContext.Provider value={{ periode, oppdaterGradering, oppdaterType, overstyrer }}>
+            <PeriodetabellContainer>
+                {manuellOverstyring && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
+                <Tabell>
+                    <Header>
+                        <p />
+                        <p>Sykmeldingsperiode</p>
+                        <p>Gradering</p>
+                    </Header>
+                    <Body>
+                        {periode.map((dag, i) => (
+                            <Rad
+                                key={i}
+                                disabled={dag.type === Dagtype.Helg}
+                                background={backgroundForRow(dag.oppgave)}
+                            >
+                                <Perioderad.Status status={dag.oppgave} />
+                                <Perioderad.Sykmeldingsperiode {...dag} status={dag.oppgave} i={i} />
+                                <Perioderad.Gradering {...dag} status={dag.oppgave} i={i} />
+                            </Rad>
+                        ))}
+                    </Body>
+                </Tabell>
+            </PeriodetabellContainer>
+        </PeriodeContext.Provider>
     );
 };
 
