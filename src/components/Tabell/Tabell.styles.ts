@@ -50,6 +50,7 @@ export const tbody = `
 export const Table = styled('table')`
     font-family: 'Source Sans Pro', Arial, sans-serif;
     border-collapse: collapse;
+    align-self: stretch;
     color: ${greyDark};
     ${thead}
     ${tbody}

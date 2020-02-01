@@ -46,15 +46,13 @@ export const Gradering = styled('div')`
     display: flex;
     align-items: center;
 
-    > * {
-        &:nth-child(1) {
-            width: 4.5rem;
-            margin-right: 0.5rem;
-        }
+    > *:nth-child(1) {
+        width: 4.5rem;
+        margin-right: 0.5rem;
     }
 
     > input:nth-child(1) {
-        width: 4rem;
+        width: calc(4rem + 1px);
         border: 1px solid #78706a;
         border-radius: 2px;
         height: 1.125rem;

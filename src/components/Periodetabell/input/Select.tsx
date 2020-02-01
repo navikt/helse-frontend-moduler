@@ -41,6 +41,7 @@ const StyledSelect = styled('select')`
     border-radius: 2px;
     height: 1.375rem;
     padding: 0.125rem 1.125rem 0.125rem 0.125rem;
+    background: none;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;

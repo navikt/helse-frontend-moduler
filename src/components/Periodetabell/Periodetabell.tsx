@@ -29,7 +29,7 @@ const clamp = (value: number, min = 0, max = 100) => Math.max(Math.min(value, ma
 const PeriodetabellContainer = styled('div')`
     display: flex;
     flex-direction: column;
-    align-items: end;
+    align-items: flex-end;
 `;
 
 const Periodetabell = ({ dager, manuellOverstyring }: PeriodetabellProps) => {
