@@ -8,19 +8,33 @@ interface OverstyringProps {
     onOverstyring: () => void;
 }
 
+const blue = '#0067c5';
+
 const Overstyringsknapp = styled('button')`
     border: none;
-    color: #0067c5;
+    color: ${blue};
     background: none;
+    border-radius: 2px;
     font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: end;
-    transition: all 0.2s;
     width: max-content;
 
     > p {
         margin: 0 0 -0.5rem 0.5rem;
+    }
+
+    &:hover > p {
+        box-shadow: 0 1px 0 0 ${blue};
+    }
+
+    &:active,
+    &:focus {
+        outline: none;
+        > p {
+            box-shadow: 0 1px 0 0 ${blue};
+        }
     }
 `;
 

@@ -50,11 +50,13 @@ const _Sykmeldingsperiode = ({ type, dato, kilde, status, i }: Sykmeldingsperiod
     const renderType =
         overstyrer && type !== Dagtype.Helg ? (
             <Select onChange={onChange}>
-                {Object.values(Dagtype as object).map((dag, index) => (
-                    <option key={index} selected={dag === type}>
-                        {dag}
-                    </option>
-                ))}
+                {Object.values(Dagtype as object)
+                    .filter(type => type !== Dagtype.Helg)
+                    .map((dag, index) => (
+                        <option key={index} selected={dag === type}>
+                            {dag}
+                        </option>
+                    ))}
             </Select>
         ) : (
             <span>{type}</span>
