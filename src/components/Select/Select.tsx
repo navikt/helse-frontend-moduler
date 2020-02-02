@@ -1,33 +1,33 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { useEffect, useRef, useState } from 'react';
-import { SelectContainer, Knapp } from './Select.styles';
+import { Container, Knapp } from './Select.styles';
 import { Alternativer } from './Alternativer';
 
 export interface SelectProps {
-    alternativer: AlternativData[];
+    alternativer: Alternativ[];
 }
 
-export interface AlternativData {
+export interface Alternativ {
     value: string;
     id: number;
 }
 
 const Select = ({ alternativer }: SelectProps) => {
     const [visible, setVisible] = useState<boolean>(false);
-    const [selectedItem, setSelectedItem] = useState<AlternativData>(alternativer && alternativer[0]);
+    const [selectedItem, setSelectedItem] = useState<Alternativ>(alternativer && alternativer[0]);
     const containerRef = useRef<HTMLDivElement>(null);
 
-    const updateSelectedItem = (alternativ: AlternativData) => {
+    const updateSelectedItem = (alternativ: Alternativ) => {
         setSelectedItem(alternativ);
         setVisible(!visible);
     };
 
-    const onAlternativClick = (alternativ: AlternativData) => {
+    const onAlternativClick = (alternativ: Alternativ) => {
         updateSelectedItem(alternativ);
     };
 
-    const onAlternativKeyPress = (event: React.KeyboardEvent<HTMLLIElement>, alternativ: AlternativData) => {
+    const onAlternativKeyPress = (event: React.KeyboardEvent<HTMLLIElement>, alternativ: Alternativ) => {
         if (event.key === 'Enter') updateSelectedItem(alternativ);
     };
 
@@ -42,7 +42,7 @@ const Select = ({ alternativer }: SelectProps) => {
     });
 
     return (
-        <SelectContainer ref={containerRef} tabIndex={-1}>
+        <Container ref={containerRef} tabIndex={-1}>
             <Knapp
                 onClick={() => setVisible(!visible)}
                 onKeyPress={e => (e.key === 'Enter' ? setVisible(!visible) : '')}
@@ -55,7 +55,7 @@ const Select = ({ alternativer }: SelectProps) => {
                 onClick={onAlternativClick}
                 onKeyPress={onAlternativKeyPress}
             />
-        </SelectContainer>
+        </Container>
     );
 };
 export default Select;

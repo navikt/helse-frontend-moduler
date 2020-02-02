@@ -1,18 +1,18 @@
 import React from 'react';
-import { AlternativData } from './Select';
+import { Alternativ } from './Select';
 import { Element, Container } from './Alternativer.styles';
 
 interface AlternativerProps {
-    alternativer: AlternativData[];
+    alternativer: Alternativ[];
     isVisible: boolean;
-    onClick(alternativ: AlternativData): void;
-    onKeyPress(event: React.KeyboardEvent<HTMLLIElement>, alternativ: AlternativData): void;
+    onClick(alternativ: Alternativ): void;
+    onKeyPress(event: React.KeyboardEvent<HTMLLIElement>, alternativ: Alternativ): void;
 }
 
 export const Alternativer = ({ alternativer, isVisible, onClick, onKeyPress }: AlternativerProps) => {
     return (
         <Container hidden={!isVisible} tabIndex={-1}>
-            {alternativer.map((item: AlternativData) => (
+            {alternativer.map((item: Alternativ) => (
                 <Element
                     key={item.id}
                     onClick={() => onClick(item)}

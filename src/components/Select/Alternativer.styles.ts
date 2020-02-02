@@ -8,6 +8,8 @@ export const Element = styled.li`
     padding: 0.5rem;
 
     border-bottom: 1px solid #c6c2bf;
+    border-left: 1px solid #c6c2bf;
+    border-right: 1px solid #c6c2bf;
 
     background-color: white;
 
@@ -16,6 +18,8 @@ export const Element = styled.li`
         color: white;
         cursor: pointer;
         border-bottom: 1px solid #0067c5;
+        border-left: 1px solid #0067c5;
+        border-right: 1px solid #0067c5;
     }
 
     &:focus,
@@ -27,13 +31,15 @@ export const Element = styled.li`
 
 export const Container = styled.ul`
     height: 100%;
-    position: relative;
+    position: absolute;
+    z-index: 5;
     list-style: none;
+
+    width: calc(100% - 2px);
 
     margin: 0 2px;
     padding: 0;
 
-    border: 1px solid #c6c2bf;
     border-radius: 2px;
 
     box-shadow: 0 0.05rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);

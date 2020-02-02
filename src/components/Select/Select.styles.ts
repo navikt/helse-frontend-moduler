@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import styled from '@emotion/styled';
 
-export const SelectContainer = styled.div`
+export const Container = styled.div`
     position: relative;
     font-family: 'Source Sans Pro', sans-serif;
     font-weight: bold;
@@ -32,6 +32,16 @@ export const Knapp = styled.button`
         background-color: #0067c5;
         color: #ffffff;
         cursor: pointer;
+    }
+
+    &:active {
+        background-color: #005b82;
+        border-color: #005b82;
+    }
+
+    &:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+        outline: 0;
     }
 
     &:before {
