@@ -1,6 +1,6 @@
 import Select from '../components/Select';
 import React from 'react';
-import { Alternativ } from '../../components/Select/Select';
+import { AlternativData } from '../../components/Select/Select';
 
 export default {
     component: Select,
@@ -11,7 +11,7 @@ export default {
 };
 
 export const select = () => {
-    const perioder: Alternativ[] = [
+    const perioder: AlternativData[] = [
         { value: '09.05.2017 - 19.05.2017', id: 1 },
         { value: '20.05.2017 - 20.06.2017', id: 2 },
         { value: '21.07.2017 - 13.08.2017', id: 3 },
