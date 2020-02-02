@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import styled from '@emotion/styled';
 
-export const Body = styled.div`
+export const Element = styled.li`
     display: flex;
     align-items: center;
 
@@ -23,4 +23,18 @@ export const Body = styled.div`
         outline: 3px solid #254b6d;
         box-shadow: 0 0 0 3px #254b6d;
     }
+`;
+
+export const Container = styled.ul`
+    height: 100%;
+    position: relative;
+    list-style: none;
+
+    margin: 0 2px;
+    padding: 0;
+
+    border: 1px solid #c6c2bf;
+    border-radius: 2px;
+
+    box-shadow: 0 0.05rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
 `;

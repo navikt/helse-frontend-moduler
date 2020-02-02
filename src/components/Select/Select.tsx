@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
 import React, { useEffect, useRef, useState } from 'react';
-import { SelectContainer, Knapp, AlternativContainer } from './Select.styles';
-import { Alternativ } from './Alternativ';
+import { SelectContainer, Knapp } from './Select.styles';
+import { Alternativer } from './Alternativer';
 
 export interface SelectProps {
     alternativer: AlternativData[];
@@ -27,7 +27,7 @@ const Select = ({ alternativer }: SelectProps) => {
         updateSelectedItem(alternativ);
     };
 
-    const onAlternativKeyPress = (event: React.KeyboardEvent<HTMLDivElement>, alternativ: AlternativData) => {
+    const onAlternativKeyPress = (event: React.KeyboardEvent<HTMLLIElement>, alternativ: AlternativData) => {
         if (event.key === 'Enter') updateSelectedItem(alternativ);
     };
 
@@ -49,16 +49,12 @@ const Select = ({ alternativer }: SelectProps) => {
             >
                 {selectedItem.value}
             </Knapp>
-            <AlternativContainer hidden={!visible} tabIndex={-1}>
-                {alternativer.map((alternativ: AlternativData) => (
-                    <Alternativ
-                        key={alternativ.id}
-                        alternativ={alternativ}
-                        onClick={onAlternativClick}
-                        onKeyPress={onAlternativKeyPress}
-                    />
-                ))}
-            </AlternativContainer>
+            <Alternativer
+                alternativer={alternativer}
+                isVisible={visible}
+                onClick={onAlternativClick}
+                onKeyPress={onAlternativKeyPress}
+            />
         </SelectContainer>
     );
 };

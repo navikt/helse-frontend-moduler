@@ -64,15 +64,3 @@ export const Knapp = styled.button`
         transform: rotate(45deg);
     }
 `;
-
-export const AlternativContainer = styled.div`
-    height: 100%;
-    position: relative;
-
-    margin: 0 2px;
-
-    border: 1px solid #c6c2bf;
-    border-radius: 2px;
-
-    box-shadow: 0 0.05rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
-`;
