@@ -30,6 +30,7 @@ const PeriodetabellContainer = styled('div')`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    min-width: max-content;
 `;
 
 const Periodetabell = ({ dager, manuellOverstyring }: PeriodetabellProps) => {

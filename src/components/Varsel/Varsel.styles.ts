@@ -16,7 +16,7 @@ const linkStyle = `
 
 const textStyle = `
     > p:nth-child(2) {
-        margin: 0;
+        margin: 0.5rem 0;
         font-weight: 600;
     }
 `;
@@ -43,15 +43,20 @@ const feilStyle = `
 
 export const VarselContainer = styled('div')`
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
-    height: 2.5rem;
+    min-height: 2.5rem;
+    min-width: min-content;
     padding: 0 1rem;
     display: flex;
     align-items: center;
     border: 1px solid transparent;
     border-radius: 4px;
-
+    
     > *:not(:last-child) {
         margin-right: 1rem !important;
+    }
+    
+    > svg {
+        min-width: max-content;
     }
 
     ${textStyle}
