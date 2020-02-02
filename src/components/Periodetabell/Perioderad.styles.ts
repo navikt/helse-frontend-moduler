@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { interactiveElement } from './input/mixins';
 
 interface AnchorProps {
     href?: string;
@@ -57,6 +58,8 @@ export const Gradering = styled('div')`
         border-radius: 2px;
         height: 1.125rem;
         padding-left: 0.25rem;
+
+        ${interactiveElement}
     }
 `;
 
@@ -118,4 +121,6 @@ export const Kildelenke = styled('a')`
         color: #59514b;
         box-shadow: 0 0 0 1px #59514b;
       `}
+
+    ${interactiveElement}
 `;

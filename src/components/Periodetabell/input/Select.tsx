@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import { interactiveElement } from './mixins';
 
 interface SelectProps {
     children: ReactNode | ReactNode[];
@@ -42,9 +43,8 @@ const StyledSelect = styled('select')`
     height: 1.375rem;
     padding: 0.125rem 1.125rem 0.125rem 0.125rem;
     background: none;
-    appearance: none;
-    -moz-appearance: none;
-    -webkit-appearance: none;
+
+    ${interactiveElement}
 `;
 
 const Select = ({ children, onChange }: SelectProps) => {
