@@ -31,15 +31,15 @@ const Select = ({ alternativer }: SelectProps) => {
         if (event.key === 'Enter') updateSelectedItem(alternativ);
     };
 
-    const handleClick = (event: MouseEvent) => {
-        if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-            setVisible(false);
-        }
-    };
-
     useEffect(() => {
+        const handleClick = (event: MouseEvent) => {
+            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
+                setVisible(false);
+            }
+        };
         document.addEventListener('mousedown', handleClick);
-    });
+        return () => document.removeEventListener('mousedown', handleClick);
+    }, [containerRef]);
 
     return (
         <Container ref={containerRef} tabIndex={-1}>
