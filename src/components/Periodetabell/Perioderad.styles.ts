@@ -24,6 +24,7 @@ export const Status = styled('div')`
 export const Sykmeldingsperiode = styled('div')`
     display: flex;
     align-items: center;
+    width: max-content;
 
     > * {
         ${cellContent}
