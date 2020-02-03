@@ -1,21 +1,26 @@
 import Select from '../components/Select';
 import React from 'react';
+import { Alternativ } from '../components/Select/Select';
 
 export default {
     component: Select,
-    title: 'Select (wip)',
+    title: 'Select/Select',
     parameters: {
         componentSubtitle: 'Select-komponent for å velge vedtaksperiode.'
     }
 };
 
 export const select = () => {
+    const perioder: Alternativ[] = [
+        { value: '09.05.2017 - 19.05.2017', id: 1 },
+        { value: '20.05.2017 - 20.06.2017', id: 2 },
+        { value: '21.07.2017 - 13.08.2017', id: 3 },
+        { value: '17.08.2017 - 05.09.2017', id: 4 }
+    ];
     return (
-        <Select>
-            <option>01.01.2018 - 23.01.2018</option>
-            <option>01.02.2018 - 23.02.2018</option>
-            <option>01.03.2018 - 23.03.2018</option>
-            <option>01.04.2018 - 23.04.2018</option>
-        </Select>
+        <div>
+            <Select alternativer={perioder} />
+            <p>Dummy-tekst for å verifisere at dropdown-effekten fungerer som den skal.</p>
+        </div>
     );
 };
