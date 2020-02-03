@@ -4,7 +4,7 @@ import { Alternativ } from '../components/Select/Select';
 
 export default {
     component: Select,
-    title: 'Select/Select',
+    title: 'Select',
     parameters: {
         componentSubtitle: 'Select-komponent for å velge vedtaksperiode.'
     }

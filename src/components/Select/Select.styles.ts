@@ -14,7 +14,7 @@ export const Knapp = styled.button`
     display: inline-block;
     position: relative;
 
-    height: 32px;
+    height: 2rem;
     width: 100%;
 
     font-family: inherit;
@@ -34,25 +34,12 @@ export const Knapp = styled.button`
         cursor: pointer;
     }
 
-    &:active {
-        background-color: #005b82;
-        border-color: #005b82;
-    }
-
-    &:focus {
-        box-shadow: 0 0 0 3px #254b6d;
-        outline: 0;
-    }
-
     &:before {
         content: '';
         background-color: transparent;
-
-        right: 2.25rem;
-
+        right: 2rem;
         border-color: #0067c5;
         border-right: 2px solid;
-
         position: absolute;
         top: 0;
         bottom: 0;
@@ -64,13 +51,30 @@ export const Knapp = styled.button`
         width: 10px;
         height: 10px;
         background-color: transparent;
+        box-shadow: 2px 2px 0 0 #0067c5;
+        right: 1rem;
+        transform: translateX(50%) rotate(45deg);
+    }
 
-        border-color: #0067c5;
-        border-bottom: 2px solid;
-        border-right: 2px solid;
-        border-radius: 2px;
+    &:active {
+        background-color: #005b82;
+        color: #ffffff;
+        border-color: #005b82;
+    }
 
-        right: 0.75rem;
-        transform: rotate(45deg);
+    &:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+        outline: 0;
+    }
+
+    &:active,
+    &:hover {
+        &:after {
+            box-shadow: 2px 2px 0 0 #fff;
+        }
+
+        &:before {
+            border-color: #fff;
+        }
     }
 `;
