@@ -1,9 +1,11 @@
 import React from 'react';
-import Tabell, { Body, Footer, Header, Rad } from '../components/Tabell/Tabell';
+import Tabell, { Body, Footer, Header, Rad } from '../packages/tabell/Tabell';
+import { withKnobs, number } from '@storybook/addon-knobs';
 
 export default {
     component: Tabell,
-    title: 'Tabell'
+    title: 'Tabell',
+    decorators: [withKnobs]
 };
 
 export const medToKolonner = () => (
@@ -101,3 +103,29 @@ export const medFooter = () => (
         </Footer>
     </Tabell>
 );
+
+export const variabeltAntallKolonnerOgRader = () => {
+    const rader = Array(number('Rader', 2)).fill(undefined);
+    const kolonner = Array(number('Kolonner', 2)).fill(undefined);
+
+    return (
+        <Tabell>
+            <Header>
+                {kolonner.map((_, i) => {
+                    const navn = `Kolonne_${i + 1}`;
+                    return <p key={navn}>{navn}</p>;
+                })}
+            </Header>
+            <Body>
+                {rader.map((_, i) => (
+                    <Rad key={i}>
+                        {kolonner.map((_, j) => {
+                            const navn = `(${i}, ${j})`;
+                            return <p key={navn}>{navn}</p>;
+                        })}
+                    </Rad>
+                ))}
+            </Body>
+        </Tabell>
+    );
+};

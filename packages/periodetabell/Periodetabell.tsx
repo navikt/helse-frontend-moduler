@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Tabell from '../Tabell';
-import { Body, Header, Rad } from '../Tabell/Tabell';
+import Tabell from '../tabell';
+import { Body, Header, Rad } from '../tabell/Tabell';
 import Perioderad from './Perioderad';
 import Overstyring from './Overstyring';
 import styled from '@emotion/styled';

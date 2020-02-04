@@ -1,13 +1,15 @@
-import Select from '../components/Select';
+import Select from '../packages/select';
 import React from 'react';
-import { Alternativ } from '../components/Select/Select';
+import { Alternativ } from '../packages/select/Select';
+import { withA11y } from '@storybook/addon-a11y';
 
 export default {
     component: Select,
     title: 'Select',
     parameters: {
         componentSubtitle: 'Select-komponent for å velge vedtaksperiode.'
-    }
+    },
+    decorators: [withA11y]
 };
 
 export const select = () => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Varsel from '../components/Varsel';
+import Varsel from '../packages/varsel';
 import styled from '@emotion/styled';
 
 export default {
