@@ -30,7 +30,8 @@ export const Element = styled.li`
 `;
 
 export const Container = styled.ul`
-    height: 100%;
+    max-height: 200px;
+    overflow: auto;
     position: absolute;
     z-index: 5;
     list-style: none;
