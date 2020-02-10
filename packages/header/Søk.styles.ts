@@ -30,7 +30,7 @@ export const Søkeknapp = styled('button')`
     &:focus {
         outline: none;
     }
-    
+
     &:active svg path {
         fill: ${inactiveColor};
     }
