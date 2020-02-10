@@ -1,15 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import {
-    Avdeler,
-    Brukerknapp,
-    Rad,
-    Kolonne,
-    HeaderBar,
-    Systemknapp,
-    TekstLiten,
-    TekstNormal,
-    Tittel
-} from './Header.styles';
+import { Avdeler, Brukerknapp, Rad, HeaderBar, Systemknapp, TekstLiten, TekstNormal, Tittel } from './Header.styles';
 import IkonSystem from './icons/IkonSystem';
 
 export type Brukerinfo = {

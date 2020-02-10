@@ -7,7 +7,7 @@ export default {
     component: Select,
     title: 'Select',
     parameters: {
-        componentSubtitle: 'Select-komponent for å velge vedtaksperiode.'
+        componentSubtitle: 'Vedtaksperiodevelger-komponent for å velge vedtaksperiode.'
     },
     decorators: [withA11y]
 };
