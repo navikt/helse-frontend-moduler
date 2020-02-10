@@ -25,23 +25,26 @@ export const Element = styled.li`
     &:focus,
     &:active {
         outline: 3px solid #254b6d;
-        box-shadow: 0 0 0 3px #254b6d;
+        outline-offset: -3px;
+        border-radius: 0;
     }
 `;
 
 export const Container = styled.ul`
     max-height: 200px;
-    overflow: auto;
+    overflow: scroll;
     position: absolute;
     z-index: 5;
     list-style: none;
 
-    width: calc(100% - 2px);
+    width: calc(100% - 10px);
 
-    margin: 0 2px;
+    margin: 0 5px;
     padding: 0;
 
     border-radius: 2px;
 
     box-shadow: 0 0.05rem 0.25rem 0.125rem rgba(0, 0, 0, 0.08);
+
+    background-color: transparent;
 `;
