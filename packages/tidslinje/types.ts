@@ -1,6 +1,7 @@
 export type Inntektstype = 'arbeidsgiver' | 'ytelse';
 
 export interface Vedtaksperiode {
+    id: string;
     fom: string;
     tom: string;
     status: VedtaksperiodeStatus;

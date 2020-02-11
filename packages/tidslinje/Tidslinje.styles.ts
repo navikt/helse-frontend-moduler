@@ -9,6 +9,7 @@ export const TidslinjeContainer = styled('div')`
     ${font('#3e3832')};
     display: flex;
     flex-direction: column;
+    padding: 0 0.75rem;
 `;
 
 interface UtsnittsknappProps {

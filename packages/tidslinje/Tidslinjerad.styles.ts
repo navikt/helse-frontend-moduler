@@ -115,13 +115,20 @@ export const Perioder = styled('div')`
     }
 `;
 
-export const Periode = styled('div')`
+export const Periode = styled('button')`
     height: ${periodeHeight}px;
     min-width: ${periodeHeight}px;
     border-radius: ${periodeHeight / 2}px;
     position: absolute;
     cursor: pointer;
+    border: none;
     ${colors};
+
+    &:active,
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 3px #0067c5;
+    }
 
     &:before {
         content: '';

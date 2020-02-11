@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useContext } from 'react';
 import { kalkulerPosisjonOgBredde, månederIUtsnitt } from './calc';
 import { Utsnitt } from './types';
 import dayjs, { Dayjs } from 'dayjs';
+import { TidslinjeContext } from './Tidslinje';
 
-interface MånedsskalaProps {
-    utsnitt: Utsnitt;
+interface TidsskalaProps {
     maksDato: string;
 }
 
-interface ÅrsskalaProps {
+interface MånedsskalaProps {
     maksDato: string;
+    utsnitt: Utsnitt;
 }
 
 const Container = styled('div')`
@@ -37,7 +38,7 @@ const årIUtsnitt = (maksDato: string) => {
     return [lagÅr(sisteÅr, 0), lagÅr(sisteÅr, 1), lagÅr(sisteÅr, 2)];
 };
 
-const År = ({ maksDato }: ÅrsskalaProps) => (
+const År = ({ maksDato }: TidsskalaProps) => (
     <>
         {årIUtsnitt(maksDato).map((år, i) => {
             const { left } = kalkulerPosisjonOgBredde(år.dato, år.dato, Utsnitt.TreÅr, maksDato);
@@ -63,10 +64,14 @@ const Måneder = ({ utsnitt, maksDato }: MånedsskalaProps) => (
     </>
 );
 
-const Tidsskala = ({ utsnitt, maksDato }: MånedsskalaProps) => (
-    <Container>
-        {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
-    </Container>
-);
+const Tidsskala = ({ maksDato }: TidsskalaProps) => {
+    const { utsnitt } = useContext(TidslinjeContext);
+
+    return (
+        <Container>
+            {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
+        </Container>
+    );
+};
 
 export default Tidsskala;

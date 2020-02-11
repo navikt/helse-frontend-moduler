@@ -1,35 +1,42 @@
-import React from 'react';
-import { EnkelTidslinje, Utsnitt } from './types';
+import React, { useContext } from 'react';
+import { EnkelTidslinje } from './types';
 import { Rad, Inntektskilde, Periode, Perioder } from './Tidslinjerad.styles';
 import { kalkulerPosisjonOgBredde } from './calc';
+import { TidslinjeContext } from './Tidslinje';
 
 interface TidslinjeradProps extends EnkelTidslinje {
-    utsnitt: Utsnitt;
     maksDato: string;
 }
 
-const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder, utsnitt, maksDato }: TidslinjeradProps) => {
+const Tidslinjerad = ({ inntektsnavn, vedtaksperioder, maksDato }: TidslinjeradProps) => {
+    const { onSelect, utsnitt } = useContext(TidslinjeContext);
+
+    const sortertePerioder = vedtaksperioder
+        .map(periode => {
+            const { left, width } = kalkulerPosisjonOgBredde(periode.fom, periode.tom, utsnitt, maksDato);
+            const erAvkuttet = left + width > 100;
+            const justertBredde = left + width > 100 ? 100 - left : width;
+            return { left, width: justertBredde, value: periode, erAvkuttet };
+        })
+        .sort((first, second) => first.left - second.left);
+
     return (
         <Rad>
             <Inntektskilde>{inntektsnavn}</Inntektskilde>
             <Perioder>
                 <hr />
-                {vedtaksperioder.map((periode, index) => {
-                    const { left, width } = kalkulerPosisjonOgBredde(periode.fom, periode.tom, utsnitt, maksDato);
-                    const erAvkuttet = left + width > 100;
-                    const justertBredde = left + width > 100 ? 100 - left : width;
-                    return (
-                        <Periode
-                            key={index}
-                            status={periode.status}
-                            avkuttet={erAvkuttet}
-                            style={{
-                                left: `${left}%`,
-                                width: `${justertBredde}%`
-                            }}
-                        />
-                    );
-                })}
+                {sortertePerioder.map((periode, index) => (
+                    <Periode
+                        key={index}
+                        onClick={() => onSelect(periode.value)}
+                        status={periode.value.status}
+                        avkuttet={periode.erAvkuttet}
+                        style={{
+                            left: `${periode.left}%`,
+                            width: `${periode.width}%`
+                        }}
+                    />
+                ))}
             </Perioder>
         </Rad>
     );

@@ -1,11 +1,11 @@
 import React from 'react';
 import styled from '@emotion/styled';
 import { interactiveElement } from './mixins';
-import { EnkelTidslinje } from '../types';
+import { EnkelTidslinje, Vedtaksperiode } from '../types';
 
 interface VedtaksperiodevelgerProps {
     tidslinjer: EnkelTidslinje[];
-    onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+    onSelect: (selected?: Vedtaksperiode) => void;
 }
 
 const selectIcon = `
@@ -51,15 +51,18 @@ const StyledSelect = styled('select')`
     ${interactiveElement}
 `;
 
-const Vedtaksperiodevelger = ({ tidslinjer, onChange }: VedtaksperiodevelgerProps) => {
+const Vedtaksperiodevelger = ({ tidslinjer, onSelect }: VedtaksperiodevelgerProps) => {
     const perioder = tidslinjer.flatMap(tidslinje => tidslinje.vedtaksperioder);
+
+    const onChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
+        onSelect(perioder.filter(periode => periode.id === event.target.value).pop());
 
     return (
         <Wrapper>
             <StyledSelect onChange={onChange}>
                 {perioder.map((periode, index) => {
                     return (
-                        <option key={index}>
+                        <option key={index} value={periode.id}>
                             {periode.fom} - {periode.tom}
                         </option>
                     );
