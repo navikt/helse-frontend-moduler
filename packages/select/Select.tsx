@@ -14,13 +14,20 @@ export interface Alternativ {
 }
 
 const Select = ({ alternativer }: SelectProps) => {
-    const [visible, setVisible] = useState<boolean>(false);
+    let timeOutId = 0;
+
+    const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
     const [selectedItem, setSelectedItem] = useState<Alternativ>(alternativer && alternativer[0]);
+
     const containerRef = useRef<HTMLDivElement>(null);
 
     const updateSelectedItem = (alternativ: Alternativ) => {
+        setDropdownVisible(false);
         setSelectedItem(alternativ);
-        setVisible(!visible);
+    };
+
+    const onKnappClick = () => {
+        setDropdownVisible(!isDropdownVisible);
     };
 
     const onAlternativClick = (alternativ: Alternativ) => {
@@ -28,30 +35,29 @@ const Select = ({ alternativer }: SelectProps) => {
     };
 
     const onAlternativKeyPress = (event: React.KeyboardEvent<HTMLLIElement>, alternativ: Alternativ) => {
-        if (event.key === 'Enter') updateSelectedItem(alternativ);
+        if (event.key === 'Enter') {
+            updateSelectedItem(alternativ);
+        }
     };
 
-    useEffect(() => {
-        const handleClick = (event: MouseEvent) => {
-            if (containerRef.current && !containerRef.current.contains(event.target as Node)) {
-                setVisible(false);
-            }
-        };
-        document.addEventListener('mousedown', handleClick);
-        return () => document.removeEventListener('mousedown', handleClick);
-    }, [containerRef]);
+    const onBlurHandler = () => {
+        timeOutId = setTimeout(() => {
+            setDropdownVisible(false);
+        });
+    };
+
+    const onFocusHandler = () => {
+        clearTimeout(timeOutId);
+    };
 
     return (
-        <Container ref={containerRef} tabIndex={-1}>
-            <Knapp
-                onClick={() => setVisible(!visible)}
-                onKeyPress={e => (e.key === 'Enter' ? setVisible(!visible) : '')}
-            >
+        <Container ref={containerRef} tabIndex={-1} onFocus={onFocusHandler} onBlur={onBlurHandler}>
+            <Knapp aria-haspopup="listbox" aria-expanded={isDropdownVisible} onClick={onKnappClick}>
                 {selectedItem.value}
             </Knapp>
             <Alternativer
                 alternativer={alternativer}
-                isVisible={visible}
+                isVisible={isDropdownVisible}
                 onClick={onAlternativClick}
                 onKeyPress={onAlternativKeyPress}
             />

@@ -11,13 +11,14 @@ interface AlternativerProps {
 
 export const Alternativer = ({ alternativer, isVisible, onClick, onKeyPress }: AlternativerProps) => {
     return (
-        <Container hidden={!isVisible} tabIndex={-1}>
+        <Container hidden={!isVisible} tabIndex={-1} role="listbox">
             {alternativer.map((item: Alternativ) => (
                 <Element
                     key={item.id}
+                    role="option"
+                    tabIndex={0}
                     onClick={() => onClick(item)}
                     onKeyPress={(event: React.KeyboardEvent<HTMLLIElement>) => onKeyPress(event, item)}
-                    tabIndex={0}
                 >
                     {item.value}
                 </Element>
