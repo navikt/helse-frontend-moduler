@@ -2,9 +2,14 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { kalkulerPosisjonOgBredde, månederIUtsnitt } from './calc';
 import { Utsnitt } from './types';
+import dayjs, { Dayjs } from 'dayjs';
 
-interface TidsskalaProps {
+interface MånedsskalaProps {
     utsnitt: Utsnitt;
+    maksDato: string;
+}
+
+interface ÅrsskalaProps {
     maksDato: string;
 }
 
@@ -23,11 +28,29 @@ const Markering = styled('div')`
     transform: translateX(-50%);
 `;
 
-const År = ({ maksDato }: Partial<TidsskalaProps>) => {
-    return <div></div>;
+const årIUtsnitt = (maksDato: string) => {
+    const sisteÅr = dayjs(maksDato, 'YYYY-MM-DD').startOf('year');
+    const lagÅr = (startÅr: Dayjs, deltaÅr: number) => ({
+        dato: startÅr.subtract(deltaÅr, 'year').format('YYYY-MM-DD'),
+        navn: startÅr.subtract(deltaÅr, 'year').format('YYYY')
+    });
+    return [lagÅr(sisteÅr, 0), lagÅr(sisteÅr, 1), lagÅr(sisteÅr, 2)];
 };
 
-const Måneder = ({ utsnitt, maksDato }: TidsskalaProps) => (
+const År = ({ maksDato }: ÅrsskalaProps) => (
+    <>
+        {årIUtsnitt(maksDato).map((år, i) => {
+            const { left } = kalkulerPosisjonOgBredde(år.dato, år.dato, Utsnitt.TreÅr, maksDato);
+            return (
+                <Markering key={i} style={{ left: `${left}%` }}>
+                    {år.navn}
+                </Markering>
+            );
+        })}
+    </>
+);
+
+const Måneder = ({ utsnitt, maksDato }: MånedsskalaProps) => (
     <>
         {månederIUtsnitt(utsnitt, maksDato).map((måned, i) => {
             const { left } = kalkulerPosisjonOgBredde(måned.dato, måned.dato, utsnitt, maksDato);
@@ -40,12 +63,10 @@ const Måneder = ({ utsnitt, maksDato }: TidsskalaProps) => (
     </>
 );
 
-const Tidsskala = ({ utsnitt, maksDato }: TidsskalaProps) => {
-    return (
-        <Container>
-            {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
-        </Container>
-    );
-};
+const Tidsskala = ({ utsnitt, maksDato }: MånedsskalaProps) => (
+    <Container>
+        {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
+    </Container>
+);
 
 export default Tidsskala;
