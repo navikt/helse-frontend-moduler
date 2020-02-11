@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-header",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -11,7 +11,7 @@
   "author": "NAV",
   "license": "MIT",
   "peerDependencies": {
-    "react": "^16.12.0",
-    "@emotion/styled": "^10.0.27"
+    "@emotion/styled": "^10.0.27",
+    "react": "^16.12.0"
   }
 }
