@@ -25,4 +25,6 @@ jobs:
             ${{ runner.os }}-
       - run: npm ci
       - run: npm run build
-      - run: npm run deploy-storybook -- --ci -t ${{ secrets.GITHUB_TOKEN }}
+      - run: npm run deploy-storybook -- --ci
+        env: 
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
