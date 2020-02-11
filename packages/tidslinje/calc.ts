@@ -1,7 +1,7 @@
 import { Utsnitt } from './types';
 import dayjs from 'dayjs';
 
-const dagerIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().format('YYYY-MM-DD')) => {
+export const dagerIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().format('YYYY-MM-DD')) => {
     const nå = dayjs(maksDato, 'YYYY-MM-DD');
     const da = nå.subtract(utsnitt, 'month');
 
