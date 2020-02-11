@@ -5,10 +5,10 @@ import HeaderEnkel from '../packages/header/HeaderEnkel';
 import { Bruker } from '../packages/header/Header';
 
 const brukerinfo = {
-    navn: 'Sjaman Durek',
+    navn: 'Kong Harald',
     ident: 'D123456',
     enhet: 'NAV Slottet',
-    rolle: 'Sjaman'
+    rolle: 'Konge'
 };
 
 export default {

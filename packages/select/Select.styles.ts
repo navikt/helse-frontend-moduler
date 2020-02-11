@@ -7,7 +7,7 @@ export const Container = styled.div`
     font-weight: bold;
     font-size: 16px;
     color: #0067c5;
-    width: 400px;
+    width: max-content;
 `;
 
 export const Knapp = styled.button`
@@ -27,6 +27,7 @@ export const Knapp = styled.button`
     border-radius: 2px;
 
     background-color: transparent;
+    padding-right: 2.5rem;
 
     &:hover {
         background-color: #0067c5;

@@ -1,11 +1,13 @@
 /** @jsx jsx */
 import { jsx } from '@emotion/core';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Container, Knapp } from './Select.styles';
 import { Alternativer } from './Alternativer';
+import classNames from 'classnames';
 
 export interface SelectProps {
     alternativer: Alternativ[];
+    className?: string;
 }
 
 export interface Alternativ {
@@ -13,7 +15,7 @@ export interface Alternativ {
     id: number;
 }
 
-const Select = ({ alternativer }: SelectProps) => {
+const Select = ({ alternativer, className }: SelectProps) => {
     let timeOutId = 0;
 
     const [isDropdownVisible, setDropdownVisible] = useState<boolean>(false);
@@ -51,7 +53,13 @@ const Select = ({ alternativer }: SelectProps) => {
     };
 
     return (
-        <Container ref={containerRef} tabIndex={-1} onFocus={onFocusHandler} onBlur={onBlurHandler}>
+        <Container
+            className={classNames('Select', className)}
+            ref={containerRef}
+            tabIndex={-1}
+            onFocus={onFocusHandler}
+            onBlur={onBlurHandler}
+        >
             <Knapp aria-haspopup="listbox" aria-expanded={isDropdownVisible} onClick={onKnappClick}>
                 {selectedItem.value}
             </Knapp>

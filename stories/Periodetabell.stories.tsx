@@ -1,5 +1,5 @@
 import React from 'react';
-import Periodetabell, { Dag, Dagtype } from '../packages/periodetabell';
+import Periodetabell, { Dag, Dagtype } from '../packages/tabell/periodetabell';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 export default {

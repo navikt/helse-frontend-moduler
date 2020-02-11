@@ -23,17 +23,27 @@ const Markering = styled('div')`
     transform: translateX(-50%);
 `;
 
+const År = ({ maksDato }: Partial<TidsskalaProps>) => {
+    return <div></div>;
+};
+
+const Måneder = ({ utsnitt, maksDato }: TidsskalaProps) => (
+    <>
+        {månederIUtsnitt(utsnitt, maksDato).map((måned, i) => {
+            const { left } = kalkulerPosisjonOgBredde(måned.dato, måned.dato, utsnitt, maksDato);
+            return (
+                <Markering key={i} style={{ left: `${left}%` }}>
+                    {måned.navn}
+                </Markering>
+            );
+        })}
+    </>
+);
+
 const Tidsskala = ({ utsnitt, maksDato }: TidsskalaProps) => {
     return (
         <Container>
-            {månederIUtsnitt(utsnitt, maksDato).map((måned, i) => {
-                const { left } = kalkulerPosisjonOgBredde(måned.dato, måned.dato, utsnitt, maksDato);
-                return (
-                    <Markering key={i} style={{ left: `${left}%` }}>
-                        {måned.navn}
-                    </Markering>
-                );
-            })}
+            {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
         </Container>
     );
 };
