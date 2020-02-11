@@ -1,7 +1,7 @@
 import React from 'react';
 import { EnkelTidslinje, Utsnitt } from './types';
 import { Rad, Inntektskilde, Periode, Perioder } from './Tidslinjerad.styles';
-import { kalkulerPosisjonOgBredde, dagerIUtsnitt } from './calc';
+import { kalkulerPosisjonOgBredde } from './calc';
 
 interface TidslinjeradProps extends EnkelTidslinje {
     utsnitt: Utsnitt;
@@ -15,19 +15,17 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder, utsnitt, ma
             <Perioder>
                 <hr />
                 {vedtaksperioder.map((periode, index) => {
-                    const { right, width } = kalkulerPosisjonOgBredde(
-                        periode.fom,
-                        periode.tom,
-                        dagerIUtsnitt(utsnitt, maksDato),
-                        maksDato
-                    );
+                    const { left, width } = kalkulerPosisjonOgBredde(periode.fom, periode.tom, utsnitt, maksDato);
+                    const erAvkuttet = left + width > 100;
+                    const justertBredde = left + width > 100 ? 100 - left : width;
                     return (
                         <Periode
                             key={index}
                             status={periode.status}
+                            avkuttet={erAvkuttet}
                             style={{
-                                right: `${right}%`,
-                                width: `${width}%`
+                                left: `${left}%`,
+                                width: `${justertBredde}%`
                             }}
                         />
                     );

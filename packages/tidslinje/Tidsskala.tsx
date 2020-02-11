@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React from 'react';
-import { dagerIUtsnitt, kalkulerPosisjonOgBredde, månederIUtsnitt } from './calc';
+import { kalkulerPosisjonOgBredde, månederIUtsnitt } from './calc';
 import { Utsnitt } from './types';
 
 interface TidsskalaProps {
@@ -20,21 +20,16 @@ const Markering = styled('div')`
     font-size: 14px;
     color: #78706a;
     position: absolute;
-    transform: translateX(50%);
+    transform: translateX(-50%);
 `;
 
 const Tidsskala = ({ utsnitt, maksDato }: TidsskalaProps) => {
     return (
         <Container>
             {månederIUtsnitt(utsnitt, maksDato).map((måned, i) => {
-                const { right } = kalkulerPosisjonOgBredde(
-                    måned.dato,
-                    måned.dato,
-                    dagerIUtsnitt(utsnitt, maksDato),
-                    maksDato
-                );
+                const { left } = kalkulerPosisjonOgBredde(måned.dato, måned.dato, utsnitt, maksDato);
                 return (
-                    <Markering key={i} style={{ right: `${right}%` }}>
+                    <Markering key={i} style={{ left: `${left}%` }}>
                         {måned.navn}
                     </Markering>
                 );

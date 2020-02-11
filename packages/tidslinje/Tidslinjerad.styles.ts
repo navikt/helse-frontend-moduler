@@ -1,6 +1,10 @@
 import styled from '@emotion/styled';
 import { Vedtaksperiode, VedtaksperiodeStatus } from './types';
 
+interface PeriodeProps extends Partial<Vedtaksperiode> {
+    avkuttet?: boolean;
+}
+
 const periodeHeight = 24;
 
 const venterFill = '#e7e9e9';
@@ -24,7 +28,7 @@ const ikonVenter =
 const ikonAvslag =
     "background-image: url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14px' height='14px' viewBox='0 0 24 24' enable-background='new 0 0 24 24' xml:space='preserve'%3E%3Cpath d='M11.499,0C5.17,0,0.012,5.148,0,11.477c-0.006,3.072,1.184,5.962,3.352,8.139c2.168,2.176,5.054,3.378,8.126,3.384H11.5%0Ac6.328,0,11.487-5.149,11.5-11.479C23.012,5.181,17.863,0.012,11.499,0z M11.5,22.5L11.5,22.5L11.5,22.5L11.5,22.5z M16.088,15.398%0Ac0.194,0.195,0.193,0.512-0.002,0.707c-0.098,0.098-0.225,0.146-0.353,0.146c-0.127,0-0.256-0.049-0.354-0.146l-3.882-3.898%0Al-3.896,3.882c-0.098,0.098-0.226,0.146-0.354,0.146c-0.128,0-0.255-0.049-0.353-0.146c-0.195-0.196-0.195-0.513,0.001-0.707%0Al3.897-3.882L6.91,7.602C6.715,7.406,6.716,7.09,6.912,6.896C7.107,6.699,7.424,6.7,7.619,6.897l3.881,3.897l3.896-3.881%0Ac0.195-0.195,0.513-0.195,0.707,0.001c0.195,0.195,0.195,0.512-0.001,0.707l-3.896,3.882L16.088,15.398z'/%3E%3C/svg%3E\");";
 
-const ikon = (props: Partial<Vedtaksperiode>) => {
+const ikon = (props: PeriodeProps) => {
     switch (props.status) {
         case VedtaksperiodeStatus.Utbetalt:
             return `
@@ -48,7 +52,7 @@ const ikon = (props: Partial<Vedtaksperiode>) => {
     }
 };
 
-const colors = (props: Partial<Vedtaksperiode>) => {
+const colors = (props: PeriodeProps) => {
     const boxShadow = (color: string) => `inset 0 0 0 1px ${color}`;
     switch (props.status) {
         case VedtaksperiodeStatus.TilUtbetaling:
@@ -129,4 +133,11 @@ export const Periode = styled('div')`
         transform: translateY(-50%);
         ${ikon};
     }
+
+    ${(props: PeriodeProps) =>
+        props.avkuttet &&
+        `
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    `}
 `;
