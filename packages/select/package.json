@@ -15,5 +15,6 @@
     "@emotion/styled": "^10.0.27",
     "classnames": "^2.2.6",
     "react": "^16.12.0"
-  }
+  },
+  "gitHead": "6a5028c847f2f00b045ad0928fcf123c4c23c3e2"
 }
