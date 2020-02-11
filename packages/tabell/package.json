@@ -14,5 +14,8 @@
     "@emotion/styled": "^10.0.27",
     "react": "^16.12.0"
   },
-  "gitHead": "6a5028c847f2f00b045ad0928fcf123c4c23c3e2"
+  "publishConfig": {
+    "access": "public"
+  },
+  "gitHead": "c4df04fc8e7637af74ca506388b3becc1c2a2d10"
 }
