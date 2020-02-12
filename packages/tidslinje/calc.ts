@@ -18,7 +18,7 @@ export const kalkulerPosisjonOgBredde = (
     const startAvUtsnitt = sisteDag.subtract(dager, 'day');
 
     const width = Math.abs((start.diff(slutt, 'day') / dager) * 100);
-    const left = 100 - (start.diff(startAvUtsnitt, 'day') / dager) * 100 - width;
+    const left = Math.max(100 - (start.diff(startAvUtsnitt, 'day') / dager) * 100 - width, 0);
 
     return { left, width };
 };

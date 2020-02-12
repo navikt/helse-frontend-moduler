@@ -10,6 +10,7 @@ export const TidslinjeContainer = styled('div')`
     display: flex;
     flex-direction: column;
     padding: 0 0.75rem;
+    min-width: 1000px;
 `;
 
 interface UtsnittsknappProps {

@@ -32,10 +32,8 @@ const Tidslinjerad = ({ inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
                         onClick={() => onSelect(periode.value)}
                         status={periode.value.status}
                         avkuttet={periode.erAvkuttet}
-                        style={{
-                            left: `${periode.left}%`,
-                            width: `${periode.width}%`
-                        }}
+                        posisjonFraVenstre={periode.left}
+                        bredde={periode.width}
                         aria-label={`${periode.value.status} fra ${periode.value.fom} til og med ${periode.value.tom}`}
                     />
                 ))}
