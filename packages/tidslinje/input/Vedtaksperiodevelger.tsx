@@ -59,7 +59,7 @@ const Vedtaksperiodevelger = ({ tidslinjer, onSelect }: VedtaksperiodevelgerProp
 
     return (
         <Wrapper>
-            <StyledSelect onChange={onChange}>
+            <StyledSelect onChange={onChange} aria-label="Periode">
                 {perioder.map((periode, index) => {
                     return (
                         <option key={index} value={periode.id}>

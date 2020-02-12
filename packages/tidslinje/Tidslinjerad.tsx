@@ -36,6 +36,7 @@ const Tidslinjerad = ({ inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
                             left: `${periode.left}%`,
                             width: `${periode.width}%`
                         }}
+                        aria-label={`${periode.value.status} fra ${periode.value.fom} til og med ${periode.value.tom}`}
                     />
                 ))}
             </Perioder>

@@ -25,11 +25,11 @@ export enum Skalastørrelse {
 }
 
 export enum VedtaksperiodeStatus {
-    TilUtbetaling,
-    Utbetalt,
-    Venter,
-    Oppgaver,
-    Avslag
+    TilUtbetaling = 'Til utbetaling',
+    Utbetalt = 'Utbetalt',
+    Venter = 'Venter',
+    Oppgaver = 'Oppgaver',
+    Avslag = 'Avslag'
 }
 
 export interface Skalapunkt {
