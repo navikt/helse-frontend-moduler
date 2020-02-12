@@ -1,16 +1,17 @@
 import styled from '@emotion/styled';
-import React, {useContext} from 'react';
-import {kalkulerPosisjonOgBredde, månederIUtsnitt, årIUtsnitt} from './calc';
-import {Utsnitt} from './types';
-import {TidslinjeContext} from './Tidslinje';
+import React, { useContext } from 'react';
+import {ettårsskala, halvtårsskala, isoDato, kalkulerPosisjonOgBredde, treårsskala} from './calc';
+import { Skalapunkt, Skalastørrelse } from './types';
+import { TidslinjeContext } from './Tidslinje';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface TidsskalaProps {
-    maksDato: string;
+    sisteDag: Dayjs;
 }
 
 interface MånedsskalaProps {
-    maksDato: string;
-    utsnitt: Utsnitt;
+    sisteDag: Dayjs;
+    utsnitt: Skalastørrelse;
 }
 
 const Container = styled('div')`
@@ -28,10 +29,15 @@ const Markering = styled('div')`
     transform: translateX(-50%);
 `;
 
-const År = ({ maksDato }: TidsskalaProps) => (
+const År = ({ sisteDag }: TidsskalaProps) => (
     <>
-        {årIUtsnitt(maksDato).map((år, i) => {
-            const { left } = kalkulerPosisjonOgBredde(år.dato, år.dato, Utsnitt.TreÅr, maksDato);
+        {treårsskala(sisteDag).map((år, i) => {
+            const { left } = kalkulerPosisjonOgBredde(
+                isoDato(år.dato),
+                isoDato(år.dato),
+                Skalastørrelse.TreÅr,
+                sisteDag
+            );
             return (
                 <Markering key={i} style={{ left: `${left}%` }}>
                     {år.navn}
@@ -41,25 +47,32 @@ const År = ({ maksDato }: TidsskalaProps) => (
     </>
 );
 
-const Måneder = ({ utsnitt, maksDato }: MånedsskalaProps) => (
-    <>
-        {månederIUtsnitt(utsnitt, maksDato).map((måned, i) => {
-            const { left } = kalkulerPosisjonOgBredde(måned.dato, måned.dato, utsnitt, maksDato);
-            return (
-                <Markering key={i} style={{ left: `${left}%` }}>
-                    {måned.navn}
-                </Markering>
-            );
-        })}
-    </>
-);
+const Måneder = ({ utsnitt, sisteDag }: MånedsskalaProps) => {
+    const skala = utsnitt === Skalastørrelse.HalvtÅr ? halvtårsskala(sisteDag) : ettårsskala(sisteDag);
+    return (
+        <>
+            {skala.map((måned: Skalapunkt, i: number) => {
+                const { left } = kalkulerPosisjonOgBredde(isoDato(måned.dato), isoDato(måned.dato), utsnitt, sisteDag);
+                return (
+                    <Markering key={i} style={{ left: `${left}%` }}>
+                        {måned.navn}
+                    </Markering>
+                );
+            })}
+        </>
+    );
+};
 
-const Tidsskala = ({ maksDato }: TidsskalaProps) => {
-    const { utsnitt } = useContext(TidslinjeContext);
+const Tidsskala = () => {
+    const { skalastørrelse, sisteDag } = useContext(TidslinjeContext);
 
     return (
         <Container>
-            {utsnitt === Utsnitt.TreÅr ? <År maksDato={maksDato} /> : <Måneder utsnitt={utsnitt} maksDato={maksDato} />}
+            {skalastørrelse === Skalastørrelse.TreÅr ? (
+                <År sisteDag={sisteDag} />
+            ) : (
+                <Måneder utsnitt={skalastørrelse} sisteDag={sisteDag} />
+            )}
         </Container>
     );
 };

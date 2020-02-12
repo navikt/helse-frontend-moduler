@@ -1,43 +1,46 @@
-import { Utsnitt } from './types';
+import { Skalapunkt, Skalastørrelse } from './types';
 import dayjs, { Dayjs } from 'dayjs';
 
-export const dagerIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().format('YYYY-MM-DD')) => {
-    const nå = dayjs(maksDato, 'YYYY-MM-DD');
-    const da = nå.subtract(utsnitt, 'month');
+export const isoDato = (string: string) => dayjs(string, 'YYYY-MM-DD');
 
-    return nå.diff(da, 'day');
+export const dagerISkala = (skalastørrelse: Skalastørrelse, sisteDag: Dayjs = dayjs()) => {
+    const førsteDag = sisteDag.subtract(skalastørrelse, 'month');
+    return sisteDag.diff(førsteDag, 'day');
 };
 
-export const kalkulerPosisjonOgBredde = (start: string, slutt: string, utsnitt: Utsnitt, maksDato: string) => {
-    const dager = dagerIUtsnitt(utsnitt, maksDato);
-    const startAvUtsnitt = dayjs(maksDato).subtract(dager, 'day');
-    const startDato = dayjs(start, 'DD-MM-YYYY');
-    const sluttDato = dayjs(slutt, 'DD-MM-YYYY');
+export const kalkulerPosisjonOgBredde = (
+    start: Dayjs,
+    slutt: Dayjs,
+    skalastørrelse: Skalastørrelse,
+    sisteDag: Dayjs
+) => {
+    const dager = dagerISkala(skalastørrelse, sisteDag);
+    const startAvUtsnitt = sisteDag.subtract(dager, 'day');
 
-    const width = Math.abs((startDato.diff(sluttDato, 'day') / dager) * 100);
-    const left = 100 - (startDato.diff(startAvUtsnitt, 'day') / dager) * 100 - width;
+    const width = Math.abs((start.diff(slutt, 'day') / dager) * 100);
+    const left = 100 - (start.diff(startAvUtsnitt, 'day') / dager) * 100 - width;
 
     return { left, width };
 };
 
-export const månederIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().format('YYYY-MM-DD')) => {
+function lagSkala(sisteDag: Dayjs, skalastørrelse: Skalastørrelse): Skalapunkt[] {
     const måneder = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'];
-    const aktuellMåned = dayjs(maksDato, 'YYYY-MM-DD').month();
-
-    return new Array(utsnitt).fill(0).map((_, i) => {
-        const index = aktuellMåned - i;
+    return new Array(skalastørrelse).fill(0).map((_, i) => {
+        const index = sisteDag.month() - i;
         const nåværendeMåned = index < 0 ? index + 12 : index;
-        const dato = dayjs(maksDato, 'YYYY-MM-DD')
+        const dato = sisteDag
             .subtract(i, 'month')
             .startOf('month')
             .format('YYYY-MM-DD');
 
         return { dato, navn: måneder[nåværendeMåned] };
     });
-};
+}
 
-export const årIUtsnitt = (maksDato: string) => {
-    const sisteÅr = dayjs(maksDato, 'YYYY-MM-DD').startOf('year');
+export const halvtårsskala = (sisteDag: Dayjs): Skalapunkt[] => lagSkala(sisteDag, Skalastørrelse.HalvtÅr);
+export const ettårsskala = (sisteDag: Dayjs): Skalapunkt[] => lagSkala(sisteDag, Skalastørrelse.EttÅr);
+export const treårsskala = (sisteDag: Dayjs): Skalapunkt[] => {
+    const sisteÅr = sisteDag.startOf('year');
     const lagÅr = (startÅr: Dayjs, deltaÅr: number) => ({
         dato: startÅr.subtract(deltaÅr, 'year').format('YYYY-MM-DD'),
         navn: startÅr.subtract(deltaÅr, 'year').format('YYYY')

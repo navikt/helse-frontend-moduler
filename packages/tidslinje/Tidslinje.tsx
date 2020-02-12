@@ -1,11 +1,12 @@
 import React, { createContext, useState } from 'react';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
 import Vedtaksperiodevelger from './input/Vedtaksperiodevelger';
 import { Footer, TidslinjeContainer, Utsnittsknapp } from './Tidslinje.styles';
 import { Rad, StyledVedtaksperiodevelger } from './Tidslinjerad.styles';
-import { EnkelTidslinje, Utsnitt, Vedtaksperiode } from './types';
+import { EnkelTidslinje, Skalastørrelse, Vedtaksperiode } from './types';
+import { isoDato } from './calc';
 
 export interface TidslinjeProps {
     tidslinjer: EnkelTidslinje[];
@@ -13,17 +14,19 @@ export interface TidslinjeProps {
 }
 
 interface TidslinjeContextType {
-    utsnitt: Utsnitt;
+    skalastørrelse: Skalastørrelse;
+    sisteDag: Dayjs;
     onSelect: (selected?: Vedtaksperiode) => void;
 }
 
 export const TidslinjeContext = createContext<TidslinjeContextType>({
     onSelect: _ => null,
-    utsnitt: Utsnitt.HalvtÅr
+    sisteDag: dayjs(),
+    skalastørrelse: Skalastørrelse.HalvtÅr
 });
 
 const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
-    const [utsnitt, setUtsnitt] = useState(Utsnitt.HalvtÅr);
+    const [utsnitt, setUtsnitt] = useState(Skalastørrelse.HalvtÅr);
     const start = dayjs(0).format('YYYY-MM-DD');
     const sisteDag = tidslinjer.reduce((sisteDag: string, tidslinje: EnkelTidslinje) => {
         const tom = tidslinje.vedtaksperioder.reduce(
@@ -34,25 +37,34 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
     }, start);
 
     return (
-        <TidslinjeContext.Provider value={{ onSelect, utsnitt }}>
+        <TidslinjeContext.Provider value={{ onSelect, skalastørrelse: utsnitt, sisteDag: isoDato(sisteDag) }}>
             <TidslinjeContainer>
                 <Rad>
                     <StyledVedtaksperiodevelger>
                         <Vedtaksperiodevelger onSelect={onSelect} tidslinjer={tidslinjer} />
                     </StyledVedtaksperiodevelger>
-                    <Tidsskala maksDato={sisteDag} />
+                    <Tidsskala />
                 </Rad>
                 {tidslinjer.map(tidslinje => (
-                    <Tidslinjerad key={tidslinje.id} {...tidslinje} maksDato={sisteDag} />
+                    <Tidslinjerad key={tidslinje.id} {...tidslinje} />
                 ))}
                 <Footer>
-                    <Utsnittsknapp selected={utsnitt === Utsnitt.HalvtÅr} onClick={() => setUtsnitt(Utsnitt.HalvtÅr)}>
+                    <Utsnittsknapp
+                        selected={utsnitt === Skalastørrelse.HalvtÅr}
+                        onClick={() => setUtsnitt(Skalastørrelse.HalvtÅr)}
+                    >
                         6 mnd
                     </Utsnittsknapp>
-                    <Utsnittsknapp selected={utsnitt === Utsnitt.EttÅr} onClick={() => setUtsnitt(Utsnitt.EttÅr)}>
+                    <Utsnittsknapp
+                        selected={utsnitt === Skalastørrelse.EttÅr}
+                        onClick={() => setUtsnitt(Skalastørrelse.EttÅr)}
+                    >
                         1 år
                     </Utsnittsknapp>
-                    <Utsnittsknapp selected={utsnitt === Utsnitt.TreÅr} onClick={() => setUtsnitt(Utsnitt.TreÅr)}>
+                    <Utsnittsknapp
+                        selected={utsnitt === Skalastørrelse.TreÅr}
+                        onClick={() => setUtsnitt(Skalastørrelse.TreÅr)}
+                    >
                         3 år
                     </Utsnittsknapp>
                 </Footer>

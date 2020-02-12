@@ -1,25 +1,33 @@
-import { Utsnitt } from './types';
-import { dagerIUtsnitt, kalkulerPosisjonOgBredde, månederIUtsnitt, årIUtsnitt } from './calc';
+import { Skalastørrelse } from './types';
+import { dagerISkala, ettårsskala, halvtårsskala, isoDato, kalkulerPosisjonOgBredde, treårsskala } from './calc';
 
 test('dager i utsnitt', () => {
-    expect(dagerIUtsnitt(Utsnitt.HalvtÅr, '2018-01-01')).toEqual(184);
-    expect(dagerIUtsnitt(Utsnitt.EttÅr, '2018-01-01')).toEqual(365);
-    expect(dagerIUtsnitt(Utsnitt.TreÅr, '2018-01-01')).toEqual(1096);
-
-    expect(dagerIUtsnitt(Utsnitt.HalvtÅr, 'i morgen')).toEqual(NaN);
+    expect(dagerISkala(Skalastørrelse.HalvtÅr, isoDato('2018-01-01'))).toEqual(184);
+    expect(dagerISkala(Skalastørrelse.EttÅr, isoDato('2018-01-01'))).toEqual(365);
+    expect(dagerISkala(Skalastørrelse.TreÅr, isoDato('2018-01-01'))).toEqual(1096);
 });
 
 test('kalkuler posisjon og bredde', () => {
-    const periodeEn = kalkulerPosisjonOgBredde('2018-01-01', '2018-01-10', Utsnitt.HalvtÅr, '2018-06-01');
-    const periodeTo = kalkulerPosisjonOgBredde('2018-01-11', '2018-01-20', Utsnitt.HalvtÅr, '2018-06-01');
+    const periodeEn = kalkulerPosisjonOgBredde(
+        isoDato('2018-01-01'),
+        isoDato('2018-01-10'),
+        Skalastørrelse.HalvtÅr,
+        isoDato('2018-06-01')
+    );
+    const periodeTo = kalkulerPosisjonOgBredde(
+        isoDato('2018-01-11'),
+        isoDato('2018-01-20'),
+        Skalastørrelse.HalvtÅr,
+        isoDato('2018-06-01')
+    );
 
     expect(periodeEn.width).toEqual(periodeTo.width);
     expect(periodeEn.left).toBeGreaterThan(periodeTo.left);
 });
 
 test('måneder i utsnitt', () => {
-    const månederIEtHalvtÅr = månederIUtsnitt(Utsnitt.HalvtÅr, '2018-06-01');
-    const månederIEtÅr = månederIUtsnitt(Utsnitt.EttÅr, '2018-12-01');
+    const månederIEtHalvtÅr = halvtårsskala(isoDato('2018-06-01'));
+    const månederIEtÅr = ettårsskala(isoDato('2018-12-01'));
 
     expect(månederIEtHalvtÅr).toHaveLength(6);
     [
@@ -49,7 +57,7 @@ test('måneder i utsnitt', () => {
 });
 
 test('år i utsnitt', () => {
-    const beregnetÅrIUtsnitt = årIUtsnitt('2020-12-01');
+    const beregnetÅrIUtsnitt = treårsskala(isoDato('2020-12-01'));
 
     expect(beregnetÅrIUtsnitt).toHaveLength(3);
     [

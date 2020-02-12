@@ -1,19 +1,20 @@
 import React, { useContext } from 'react';
 import { EnkelTidslinje } from './types';
 import { Rad, Inntektskilde, Periode, Perioder } from './Tidslinjerad.styles';
-import { kalkulerPosisjonOgBredde } from './calc';
+import { isoDato, kalkulerPosisjonOgBredde } from './calc';
 import { TidslinjeContext } from './Tidslinje';
 
-interface TidslinjeradProps extends EnkelTidslinje {
-    maksDato: string;
-}
-
-const Tidslinjerad = ({ inntektsnavn, vedtaksperioder, maksDato }: TidslinjeradProps) => {
-    const { onSelect, utsnitt } = useContext(TidslinjeContext);
+const Tidslinjerad = ({ inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
+    const { onSelect, skalastørrelse, sisteDag } = useContext(TidslinjeContext);
 
     const sortertePerioder = vedtaksperioder
         .map(periode => {
-            const { left, width } = kalkulerPosisjonOgBredde(periode.fom, periode.tom, utsnitt, maksDato);
+            const { left, width } = kalkulerPosisjonOgBredde(
+                isoDato(periode.fom),
+                isoDato(periode.tom),
+                skalastørrelse,
+                sisteDag
+            );
             const erAvkuttet = left + width > 100;
             const justertBredde = left + width > 100 ? 100 - left : width;
             return { left, width: justertBredde, value: periode, erAvkuttet };

@@ -18,7 +18,7 @@ export interface SammensattTidslinje {
     tidslinjer: EnkelTidslinje[];
 }
 
-export enum Utsnitt {
+export enum Skalastørrelse {
     HalvtÅr = 6,
     EttÅr = 12,
     TreÅr = 36
@@ -30,4 +30,9 @@ export enum VedtaksperiodeStatus {
     Venter,
     Oppgaver,
     Avslag
+}
+
+export interface Skalapunkt {
+    dato: string;
+    navn: string;
 }
