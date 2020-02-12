@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import React, { useContext } from 'react';
-import { kalkulerPosisjonOgBredde, månederIUtsnitt } from './calc';
-import { Utsnitt } from './types';
-import dayjs, { Dayjs } from 'dayjs';
-import { TidslinjeContext } from './Tidslinje';
+import React, {useContext} from 'react';
+import {kalkulerPosisjonOgBredde, månederIUtsnitt, årIUtsnitt} from './calc';
+import {Utsnitt} from './types';
+import {TidslinjeContext} from './Tidslinje';
 
 interface TidsskalaProps {
     maksDato: string;
@@ -28,15 +27,6 @@ const Markering = styled('div')`
     position: absolute;
     transform: translateX(-50%);
 `;
-
-const årIUtsnitt = (maksDato: string) => {
-    const sisteÅr = dayjs(maksDato, 'YYYY-MM-DD').startOf('year');
-    const lagÅr = (startÅr: Dayjs, deltaÅr: number) => ({
-        dato: startÅr.subtract(deltaÅr, 'year').format('YYYY-MM-DD'),
-        navn: startÅr.subtract(deltaÅr, 'year').format('YYYY')
-    });
-    return [lagÅr(sisteÅr, 0), lagÅr(sisteÅr, 1), lagÅr(sisteÅr, 2)];
-};
 
 const År = ({ maksDato }: TidsskalaProps) => (
     <>

@@ -1,5 +1,5 @@
 import { Utsnitt } from './types';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export const dagerIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().format('YYYY-MM-DD')) => {
     const nå = dayjs(maksDato, 'YYYY-MM-DD');
@@ -34,4 +34,13 @@ export const månederIUtsnitt = (utsnitt: Utsnitt, maksDato: string = dayjs().fo
 
         return { dato, navn: måneder[nåværendeMåned] };
     });
+};
+
+export const årIUtsnitt = (maksDato: string) => {
+    const sisteÅr = dayjs(maksDato, 'YYYY-MM-DD').startOf('year');
+    const lagÅr = (startÅr: Dayjs, deltaÅr: number) => ({
+        dato: startÅr.subtract(deltaÅr, 'year').format('YYYY-MM-DD'),
+        navn: startÅr.subtract(deltaÅr, 'year').format('YYYY')
+    });
+    return [lagÅr(sisteÅr, 0), lagÅr(sisteÅr, 1), lagÅr(sisteÅr, 2)];
 };
