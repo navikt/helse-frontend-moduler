@@ -15,7 +15,7 @@ Vi bruker CSS-in-JS-rammeverket [Emotion](https://emotion.sh/docs/introduction) 
 Emotion genererer unike klassenavn for hver komponent slik at vi ikke trenger å bekymre oss for at vi endrer stylingen andre steder i applikasjonen når vi endrer en enkelt komponent. BEM løser dette for applikasjoner som bruker Less og CSS, men garanterer ikke unike klassenavn og resulterer i ganske "wordy" klassenavn man må forholde seg til i koden.
 
 #### 2. Enkel læringskurve
-Med Emtion kan man style komponenter med både js-objekter og vanlig CSS.
+Med Emotion kan man style komponenter med både js-objekter og vanlig CSS.
 
 #### 3. Mer lesbar renderingkode
 Her er to enkle eksempler for å illustrere dette, én med Less + BEM og én med Emotion:
