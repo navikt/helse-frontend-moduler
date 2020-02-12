@@ -1,4 +1,5 @@
 [![Actions Status](https://github.com/navikt/helse-frontend-moduler/workflows/storybook/badge.svg)](https://github.com/navikt/helse-frontend-moduler/actions)
+[![Storybook](https://img.shields.io/badge/storybook-github%20pages-blue?style=flat&logo=github)](https://navikt.github.io/helse-frontend-moduler)
 
 # helse-frontend-moduler
 Gjenbrukbare React-komponenter for interne flater i PO Helse
