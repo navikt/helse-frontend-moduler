@@ -2,3 +2,5 @@
 
 # helse-frontend-moduler
 Gjenbrukbare React-komponenter for interne flater i PO Helse
+
+Komponentene er laget basert på våre behov i PO Helse men kan fint gjenbrukes i andre interne saksbehandlingsløsninger.
