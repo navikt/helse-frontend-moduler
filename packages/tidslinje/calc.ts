@@ -9,21 +9,21 @@ export const dagerISkala = (skalastørrelse: Skalastørrelse, sisteDag: Dayjs = 
 };
 
 export const kalkulerPosisjonOgBredde = (
-    start: Dayjs,
-    slutt: Dayjs,
+    periodeFom: Dayjs,
+    periodeTom: Dayjs,
     skalastørrelse: Skalastørrelse,
-    sisteDag: Dayjs
+    tidslinjeTom: Dayjs
 ) => {
-    const dager = dagerISkala(skalastørrelse, sisteDag);
-    const startAvUtsnitt = sisteDag.subtract(dager, 'day');
-
-    const width = Math.abs((start.diff(slutt, 'day') / dager) * 100);
-    const left = Math.max(100 - (start.diff(startAvUtsnitt, 'day') / dager) * 100 - width, 0);
+    const antallDager = dagerISkala(skalastørrelse, tidslinjeTom);
+    const dagerIPerioden = periodeFom.diff(periodeTom, 'day');
+    const dagerEtterPeriode = periodeTom.diff(tidslinjeTom, 'day');
+    const width = Math.abs((dagerIPerioden / antallDager) * 100);
+    const left = Math.abs((dagerEtterPeriode / antallDager) * 100);
 
     return { left, width };
 };
 
-function lagSkala(sisteDag: Dayjs, skalastørrelse: Skalastørrelse): Skalapunkt[] {
+const lagSkala = (sisteDag: Dayjs, skalastørrelse: Skalastørrelse): Skalapunkt[] => {
     const måneder = ['Jan', 'Feb', 'Mar', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Des'];
     return new Array(skalastørrelse).fill(0).map((_, i) => {
         const index = sisteDag.month() - i;
@@ -35,10 +35,12 @@ function lagSkala(sisteDag: Dayjs, skalastørrelse: Skalastørrelse): Skalapunkt
 
         return { dato, navn: måneder[nåværendeMåned] };
     });
-}
+};
 
 export const halvtårsskala = (sisteDag: Dayjs): Skalapunkt[] => lagSkala(sisteDag, Skalastørrelse.HalvtÅr);
+
 export const ettårsskala = (sisteDag: Dayjs): Skalapunkt[] => lagSkala(sisteDag, Skalastørrelse.EttÅr);
+
 export const treårsskala = (sisteDag: Dayjs): Skalapunkt[] => {
     const sisteÅr = sisteDag.startOf('year');
     const lagÅr = (startÅr: Dayjs, deltaÅr: number) => ({
