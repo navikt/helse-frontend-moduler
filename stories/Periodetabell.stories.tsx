@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Periodetabell, { Dag, Dagtype } from '../packages/tabell/periodetabell';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
@@ -92,7 +92,7 @@ export const medFerdigOppgave = () => {
 };
 
 export const medManuellOverstyring = () => {
-    const dager: Dag[] = [
+    const initialDager: Dag[] = [
         { type: Dagtype.Egenmelding, dato: '19.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } },
         { type: Dagtype.Syk, dato: '20.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' } },
         { type: Dagtype.Syk, dato: '21.02.2019', gradering: 100, kilde: { label: 'SM', link: '#' } },
@@ -104,6 +104,7 @@ export const medManuellOverstyring = () => {
         { type: Dagtype.Ferie, dato: '27.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } },
         { type: Dagtype.Ferie, dato: '28.02.2019', gradering: 100, kilde: { label: 'IM', link: '#' } }
     ];
+    const [dager, setDager] = useState(initialDager);
 
-    return <Periodetabell dager={object('Tabell med manuell overstyring', dager)} manuellOverstyring />;
+    return <Periodetabell dager={dager} setDager={setDager} />;
 };

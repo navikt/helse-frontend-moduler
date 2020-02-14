@@ -19,7 +19,8 @@
     "deploy-storybook": "storybook-to-ghpages",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "build": "lerna run build",
-    "test": "jest"
+    "test": "jest",
+    "clean": "rm -rf ./build"
   },
   "dependencies": {
     "@emotion/core": "^10.0.27",

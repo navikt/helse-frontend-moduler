@@ -9,8 +9,7 @@ import { Dag, Dagtype, OppgaveStatus } from './types';
 
 export interface PeriodetabellProps {
     dager: Dag[];
-    setDager: React.SetStateAction<Dag[]>;
-    manuellOverstyring?: boolean;
+    setDager?: (nyeDager: Dag[]) => void;
     className?: string;
 }
 
@@ -34,21 +33,26 @@ const PeriodetabellContainer = styled('div')`
     align-items: flex-end;
 `;
 
-const Periodetabell = ({ dager = [], setDager, manuellOverstyring }: PeriodetabellProps) => {
+const Periodetabell = ({ dager = [], setDager }: PeriodetabellProps) => {
     const [overstyrer, setOverstyrer] = useState(false);
 
     const oppdaterGradering = (index: number, nyGradering: number) => {
+        if (!setDager) return;
         const gradering = clamp(isNaN(nyGradering) ? 0 : nyGradering);
-        setDager(dager => dager.map((dag, i) => (i === index ? { ...dag, gradering } : dag)));
+        const nyeDager = dager.map((dag, i) => (i === index ? { ...dag, gradering } : dag));
+        setDager(nyeDager);
     };
 
-    const oppdaterType = (index: number, nyType: Dagtype) =>
-        setDager(dager => dager.map((dag, i) => (i === index ? { ...dag, type: nyType } : dag)));
+    const oppdaterType = (index: number, nyType: Dagtype) => {
+        if (!setDager) return;
+        const nyeDager = dager.map((dag, i) => (i === index ? { ...dag, type: nyType } : dag));
+        setDager(nyeDager);
+    };
 
     return (
         <PeriodeContext.Provider value={{ dager, oppdaterGradering, oppdaterType, overstyrer }}>
             <PeriodetabellContainer>
-                {manuellOverstyring && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
+                {setDager && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
                 <Tabell>
                     <Header>
                         <p />
