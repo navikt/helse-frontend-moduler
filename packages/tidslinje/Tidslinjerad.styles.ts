@@ -91,7 +91,7 @@ export const Rad = styled('div')`
     margin: 0.25rem 0;
 `;
 
-export const StyledVedtaksperiodevelger = styled('div')`
+export const VedtaksperiodevelgerContainer = styled('div')`
     width: 15rem;
 `;
 

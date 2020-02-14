@@ -2,9 +2,9 @@ import React, { createContext, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
-import Vedtaksperiodevelger from './input/Vedtaksperiodevelger';
+import Vedtaksperiodevelger from './vedtaksperiodevelger/Vedtaksperiodevelger';
 import { Footer, TidslinjeContainer, Utsnittsknapp } from './Tidslinje.styles';
-import { Rad, StyledVedtaksperiodevelger } from './Tidslinjerad.styles';
+import { Rad, VedtaksperiodevelgerContainer } from './Tidslinjerad.styles';
 import { EnkelTidslinje, Skalastørrelse, Vedtaksperiode } from './types';
 import { isoDato } from './calc';
 
@@ -17,6 +17,7 @@ interface TidslinjeContextType {
     skalastørrelse: Skalastørrelse;
     sisteDag: Dayjs;
     onSelect: (selected?: Vedtaksperiode) => void;
+    aktivPeriodeId?: string;
 }
 
 export const TidslinjeContext = createContext<TidslinjeContextType>({
@@ -26,8 +27,11 @@ export const TidslinjeContext = createContext<TidslinjeContextType>({
 });
 
 const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
+    const [aktivPeriodeId, setAktivPeriodeId] = useState<string>();
     const [utsnitt, setUtsnitt] = useState(Skalastørrelse.HalvtÅr);
+
     const start = dayjs(0).format('YYYY-MM-DD');
+
     const sisteDag = tidslinjer.reduce((sisteDag: string, tidslinje: EnkelTidslinje) => {
         const tom = tidslinje.vedtaksperioder.reduce(
             (sisteDag: string, perioden: Vedtaksperiode) => (sisteDag > perioden.tom ? sisteDag : perioden.tom),
@@ -36,13 +40,25 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
         return sisteDag > tom ? sisteDag : tom;
     }, start);
 
+    const onVelgAktivVedtaksperiode = (periode: Vedtaksperiode) => {
+        setAktivPeriodeId(periode.id);
+        onSelect(periode);
+    };
+
     return (
-        <TidslinjeContext.Provider value={{ onSelect, skalastørrelse: utsnitt, sisteDag: isoDato(sisteDag) }}>
+        <TidslinjeContext.Provider
+            value={{
+                onSelect: onVelgAktivVedtaksperiode,
+                aktivPeriodeId,
+                skalastørrelse: utsnitt,
+                sisteDag: isoDato(sisteDag)
+            }}
+        >
             <TidslinjeContainer>
                 <Rad>
-                    <StyledVedtaksperiodevelger>
-                        <Vedtaksperiodevelger onSelect={onSelect} tidslinjer={tidslinjer} />
-                    </StyledVedtaksperiodevelger>
+                    <VedtaksperiodevelgerContainer>
+                        <Vedtaksperiodevelger tidslinjer={tidslinjer} />
+                    </VedtaksperiodevelgerContainer>
                     <Tidsskala />
                 </Rad>
                 {tidslinjer.map(tidslinje => (
