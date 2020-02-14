@@ -99,6 +99,12 @@ export const Inntektskilde = styled('p')`
     font-size: 14px;
     margin: 0;
     width: 15rem;
+    display: flex;
+    align-items: center;
+
+    > svg {
+        margin-right: 0.5rem;
+    }
 `;
 
 export const Perioder = styled('div')`

@@ -1,10 +1,21 @@
 import React, { useContext } from 'react';
-import { EnkelTidslinje } from './types';
+import { EnkelTidslinje, Inntektstype } from './types';
 import { Rad, Inntektskilde, Periode, Perioder } from './Tidslinjerad.styles';
 import { isoDato, kalkulerPosisjonOgBredde } from './calc';
 import { TidslinjeContext } from './Tidslinje';
+import IkonArbeidsgiver from './icons/IkonArbeidsgiver';
+import IkonInfotrygd from './icons/IkonInfotrygd';
 
-const Tidslinjerad = ({ inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
+const ikon = (inntektstype: Inntektstype) => {
+    switch (inntektstype) {
+        case 'arbeidsgiver':
+            return <IkonArbeidsgiver />;
+        case 'ytelse':
+            return <IkonInfotrygd />;
+    }
+};
+
+const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
     const { onSelect, skalastørrelse, sisteDag } = useContext(TidslinjeContext);
 
     const sortertePerioder = vedtaksperioder
@@ -23,7 +34,10 @@ const Tidslinjerad = ({ inntektsnavn, vedtaksperioder }: EnkelTidslinje) => {
 
     return (
         <Rad>
-            <Inntektskilde>{inntektsnavn}</Inntektskilde>
+            <Inntektskilde>
+                {ikon(inntektstype)}
+                {inntektsnavn}
+            </Inntektskilde>
             <Perioder>
                 <hr />
                 {sortertePerioder.map((periode, index) => (
