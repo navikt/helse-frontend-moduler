@@ -17,7 +17,6 @@ const linkStyle = `
 const textStyle = `
     > p:nth-child(2) {
         margin: 0.5rem 0;
-        font-weight: 600;
     }
 `;
 

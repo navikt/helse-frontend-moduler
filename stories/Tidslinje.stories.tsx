@@ -24,19 +24,19 @@ const mockdata: SammensattTidslinje = {
                     id: '2345',
                     fom: '2020-01-16',
                     tom: '2020-01-30',
-                    status: VedtaksperiodeStatus.Oppgaver
+                    status: VedtaksperiodeStatus.Venter
                 },
                 {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.Avslag
+                    status: VedtaksperiodeStatus.Utbetalt
                 },
                 {
                     id: '4567',
                     fom: '2019-09-16',
                     tom: '2019-10-30',
-                    status: VedtaksperiodeStatus.TilUtbetaling
+                    status: VedtaksperiodeStatus.Utbetalt
                 },
                 {
                     id: '5678',
@@ -45,10 +45,28 @@ const mockdata: SammensattTidslinje = {
                     status: VedtaksperiodeStatus.Utbetalt
                 }
             ]
+        },
+
+        {
+            id: '1234567890',
+            inntektsnavn: 'Oslo Kommune',
+            inntektstype: 'arbeidsgiver',
+            vedtaksperioder: [
+                {
+                    id: '3456',
+                    fom: '2019-11-01',
+                    tom: '2019-11-31',
+                    status: VedtaksperiodeStatus.Avslag
+                }
+            ]
         }
     ]
 };
 
 export const tidslinje = () => {
+    return <Tidslinje tidslinjer={mockdata.tidslinjer.slice(0, 1)} onSelect={value => console.log(value)} />;
+};
+
+export const flereArbeidsgivere = () => {
     return <Tidslinje tidslinjer={mockdata.tidslinjer} onSelect={value => console.log(value)} />;
 };

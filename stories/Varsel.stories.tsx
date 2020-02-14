@@ -29,7 +29,7 @@ export const alleVarsler = () => {
 
 export const varselMedOppgave = () => {
     return (
-        <Varsel text="Du har en ventende oppgave" type="advarsel">
+        <Varsel text="Oppgave: Du har en ventende oppgave" type="advarsel">
             <a href="#">Gå til oppgave</a>
         </Varsel>
     );

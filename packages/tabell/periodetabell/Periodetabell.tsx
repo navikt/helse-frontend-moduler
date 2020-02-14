@@ -9,7 +9,9 @@ import { Dag, Dagtype, OppgaveStatus } from './types';
 
 export interface PeriodetabellProps {
     dager: Dag[];
+    setDager: React.SetStateAction<Dag[]>;
     manuellOverstyring?: boolean;
+    className?: string;
 }
 
 const backgroundForRow = (status?: OppgaveStatus) => {
@@ -32,20 +34,19 @@ const PeriodetabellContainer = styled('div')`
     align-items: flex-end;
 `;
 
-const Periodetabell = ({ dager, manuellOverstyring }: PeriodetabellProps) => {
+const Periodetabell = ({ dager = [], setDager, manuellOverstyring }: PeriodetabellProps) => {
     const [overstyrer, setOverstyrer] = useState(false);
-    const [periode, setPeriode] = useState(dager ?? []);
 
     const oppdaterGradering = (index: number, nyGradering: number) => {
         const gradering = clamp(isNaN(nyGradering) ? 0 : nyGradering);
-        setPeriode(periode => periode.map((dag, i) => (i === index ? { ...dag, gradering } : dag)));
+        setDager(dager => dager.map((dag, i) => (i === index ? { ...dag, gradering } : dag)));
     };
 
     const oppdaterType = (index: number, nyType: Dagtype) =>
-        setPeriode(periode => periode.map((dag, i) => (i === index ? { ...dag, type: nyType } : dag)));
+        setDager(dager => dager.map((dag, i) => (i === index ? { ...dag, type: nyType } : dag)));
 
     return (
-        <PeriodeContext.Provider value={{ periode, oppdaterGradering, oppdaterType, overstyrer }}>
+        <PeriodeContext.Provider value={{ dager, oppdaterGradering, oppdaterType, overstyrer }}>
             <PeriodetabellContainer>
                 {manuellOverstyring && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
                 <Tabell>
@@ -55,7 +56,7 @@ const Periodetabell = ({ dager, manuellOverstyring }: PeriodetabellProps) => {
                         <p>Gradering</p>
                     </Header>
                     <Body>
-                        {periode.map((dag, i) => (
+                        {dager.map((dag, i) => (
                             <Rad
                                 key={i}
                                 disabled={dag.type === Dagtype.Helg}

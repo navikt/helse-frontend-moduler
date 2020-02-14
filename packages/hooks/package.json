@@ -1,6 +1,6 @@
 {
-  "name": "@navikt/helse-frontend-tidslinje",
-  "version": "1.0.4",
+  "name": "@navikt/helse-frontend-hooks",
+  "version": "1.0.3",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "scripts": {
@@ -11,8 +11,6 @@
   "author": "NAV",
   "license": "MIT",
   "peerDependencies": {
-    "@emotion/styled": "^10.0.27",
-    "dayjs": "^1.8.20",
     "react": "^16.12.0"
   },
   "publishConfig": {
