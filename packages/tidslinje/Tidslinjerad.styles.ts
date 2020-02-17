@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
-import { Vedtaksperiode, VedtaksperiodeStatus } from './types';
+import { VedtaksperiodeStatus } from './types';
+import { venstreMargin } from './common.styles';
 
-interface PeriodeProps extends Partial<Vedtaksperiode> {
+interface PeriodeProps {
+    status: VedtaksperiodeStatus;
     avkuttet: boolean;
     posisjonFraVenstre: number;
     bredde: number;
@@ -91,14 +93,10 @@ export const Rad = styled('div')`
     margin: 0.25rem 0;
 `;
 
-export const VedtaksperiodevelgerContainer = styled('div')`
-    width: 15rem;
-`;
-
 export const Inntektskilde = styled('p')`
     font-size: 14px;
     margin: 0;
-    width: 15rem;
+    width: ${venstreMargin};
     display: flex;
     align-items: center;
 
@@ -156,10 +154,10 @@ export const Periode = styled('button')`
         border-bottom-right-radius: 0;
     `}
 
-    ${(periode: PeriodeProps) => `
-        left: ${periode.posisjonFraVenstre}%;
-        width: ${periode.bredde}%;
-    `}
+    ${(props: PeriodeProps) => `
+        left: ${props.posisjonFraVenstre}%;
+        width: ${props.bredde}%;
+    `};
 
     ${(periode: PeriodeProps) =>
         periode.bredde < 3 &&

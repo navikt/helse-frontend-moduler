@@ -3,10 +3,17 @@ import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
 import Vedtaksperiodevelger from './vedtaksperiodevelger/Vedtaksperiodevelger';
-import { Footer, TidslinjeContainer, Utsnittsknapp } from './Tidslinje.styles';
-import { Rad, VedtaksperiodevelgerContainer } from './Tidslinjerad.styles';
+import {
+    Footer,
+    Header,
+    TidslinjeContainer,
+    Tidslinjerader,
+    Utsnittsknapp,
+    VedtaksperiodevelgerContainer
+} from './Tidslinje.styles';
 import { EnkelTidslinje, Skalastørrelse, Vedtaksperiode } from './types';
 import { isoDato } from './calc';
+import Datointervaller from './Datointervaller';
 
 export interface TidslinjeProps {
     tidslinjer: EnkelTidslinje[];
@@ -55,15 +62,18 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
             }}
         >
             <TidslinjeContainer>
-                <Rad>
+                <Header>
                     <VedtaksperiodevelgerContainer>
                         <Vedtaksperiodevelger tidslinjer={tidslinjer} />
                     </VedtaksperiodevelgerContainer>
                     <Tidsskala />
-                </Rad>
-                {tidslinjer.map(tidslinje => (
-                    <Tidslinjerad key={tidslinje.id} {...tidslinje} />
-                ))}
+                </Header>
+                <Tidslinjerader>
+                    {tidslinjer.map(tidslinje => (
+                        <Tidslinjerad key={tidslinje.id} {...tidslinje} />
+                    ))}
+                    <Datointervaller tidslinjer={tidslinjer} />
+                </Tidslinjerader>
                 <Footer>
                     <Utsnittsknapp
                         selected={utsnitt === Skalastørrelse.HalvtÅr}

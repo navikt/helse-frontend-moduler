@@ -1,10 +1,12 @@
 import React from 'react';
 import Tidslinje from '../packages/tidslinje';
 import { SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
+import { withA11y } from '@storybook/addon-a11y';
 
 export default {
     title: 'Tidslinje',
-    component: Tidslinje
+    component: Tidslinje,
+    decorators: [withA11y]
 };
 
 const mockdata: SammensattTidslinje = {
@@ -35,7 +37,7 @@ const mockdata: SammensattTidslinje = {
                 {
                     id: '4567',
                     fom: '2019-09-16',
-                    tom: '2019-10-30',
+                    tom: '2019-10-31',
                     status: VedtaksperiodeStatus.Utbetalt
                 },
                 {
@@ -48,14 +50,14 @@ const mockdata: SammensattTidslinje = {
         },
 
         {
-            id: '1234567890',
+            id: '1234567891',
             inntektsnavn: 'Oslo Kommune',
             inntektstype: 'arbeidsgiver',
             vedtaksperioder: [
                 {
-                    id: '3456',
+                    id: '34561',
                     fom: '2019-11-01',
-                    tom: '2019-11-31',
+                    tom: '2019-11-30',
                     status: VedtaksperiodeStatus.Avslag
                 }
             ]

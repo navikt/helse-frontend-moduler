@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { venstreMargin } from './common.styles';
 
 const font = (color: string) => `
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
@@ -11,11 +12,26 @@ export const TidslinjeContainer = styled('div')`
     flex-direction: column;
     padding: 0 0.75rem;
     min-width: 1000px;
+    background: #fff;
+`;
+
+export const Tidslinjerader = styled.div`
+    position: relative;
+    height: 100%;
+    padding: 0.75rem 0;
+`;
+
+export const VedtaksperiodevelgerContainer = styled('div')`
+    width: ${venstreMargin};
 `;
 
 interface UtsnittsknappProps {
     selected?: boolean;
 }
+
+export const Header = styled.div`
+    display: flex;
+`;
 
 export const Footer = styled('div')`
     display: flex;

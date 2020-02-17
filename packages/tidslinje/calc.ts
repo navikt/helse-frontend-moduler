@@ -17,7 +17,7 @@ export const kalkulerPosisjonOgBredde = (
     const antallDager = dagerISkala(skalastørrelse, tidslinjeTom);
     const dagerIPerioden = periodeFom.diff(periodeTom, 'day');
     const dagerEtterPeriode = periodeTom.diff(tidslinjeTom, 'day');
-    const width = Math.abs((dagerIPerioden / antallDager) * 100);
+    const width = Math.abs(((dagerIPerioden - 1) / antallDager) * 100);
     const left = Math.abs((dagerEtterPeriode / antallDager) * 100);
 
     return { left, width };
