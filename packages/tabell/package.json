@@ -17,5 +17,8 @@
   "publishConfig": {
     "access": "public"
   },
-  "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3"
+  "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3",
+  "files": [
+    "dist"
+  ]
 }
