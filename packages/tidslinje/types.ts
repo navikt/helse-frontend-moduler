@@ -7,6 +7,8 @@ export interface Vedtaksperiode {
     status: VedtaksperiodeStatus;
 }
 
+export type Intervall = Vedtaksperiode;
+
 export interface EnkelTidslinje {
     id: string;
     inntektsnavn: string;

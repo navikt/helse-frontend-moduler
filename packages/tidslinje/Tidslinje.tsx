@@ -2,94 +2,90 @@ import React, { createContext, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
-import Vedtaksperiodevelger from './vedtaksperiodevelger/Vedtaksperiodevelger';
-import {
-    Footer,
-    Header,
-    TidslinjeContainer,
-    Tidslinjerader,
-    Utsnittsknapp,
-    VedtaksperiodevelgerContainer
-} from './Tidslinje.styles';
-import { EnkelTidslinje, Skalastørrelse, Vedtaksperiode } from './types';
+import Intervallvelger from './vedtaksperiodevelger/Intervallvelger';
+import { Footer, Header, Utsnittsknapp, Tidslinjerader, TidslinjeContainer } from './Tidslinje.styles';
+import { EnkelTidslinje, Intervall, Skalastørrelse, Vedtaksperiode } from './types';
 import { isoDato } from './calc';
 import Datointervaller from './Datointervaller';
 
 export interface TidslinjeProps {
     tidslinjer: EnkelTidslinje[];
-    onSelect: (selected?: Vedtaksperiode) => void;
+    onSelect: (selected?: Intervall) => void;
 }
 
 interface TidslinjeContextType {
-    skalastørrelse: Skalastørrelse;
     sisteDag: Dayjs;
+    skalastørrelse: Skalastørrelse;
     onSelect: (selected?: Vedtaksperiode) => void;
-    aktivPeriodeId?: string;
+    intervaller: Intervall[];
+    aktivtIntervall?: Intervall;
 }
 
 export const TidslinjeContext = createContext<TidslinjeContextType>({
     onSelect: _ => null,
     sisteDag: dayjs(),
-    skalastørrelse: Skalastørrelse.HalvtÅr
+    skalastørrelse: Skalastørrelse.HalvtÅr,
+    intervaller: []
 });
 
+const sammenlignVedtaksperioder = (first: Vedtaksperiode, second: Vedtaksperiode) => {
+    if (first.tom < second.tom) return 1;
+    if (first.tom > second.tom) return -1;
+    return 0;
+};
+
 const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
-    const [aktivPeriodeId, setAktivPeriodeId] = useState<string>();
-    const [utsnitt, setUtsnitt] = useState(Skalastørrelse.HalvtÅr);
+    const [skalastørrelse, setSkalastørrelse] = useState(Skalastørrelse.HalvtÅr);
+    const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
 
-    const start = dayjs(0).format('YYYY-MM-DD');
+    const intervaller = tidslinjer
+        .reduce((alleIntervaller: Vedtaksperiode[], tidslinje) => alleIntervaller.concat(tidslinje.vedtaksperioder), [])
+        .sort(sammenlignVedtaksperioder);
 
-    const sisteDag = tidslinjer.reduce((sisteDag: string, tidslinje: EnkelTidslinje) => {
-        const tom = tidslinje.vedtaksperioder.reduce(
-            (sisteDag: string, perioden: Vedtaksperiode) => (sisteDag > perioden.tom ? sisteDag : perioden.tom),
-            start
-        );
-        return sisteDag > tom ? sisteDag : tom;
-    }, start);
+    const sisteDag = [...intervaller].shift()!.tom;
 
-    const onVelgAktivVedtaksperiode = (periode: Vedtaksperiode) => {
-        setAktivPeriodeId(periode.id);
-        onSelect(periode);
+    const onVelgIntervall = (intervall: Intervall) => {
+        setAktivtIntervall(intervall);
+        onSelect(intervall);
     };
 
     return (
         <TidslinjeContext.Provider
             value={{
-                onSelect: onVelgAktivVedtaksperiode,
-                aktivPeriodeId,
-                skalastørrelse: utsnitt,
-                sisteDag: isoDato(sisteDag)
+                onSelect: onVelgIntervall,
+                intervaller,
+                skalastørrelse,
+                sisteDag: isoDato(sisteDag),
+                aktivtIntervall
             }}
         >
             <TidslinjeContainer>
                 <Header>
-                    <VedtaksperiodevelgerContainer>
-                        <Vedtaksperiodevelger tidslinjer={tidslinjer} />
-                    </VedtaksperiodevelgerContainer>
+                    <Intervallvelger />
                     <Tidsskala />
                 </Header>
                 <Tidslinjerader>
                     {tidslinjer.map(tidslinje => (
                         <Tidslinjerad key={tidslinje.id} {...tidslinje} />
                     ))}
-                    <Datointervaller tidslinjer={tidslinjer} />
+                    <Datointervaller />
                 </Tidslinjerader>
                 <Footer>
                     <Utsnittsknapp
-                        selected={utsnitt === Skalastørrelse.HalvtÅr}
-                        onClick={() => setUtsnitt(Skalastørrelse.HalvtÅr)}
+                        selected={skalastørrelse === Skalastørrelse.HalvtÅr}
+                        onClick={() => setSkalastørrelse(Skalastørrelse.HalvtÅr)}
                     >
                         6 mnd
                     </Utsnittsknapp>
                     <Utsnittsknapp
-                        selected={utsnitt === Skalastørrelse.EttÅr}
-                        onClick={() => setUtsnitt(Skalastørrelse.EttÅr)}
+                        selected={skalastørrelse === Skalastørrelse.EttÅr}
+                        onClick={() => setSkalastørrelse(Skalastørrelse.EttÅr)}
                     >
                         1 år
                     </Utsnittsknapp>
                     <Utsnittsknapp
-                        selected={utsnitt === Skalastørrelse.TreÅr}
-                        onClick={() => setUtsnitt(Skalastørrelse.TreÅr)}
+                        selected={skalastørrelse === Skalastørrelse.TreÅr}
+                        onClick={() => setSkalastørrelse(Skalastørrelse.TreÅr)}
                     >
                         3 år
                     </Utsnittsknapp>

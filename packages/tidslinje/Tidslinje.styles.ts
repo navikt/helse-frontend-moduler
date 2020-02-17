@@ -1,5 +1,4 @@
 import styled from '@emotion/styled';
-import { venstreMargin } from './common.styles';
 
 const font = (color: string) => `
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
@@ -19,10 +18,6 @@ export const Tidslinjerader = styled.div`
     position: relative;
     height: 100%;
     padding: 0.75rem 0;
-`;
-
-export const VedtaksperiodevelgerContainer = styled('div')`
-    width: ${venstreMargin};
 `;
 
 interface UtsnittsknappProps {

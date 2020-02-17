@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { interactiveElement } from './mixins';
+import { venstreMargin } from '../common.styles';
 
 const selectIcon = `
     pointer-events: none;
@@ -14,7 +15,11 @@ const selectIcon = `
     position: absolute;
 `;
 
-export const Wrapper = styled('div')`
+export const IntervallvelgerContainer = styled('div')`
+    width: ${venstreMargin};
+`;
+
+export const SelectContainer = styled('div')`
     display: flex;
     position: relative;
     margin-right: 2rem;
@@ -30,7 +35,7 @@ export const Wrapper = styled('div')`
     }
 `;
 
-export const StyledSelect = styled('select')`
+export const Select = styled('select')`
     flex: 1;
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
     border: 1px solid #78706a;

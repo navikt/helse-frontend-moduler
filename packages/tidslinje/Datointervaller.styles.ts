@@ -17,15 +17,19 @@ export const Datointervall = styled.button`
     border: none;
     background: none;
     mix-blend-mode: darken;
+    ::-moz-focus-inner {
+        border: 0;
+    }
 
     ${(props: DatointervallProps) => `
         left: ${props.posisjonFraVenstre}%;
         width: ${props.bredde}%;
     `};
+
     ${(props: DatointervallProps) =>
         !props.aktiv &&
         `
-        &:hover {
+        &:hover, &:focus {
             background: ${bakgrunnsfargeIntervallHover};
         }
     `}

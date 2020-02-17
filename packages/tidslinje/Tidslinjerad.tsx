@@ -48,6 +48,7 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
                         avkuttet={periode.erAvkuttet}
                         posisjonFraVenstre={periode.left}
                         bredde={periode.width}
+                        tabIndex={-1}
                         aria-label={`${periode.value.status} fra ${periode.value.fom} til og med ${periode.value.tom}`}
                     />
                 ))}
