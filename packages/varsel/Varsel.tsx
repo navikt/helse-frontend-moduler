@@ -11,6 +11,7 @@ export interface VarselProps {
     text: string;
     type?: Varseltype;
     children?: ReactNode | ReactNode[];
+    className?: string;
 }
 
 const ikon = (type: Varseltype) => {
@@ -33,9 +34,9 @@ const ikon = (type: Varseltype) => {
  *
  * `Varsel` kan ta en valgfri `children` prop. Denne vil rendres til høyre for varselteksten.
  */
-const Varsel = ({ text, children, type = 'info' }: VarselProps) => {
+const Varsel = ({ text, children, className = 'Varsel', type = 'info' }: VarselProps) => {
     return (
-        <VarselContainer type={type}>
+        <VarselContainer type={type} className={className}>
             {ikon(type)}
             <p>{text}</p>
             {children}
