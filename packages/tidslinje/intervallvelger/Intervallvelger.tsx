@@ -12,15 +12,11 @@ const Intervallvelger = () => {
     return (
         <IntervallvelgerContainer>
             <SelectContainer>
-                <Select onChange={onChange} aria-label="Periode">
-                    {intervaller.map((periode, index) => {
+                <Select onChange={onChange} aria-label="Periode" value={aktivtIntervall?.fom}>
+                    {intervaller.map((intervall, index) => {
                         return (
-                            <option
-                                key={index}
-                                value={periode.fom}
-                                {...(periode.fom === aktivtIntervall?.fom && { selected: true })}
-                            >
-                                {periode.fom} - {periode.tom}
+                            <option key={index} value={intervall.fom}>
+                                {intervall.fom} - {intervall.tom}
                             </option>
                         );
                     })}

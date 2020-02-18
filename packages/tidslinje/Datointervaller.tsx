@@ -35,8 +35,8 @@ const Datointervaller = () => {
                 .map((intervall: Intervall) => layout(intervall, skalastørrelse, sisteDag))
                 .map((intervall: PosisjonertIntervall) => (
                     <Datointervall
-                        onClick={() => onClick(intervall.value)}
                         key={intervall.value.fom}
+                        onClick={() => onClick(intervall.value)}
                         posisjonFraVenstre={intervall.left}
                         bredde={intervall.width}
                         aktiv={intervall.value.id === aktivtIntervall?.id}

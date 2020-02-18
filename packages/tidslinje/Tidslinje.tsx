@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
-import Intervallvelger from './vedtaksperiodevelger/Intervallvelger';
+import Intervallvelger from './intervallvelger/Intervallvelger';
 import { Footer, Header, Utsnittsknapp, Tidslinjerader, TidslinjeContainer } from './Tidslinje.styles';
 import { EnkelTidslinje, Intervall, Skalastørrelse, Vedtaksperiode } from './types';
 import { isoDato } from './calc';
