@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
-import { TidslinjeContext } from '../Tidslinje';
-import { Select, IntervallvelgerContainer, SelectContainer } from './Intervallvelger.styles';
+import { TidslinjeContext } from './Tidslinje';
+import styles from './Intervallvelger.less';
 
 const Intervallvelger = () => {
     const { onSelect, aktivtIntervall, intervaller } = useContext(TidslinjeContext);
@@ -10,9 +10,9 @@ const Intervallvelger = () => {
     };
 
     return (
-        <IntervallvelgerContainer>
-            <SelectContainer>
-                <Select onChange={onChange} aria-label="Periode" value={aktivtIntervall?.fom}>
+        <div className={styles.container}>
+            <div className={styles.selectContainer}>
+                <select className={styles.select} onChange={onChange} aria-label="Periode" value={aktivtIntervall?.fom}>
                     {intervaller.map((intervall, index) => {
                         return (
                             <option key={index} value={intervall.fom}>
@@ -20,9 +20,9 @@ const Intervallvelger = () => {
                             </option>
                         );
                     })}
-                </Select>
-            </SelectContainer>
-        </IntervallvelgerContainer>
+                </select>
+            </div>
+        </div>
     );
 };
 

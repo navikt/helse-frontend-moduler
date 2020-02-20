@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { EnkelTidslinje, Inntektstype } from './types';
-import { Rad, Inntektskilde, Periode, Perioder } from './Tidslinjerad.styles';
-import { isoDato, kalkulerPosisjonOgBredde } from './calc';
+import { EnkelTidslinje, Inntektstype, VedtaksperiodeStatus } from '../types';
+import { isoDato, kalkulerPosisjonOgBredde } from '../calc';
 import { TidslinjeContext } from './Tidslinje';
-import IkonArbeidsgiver from './icons/IkonArbeidsgiver';
-import IkonInfotrygd from './icons/IkonInfotrygd';
+import IkonArbeidsgiver from '../icons/IkonArbeidsgiver';
+import IkonInfotrygd from '../icons/IkonInfotrygd';
+import styles from './Tidslinjerad.less';
+import classNames from 'classnames';
 
 const ikon = (inntektstype: Inntektstype) => {
     switch (inntektstype) {
@@ -12,6 +13,21 @@ const ikon = (inntektstype: Inntektstype) => {
             return <IkonArbeidsgiver />;
         case 'ytelse':
             return <IkonInfotrygd />;
+    }
+};
+
+const status = (type: VedtaksperiodeStatus) => {
+    switch (type) {
+        case VedtaksperiodeStatus.TilUtbetaling:
+            return 'tilUtbetaling';
+        case VedtaksperiodeStatus.Utbetalt:
+            return 'utbetalt';
+        case VedtaksperiodeStatus.Venter:
+            return 'venter';
+        case VedtaksperiodeStatus.Oppgaver:
+            return 'oppgaver';
+        case VedtaksperiodeStatus.Avslag:
+            return 'avslag';
     }
 };
 
@@ -33,27 +49,33 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
         .sort((first, second) => first.left - second.left);
 
     return (
-        <Rad>
-            <Inntektskilde>
+        <div className={styles.rad}>
+            <p className={styles.inntektskilde}>
                 {ikon(inntektstype)}
                 {inntektsnavn}
-            </Inntektskilde>
-            <Perioder>
+            </p>
+            <div className={styles.perioder}>
                 <hr />
                 {sortertePerioder.map((periode, index) => (
-                    <Periode
+                    <button
+                        className={classNames(
+                            styles.periode,
+                            periode.erAvkuttet && styles.avkuttet,
+                            periode.width < 3 && 'mini',
+                            styles[status(periode.value.status)]
+                        )}
                         key={index}
                         onClick={() => onSelect(periode.value)}
-                        status={periode.value.status}
-                        avkuttet={periode.erAvkuttet}
-                        posisjonFraVenstre={periode.left}
-                        bredde={periode.width}
                         tabIndex={-1}
+                        style={{
+                            left: `${periode.left}%`,
+                            width: `${periode.width}%`
+                        }}
                         aria-label={`${periode.value.status} fra ${periode.value.fom} til og med ${periode.value.tom}`}
                     />
                 ))}
-            </Perioder>
-        </Rad>
+            </div>
+        </div>
     );
 };
 

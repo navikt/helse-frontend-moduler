@@ -38,3 +38,8 @@ export interface Skalapunkt {
     dato: string;
     navn: string;
 }
+
+export interface TidslinjeProps {
+    tidslinjer: EnkelTidslinje[];
+    onSelect: (selected?: Intervall) => void;
+}

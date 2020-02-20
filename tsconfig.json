@@ -1,15 +1,15 @@
 {
   "compilerOptions": {
     "outDir": "build/lib",
-    "module": "commonjs",
+    "module": "es6",
     "target": "es5",
     "lib": ["esnext","dom"],
     "sourceMap": false,
     "allowJs": false,
     "jsx": "react",
     "moduleResolution": "node",
-    "rootDirs": ["src", "stories"],
-    "baseUrl": "src",
+    "rootDirs": ["packages", "stories"],
+    "baseUrl": "packages",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,

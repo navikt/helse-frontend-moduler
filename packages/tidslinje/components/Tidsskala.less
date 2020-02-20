@@ -1,0 +1,17 @@
+@containerBorderBottomColor: #e7e9e9;
+@markeringColor: #78706a;
+
+.container {
+  flex: 1;
+  display: flex;
+  border-bottom: 1px solid @containerBorderBottomColor;
+  align-items: center;
+  position: relative;
+}
+
+.markering {
+  font-size: 14px;
+  color: @markeringColor;
+  position: absolute;
+  transform: translateX(-50%);
+}

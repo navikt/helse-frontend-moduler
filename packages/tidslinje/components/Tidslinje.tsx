@@ -2,11 +2,12 @@ import React, { createContext, useState } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
-import Intervallvelger from './intervallvelger/Intervallvelger';
-import { Footer, Header, Utsnittsknapp, Tidslinjerader, TidslinjeContainer } from './Tidslinje.styles';
-import { EnkelTidslinje, Intervall, Skalastørrelse, Vedtaksperiode } from './types';
-import { isoDato } from './calc';
+import Intervallvelger from './Intervallvelger';
+import { EnkelTidslinje, Intervall, Skalastørrelse, Vedtaksperiode } from '../types';
+import { isoDato } from '../calc';
 import Datointervaller from './Datointervaller';
+import styles from './Tidslinje.less';
+import Skalaknapp from './Skalaknapp';
 
 export interface TidslinjeProps {
     tidslinjer: EnkelTidslinje[];
@@ -59,38 +60,38 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
                 aktivtIntervall
             }}
         >
-            <TidslinjeContainer>
-                <Header>
+            <div className={styles.container}>
+                <div className={styles.header}>
                     <Intervallvelger />
                     <Tidsskala />
-                </Header>
-                <Tidslinjerader>
+                </div>
+                <div className={styles.tidslinjerader}>
                     {tidslinjer.map(tidslinje => (
                         <Tidslinjerad key={tidslinje.id} {...tidslinje} />
                     ))}
                     <Datointervaller />
-                </Tidslinjerader>
-                <Footer>
-                    <Utsnittsknapp
+                </div>
+                <div className={styles.footer}>
+                    <Skalaknapp
                         selected={skalastørrelse === Skalastørrelse.HalvtÅr}
                         onClick={() => setSkalastørrelse(Skalastørrelse.HalvtÅr)}
                     >
                         6 mnd
-                    </Utsnittsknapp>
-                    <Utsnittsknapp
+                    </Skalaknapp>
+                    <Skalaknapp
                         selected={skalastørrelse === Skalastørrelse.EttÅr}
                         onClick={() => setSkalastørrelse(Skalastørrelse.EttÅr)}
                     >
                         1 år
-                    </Utsnittsknapp>
-                    <Utsnittsknapp
+                    </Skalaknapp>
+                    <Skalaknapp
                         selected={skalastørrelse === Skalastørrelse.TreÅr}
                         onClick={() => setSkalastørrelse(Skalastørrelse.TreÅr)}
                     >
                         3 år
-                    </Utsnittsknapp>
-                </Footer>
-            </TidslinjeContainer>
+                    </Skalaknapp>
+                </div>
+            </div>
         </TidslinjeContext.Provider>
     );
 };

@@ -1,3 +1,3 @@
-import Tidslinje from './Tidslinje';
+import Tidslinje from './components/Tidslinje';
 
 export default Tidslinje;

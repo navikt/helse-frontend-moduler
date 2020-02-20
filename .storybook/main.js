@@ -11,20 +11,22 @@ module.exports = {
     webpackFinal: async config => {
         config.module.rules.push({
             test: /\.(ts|tsx)$/,
-            use: [
-                { loader: require.resolve('awesome-typescript-loader') },
-                { loader: require.resolve('react-docgen-typescript-loader') }
-            ]
+            use: ['awesome-typescript-loader', 'react-docgen-typescript-loader']
         });
         config.module.rules.push({
-            test: /\.(less)$/,
+            test: /\.less$/,
             use: [
-                { loader: require.resolve('style-loader') },
-                { loader: require.resolve('css-loader') },
-                { loader: require.resolve('less-loader') }
+                'style-loader',
+                {
+                    loader: 'css-loader',
+                    options: {
+                        modules: true
+                    }
+                },
+                'less-loader'
             ]
         });
-        config.resolve.extensions.push('.ts', '.tsx');
+        config.resolve.extensions.push('.ts', '.tsx', '.d.ts');
         return config;
     }
 };

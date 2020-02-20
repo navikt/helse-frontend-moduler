@@ -1,0 +1,23 @@
+.skalaknapp {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  color: #0067c5;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+
+  &:active,
+  &:focus {
+    outline: none;
+  }
+
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
+}
+
+.skalaKnappSelected {
+  composes: skalaknapp;
+  text-decoration: underline;
+}
