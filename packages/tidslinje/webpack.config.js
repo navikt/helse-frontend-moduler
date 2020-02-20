@@ -26,7 +26,6 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        library: 'helse-frontend-tidslinje'
+        path: path.resolve(__dirname, 'dist')
     }
 };
