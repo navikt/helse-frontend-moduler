@@ -5,9 +5,10 @@
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npm run clean && webpack -p",
+    "build": "npm run clean && webpack -p && npm run injectStyles",
     "clean": "rm -rf ./dist",
-    "tsc": "tsc -p tsconfig.json"
+    "tsc": "tsc -p tsconfig.json",
+    "injectStyles": "echo \"import './main.css';\" >> dist/index.js"
   },
   "author": "NAV",
   "license": "MIT",
