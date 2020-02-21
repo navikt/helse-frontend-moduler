@@ -1,4 +1,3 @@
-const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
@@ -26,8 +25,6 @@ module.exports = {
     },
     output: {
         filename: 'index.js',
-        path: path.resolve(__dirname, 'dist'),
-        library: 'helse-frontend-tidslinje',
         libraryTarget: 'umd',
         umdNamedDefine: true
     },
