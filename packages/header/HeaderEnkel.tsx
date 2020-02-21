@@ -11,11 +11,13 @@ const Bruker = ({ navn, ident }: Brukerinfo) => (
     </div>
 );
 
-const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => {
+const HeaderEnkel = ({ tittel, children, brukerinfo, tittelHref = '/' }: HeaderProps) => {
     return (
         <div className={styles.header}>
             <div className={styles.rad}>
-                <h1 className={styles.tittel}>{tittel}</h1>
+                <h1 className={styles.tittel}>
+                    <a href={tittelHref}>{tittel}</a>
+                </h1>
                 <div className={styles.avdeler} />
                 {children}
             </div>

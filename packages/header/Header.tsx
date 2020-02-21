@@ -13,6 +13,7 @@ export type Brukerinfo = {
 export interface HeaderProps {
     tittel: string;
     brukerinfo: Brukerinfo;
+    tittelHref?: string;
     children?: ReactNode | ReactNode[];
 }
 
@@ -33,11 +34,13 @@ export const Bruker = ({ navn, ident, enhet, rolle }: Brukerinfo) => {
     );
 };
 
-const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
+const Header = ({ tittel, children, brukerinfo, tittelHref = '/' }: HeaderProps) => {
     return (
         <div className={styles.header}>
             <div className={styles.rad}>
-                <h1 className={styles.tittel}>{tittel}</h1>
+                <h1 className={styles.tittel}>
+                    <a href={tittelHref}>{tittel}</a>
+                </h1>
                 <div className={styles.avdeler} />
                 {children}
             </div>
