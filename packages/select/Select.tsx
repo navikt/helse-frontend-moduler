@@ -1,9 +1,7 @@
-/** @jsx jsx */
-import { jsx } from '@emotion/core';
 import React, { useRef, useState } from 'react';
-import { Container, Knapp } from './Select.styles';
 import { Alternativer } from './Alternativer';
 import classNames from 'classnames';
+import styles from './Select.less';
 
 export interface SelectProps {
     alternativer: Alternativ[];
@@ -53,23 +51,28 @@ const Select = ({ alternativer, className }: SelectProps) => {
     };
 
     return (
-        <Container
-            className={classNames('Select', className)}
+        <div
+            className={classNames('Select', className, styles.container)}
             ref={containerRef}
             tabIndex={-1}
             onFocus={onFocusHandler}
             onBlur={onBlurHandler}
         >
-            <Knapp aria-haspopup="listbox" aria-expanded={isDropdownVisible} onClick={onKnappClick}>
+            <button
+                className={styles.knapp}
+                aria-haspopup="listbox"
+                aria-expanded={isDropdownVisible}
+                onClick={onKnappClick}
+            >
                 {selectedItem.value}
-            </Knapp>
+            </button>
             <Alternativer
                 alternativer={alternativer}
                 isVisible={isDropdownVisible}
                 onClick={onAlternativClick}
                 onKeyPress={onAlternativKeyPress}
             />
-        </Container>
+        </div>
     );
 };
 export default Select;

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Alternativ } from './Select';
-import { Element, Container } from './Alternativer.styles';
+import styles from './Alternativer.less';
 
 interface AlternativerProps {
     alternativer: Alternativ[];
@@ -11,9 +11,10 @@ interface AlternativerProps {
 
 export const Alternativer = ({ alternativer, isVisible, onClick, onKeyPress }: AlternativerProps) => {
     return (
-        <Container hidden={!isVisible} tabIndex={-1} role="listbox">
+        <ul className={styles.list} hidden={!isVisible} tabIndex={-1} role="listbox">
             {alternativer.map((item: Alternativ) => (
-                <Element
+                <li
+                    className={styles.alternativ}
                     key={item.id}
                     role="option"
                     tabIndex={0}
@@ -21,8 +22,8 @@ export const Alternativer = ({ alternativer, isVisible, onClick, onKeyPress }: A
                     onKeyPress={(event: React.KeyboardEvent<HTMLLIElement>) => onKeyPress(event, item)}
                 >
                     {item.value}
-                </Element>
+                </li>
             ))}
-        </Container>
+        </ul>
     );
 };
