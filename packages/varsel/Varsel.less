@@ -1,0 +1,49 @@
+.container {
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  min-height: 2.5rem;
+  min-width: min-content;
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid transparent;
+  border-radius: 4px;
+
+  > *:not(:last-child) {
+    margin-right: 1rem !important;
+  }
+
+  > svg {
+    min-width: max-content;
+  }
+
+  > p:nth-child(2) {
+    margin: 0.5rem 0;
+  }
+
+  a {
+    color: #0067C5;
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+.suksess {
+  border-color: #1c6937;
+  background: #cde7d8;
+}
+
+.advarsel {
+  border-color: #8b5c1e;
+  background: #ffe9cc;
+}
+
+.info {
+  border-color: #194d62;
+  background: #c2eaf7;
+}
+
+.feil {
+  border-color: #88392b;
+  background: #e3b0a8;
+}

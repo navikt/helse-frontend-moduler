@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
 import IkonInfo from './icons/IkonInfo';
 import IkonSuksess from './icons/IkonSuksess';
-import { VarselContainer } from './Varsel.styles';
 import IkonAdvarsel from './icons/IkonAdvarsel';
 import IkonFeil from './icons/IkonFeil';
+import styles from './Varsel.less';
+import classNames from 'classnames';
 
 export type Varseltype = 'info' | 'suksess' | 'advarsel' | 'feil';
 
@@ -36,11 +37,11 @@ const ikon = (type: Varseltype) => {
  */
 const Varsel = ({ text, children, className = 'Varsel', type = 'info' }: VarselProps) => {
     return (
-        <VarselContainer type={type} className={className}>
+        <div className={classNames(className, styles.container, styles[type])}>
             {ikon(type)}
             <p>{text}</p>
             {children}
-        </VarselContainer>
+        </div>
     );
 };
 
