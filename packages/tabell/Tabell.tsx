@@ -1,14 +1,12 @@
 import React, { ReactNode } from 'react';
-import { Table, TableRow } from './Tabell.styles';
+import styles from './Tabell.less';
 
-type Children = { children: ReactNode[] };
+type TableElementProps = {
+    children: ReactNode[];
+    className?: string;
+};
 
-interface RadProps extends Children {
-    disabled?: boolean;
-    background?: string;
-}
-
-export const Header = ({ children }: Children) => (
+export const Header = ({ children }: TableElementProps) => (
     <thead>
         <tr>
             {children.map((node, i) => (
@@ -18,7 +16,7 @@ export const Header = ({ children }: Children) => (
     </thead>
 );
 
-export const Footer = ({ children }: Children) => (
+export const Footer = ({ children }: TableElementProps) => (
     <tfoot>
         <tr>
             {children.map((node, i) => (
@@ -28,17 +26,13 @@ export const Footer = ({ children }: Children) => (
     </tfoot>
 );
 
-export const Body = ({ children }: Children) => {
+export const Body = ({ children }: TableElementProps) => {
     return <tbody>{children}</tbody>;
 };
 
-export const Rad = ({ children, disabled, background }: RadProps) => {
+export const Rad = ({ children, className }: TableElementProps) => {
     const cells = children.map((cell, i) => <td key={i}>{cell}</td>);
-    return (
-        <TableRow disabled={disabled} background={background}>
-            {cells}
-        </TableRow>
-    );
+    return <tr className={className}>{cells}</tr>;
 };
 
 /**
@@ -46,8 +40,8 @@ export const Rad = ({ children, disabled, background }: RadProps) => {
  * Utseendemessig minner den om [tabellen i designsystemet](https://design.nav.no/components/tabell) til Nav men
  * tilpasset internflater med lavere radhøyde for å kunne vise flere rader på én gang uten at brukeren må scrolle.
  */
-const Tabell = ({ children }: Children) => {
-    return <Table>{children}</Table>;
+const Tabell = ({ children }: TableElementProps) => {
+    return <table className={styles.table}>{children}</table>;
 };
 
 export default Tabell;

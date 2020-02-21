@@ -3,9 +3,10 @@ import Tabell from '../index';
 import { Body, Header, Rad } from '../Tabell';
 import Perioderad from './Perioderad';
 import Overstyring from './Overstyring';
-import styled from '@emotion/styled';
 import PeriodeContext from './PeriodeContext';
-import { Dag, Dagtype, OppgaveStatus } from './types';
+import { Dag, Dagtype } from './types';
+import styles from './Periodetabell.less';
+import classNames from 'classnames';
 
 export interface PeriodetabellProps {
     dager: Dag[];
@@ -13,25 +14,7 @@ export interface PeriodetabellProps {
     className?: string;
 }
 
-const backgroundForRow = (status?: OppgaveStatus) => {
-    switch (status) {
-        case 'advarsel':
-            return '#ffe9cc';
-        case 'løst':
-            return '#cde7d8';
-        case 'ingen':
-        default:
-            return 'transparent';
-    }
-};
-
 const clamp = (value: number, min = 0, max = 100) => Math.max(Math.min(value, max), min);
-
-const PeriodetabellContainer = styled('div')`
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-`;
 
 const Periodetabell = ({ dager = [], setDager }: PeriodetabellProps) => {
     const [overstyrer, setOverstyrer] = useState(false);
@@ -51,7 +34,7 @@ const Periodetabell = ({ dager = [], setDager }: PeriodetabellProps) => {
 
     return (
         <PeriodeContext.Provider value={{ dager, oppdaterGradering, oppdaterType, overstyrer }}>
-            <PeriodetabellContainer>
+            <div className={styles.container}>
                 {setDager && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
                 <Tabell>
                     <Header>
@@ -62,9 +45,11 @@ const Periodetabell = ({ dager = [], setDager }: PeriodetabellProps) => {
                     <Body>
                         {dager.map((dag, i) => (
                             <Rad
+                                className={classNames(
+                                    dag.oppgave && styles[dag.oppgave],
+                                    dag.type === Dagtype.Helg && styles.disabled
+                                )}
                                 key={i}
-                                disabled={dag.type === Dagtype.Helg}
-                                background={backgroundForRow(dag.oppgave)}
                             >
                                 <Perioderad.Status status={dag.oppgave} />
                                 <Perioderad.Sykmeldingsperiode {...dag} status={dag.oppgave} i={i} />
@@ -73,7 +58,7 @@ const Periodetabell = ({ dager = [], setDager }: PeriodetabellProps) => {
                         ))}
                     </Body>
                 </Tabell>
-            </PeriodetabellContainer>
+            </div>
         </PeriodeContext.Provider>
     );
 };
