@@ -14,8 +14,8 @@
   "homepage": "https://github.com/navikt/helse-frontend-moduler#readme",
   "main": "index.js",
   "scripts": {
-    "storybook": "start-storybook --port 2468",
-    "storybook-ci": "start-storybook --port 2468 --ci",
+    "storybook": "lerna run clean && start-storybook --port 2468",
+    "storybook-ci": "lerna run clean && start-storybook --port 2468 --ci",
     "deploy-storybook": "storybook-to-ghpages",
     "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix",
     "build": "lerna run build",

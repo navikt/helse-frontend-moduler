@@ -49,7 +49,7 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
         .sort((first, second) => first.left - second.left);
 
     return (
-        <div className={styles.rad}>
+        <div className={classNames('Tidslinjerad', styles.rad)}>
             <p className={styles.inntektskilde}>
                 {ikon(inntektstype)}
                 {inntektsnavn}
@@ -61,7 +61,7 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
                         className={classNames(
                             styles.periode,
                             periode.erAvkuttet && styles.avkuttet,
-                            periode.width < 3 && 'mini',
+                            periode.width < 3 && styles.mini,
                             styles[status(periode.value.status)]
                         )}
                         key={index}
