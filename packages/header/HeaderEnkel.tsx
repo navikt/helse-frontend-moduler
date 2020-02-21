@@ -1,25 +1,26 @@
 import React from 'react';
-import { Avdeler, Rad, HeaderBar, TekstLiten, TekstNormal, Tittel } from './Header.styles';
 import { Brukerinfo, HeaderProps } from './Header';
+import styles from './Header.less';
+import classNames from 'classnames';
 
 const Bruker = ({ navn, ident }: Brukerinfo) => (
-    <Rad gap>
-        <Avdeler />
-        <TekstNormal>{navn}</TekstNormal>
-        <TekstLiten>{ident}</TekstLiten>
-    </Rad>
+    <div className={classNames(styles.rad, styles.gap)}>
+        <div className={styles.avdeler} />
+        <p className={styles.tekstNormal}>{navn}</p>
+        <p className={styles.tekstLiten}>{ident}</p>
+    </div>
 );
 
 const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => {
     return (
-        <HeaderBar>
-            <Rad>
-                <Tittel>{tittel}</Tittel>
-                <Avdeler />
+        <div className={styles.header}>
+            <div className={styles.rad}>
+                <h1 className={styles.tittel}>{tittel}</h1>
+                <div className={styles.avdeler} />
                 {children}
-            </Rad>
+            </div>
             <Bruker {...brukerinfo} />
-        </HeaderBar>
+        </div>
     );
 };
 

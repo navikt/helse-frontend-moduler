@@ -1,6 +1,7 @@
 import React, { ReactNode, useState } from 'react';
-import { Avdeler, Brukerknapp, Rad, HeaderBar, Systemknapp, TekstLiten, TekstNormal, Tittel } from './Header.styles';
 import IkonSystem from './icons/IkonSystem';
+import classNames from 'classnames';
+import styles from './Header.less';
 
 export type Brukerinfo = {
     navn: string;
@@ -19,35 +20,35 @@ export const Bruker = ({ navn, ident, enhet, rolle }: Brukerinfo) => {
     const [åpen, setÅpen] = useState(false);
 
     return (
-        <Brukerknapp åpen={åpen} onClick={() => setÅpen(å => !å)}>
-            <Rad gap>
-                <TekstNormal>{navn}</TekstNormal>
-                <TekstLiten>{ident}</TekstLiten>
-            </Rad>
-            <TekstLiten>
+        <button className={classNames(åpen ? styles.lukkeknapp : styles.åpneknapp)} onClick={() => setÅpen(å => !å)}>
+            <div className={classNames(styles.rad, styles.gap)}>
+                <p className={styles.tekstNormal}>{navn}</p>
+                <p className={styles.tekstLiten}>{ident}</p>
+            </div>
+            <p className={styles.tekstLiten}>
                 {enhet}
                 {rolle ? `, ${rolle}` : ''}
-            </TekstLiten>
-        </Brukerknapp>
+            </p>
+        </button>
     );
 };
 
 const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
     return (
-        <HeaderBar>
-            <Rad>
-                <Tittel>{tittel}</Tittel>
-                <Avdeler />
+        <div className={styles.header}>
+            <div className={styles.rad}>
+                <h1 className={styles.tittel}>{tittel}</h1>
+                <div className={styles.avdeler} />
                 {children}
-            </Rad>
-            <Rad>
-                <Systemknapp>
+            </div>
+            <div className={styles.rad}>
+                <button className={styles.systemknapp}>
                     <IkonSystem />
-                </Systemknapp>
-                <Avdeler />
+                </button>
+                <div className={styles.avdeler} />
                 <Bruker {...brukerinfo} />
-            </Rad>
-        </HeaderBar>
+            </div>
+        </div>
     );
 };
 
