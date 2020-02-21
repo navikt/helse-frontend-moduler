@@ -15,4 +15,4 @@ https://navikt.github.io/helse-frontend-moduler ved push til master. Storybooken
 
 ## Styling
 For å kutte ned på peer dependencies som konsumenter må installere har vi valgt å kompilere less til css og bundle 
-stilarkene med pakkene.
+stilarkene med pakkene. Vi bruker [CSS-modules](https://github.com/css-modules/css-modules) for å garantere unike klassenavn slik at vi slipper navnkollisjoner i konsumentapplikasjoner.
