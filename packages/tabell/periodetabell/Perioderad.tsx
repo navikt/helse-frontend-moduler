@@ -29,7 +29,7 @@ interface GraderingProps extends StatusProps {
 const kildelenke = (kilde?: Kilde, status?: OppgaveStatus) => {
     if (status === 'løst') return <IkonFastsattAvSaksbehandler />;
     return kilde?.link ? (
-        <a className={styles.kildelenke} href={kilde?.link}>
+        <a className={styles.aktivKildelenke} href={kilde?.link}>
             {kilde?.label}
         </a>
     ) : (
