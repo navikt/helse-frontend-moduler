@@ -1,0 +1,48 @@
+.behandletInnhold {
+    @iconSize: 24px;
+    @marginLeft: @iconSize + 10px;
+
+    position: relative;
+    margin-left: @marginLeft;
+
+    &:before {
+        @padding: 4px;
+        position: absolute;
+        left: -@marginLeft;
+        content: '';
+        padding: @padding;
+        height: @iconSize - @padding * 2;
+        width: @iconSize - @padding * 2;
+        background-color: #826ba1;
+        border-radius: 50%;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='19' height='16' viewBox='0 0 24 24'%3E%3Cg fill='%23fff'%3E%3Cpath d='M12.255 19.123l5.057-5.056c-.842-.486-2.049-.886-3.428-1.341a64.39 64.39 0 01-1.885-.644v-1.864c.486-.325 1.383-1.159 1.49-2.932.366-.234.597-.744.597-1.393 0-.57-.177-1.031-.469-1.295.244-.615.642-1.688.367-2.79C13.653.474 11.765 0 10.249 0 8.906 0 7.272.372 6.687 1.384c-.516-.028-.917.11-1.199.416-.669.726-.298 2.078-.077 2.84-.116.096-.217.22-.295.37a2.017 2.017 0 00-.204.919c0 .635.23 1.132.599 1.361.108 1.77 1.003 2.603 1.488 2.928v1.864c-.618.226-1.26.438-1.883.644-2.352.776-4.208 1.389-4.592 2.546-.492 1.486-.523 4.113-.525 4.224a.5.5 0 00.5.504h11.439l.189-.661a.496.496 0 01.128-.216zM18.114 14.679l-4.615 4.614 3.207 3.207 4.794-4.794-3.207-3.207zM12.019 23.363a.496.496 0 00.48.637.492.492 0 00.137-.019l3.218-.919-2.916-2.916-.919 3.217zM23.854 14.646l-2.5-2.5a.5.5 0 00-.707 0L19 13.792l3.207 3.207 1.647-1.646a.504.504 0 000-.707z'/%3E%3C/g%3E%3C/svg%3E");
+        background-origin: content-box;
+        background-repeat: no-repeat;
+    }
+    &:after {
+        @lineWidth: 4px;
+        position: absolute;
+        content: '';
+        background-color: #826ba1;
+        border-radius: @lineWidth / 2;
+        width: @lineWidth;
+        height: calc(100% - @marginLeft);
+        left: calc(-@marginLeft + @iconSize / 2 - @lineWidth / 2);
+        top: @marginLeft;
+    }
+}
+
+.tittel {
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #3e3832;
+    margin: 0;
+}
+
+.undertekst {
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #78706a;
+    margin: 0.625rem 0 0.25rem 0;
+}
