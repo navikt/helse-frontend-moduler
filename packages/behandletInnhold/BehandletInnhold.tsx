@@ -1,21 +1,24 @@
 import React, { ReactNode } from 'react';
 import styles from './BehandletInnhold.less';
+import classNames from 'classnames';
 
 export interface BehandletInnholdProps {
     tittel: string;
     saksbehandler: string;
-    vurderingsdato?: string;
     children: ReactNode | ReactNode[];
+    vurderingsdato?: string;
+    className?: string;
 }
 
 const BehandletInnhold = ({
     tittel,
     saksbehandler,
     vurderingsdato,
-    children
+    children,
+    className
 }: BehandletInnholdProps) => {
     return (
-        <div className={styles.behandletInnhold}>
+        <div className={classNames(styles.behandletInnhold, className)}>
             <p className={styles.tittel}>{tittel}</p>
             <p className={styles.undertekst}>
                 Behandlet av {saksbehandler}
