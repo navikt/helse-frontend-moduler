@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import Tidsskala from './Tidsskala';
 import Tidslinjerad from './Tidslinjerad';
@@ -40,7 +40,11 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
     const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
 
     const intervaller = tidslinjer
-        .reduce((alleIntervaller: Vedtaksperiode[], tidslinje) => alleIntervaller.concat(tidslinje.vedtaksperioder), [])
+        .reduce(
+            (alleIntervaller: Vedtaksperiode[], tidslinje) =>
+                alleIntervaller.concat(tidslinje.vedtaksperioder),
+            []
+        )
         .sort(sammenlignVedtaksperioder);
 
     const sisteDag = [...intervaller].shift()!.tom;
@@ -49,6 +53,10 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
         setAktivtIntervall(intervall);
         onSelect(intervall);
     };
+
+    useEffect(() => {
+        setAktivtIntervall(intervaller[0]);
+    }, []);
 
     return (
         <TidslinjeContext.Provider
