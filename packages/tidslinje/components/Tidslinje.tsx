@@ -8,10 +8,12 @@ import { isoDato } from '../calc';
 import Datointervaller from './Datointervaller';
 import styles from './Tidslinje.less';
 import Skalaknapp from './Skalaknapp';
+import classNames from 'classnames';
 
 export interface TidslinjeProps {
     tidslinjer: EnkelTidslinje[];
     onSelect: (selected?: Intervall) => void;
+    className?: string;
 }
 
 interface TidslinjeContextType {
@@ -40,7 +42,7 @@ const sammenlignVedtaksperioder = (first: Vedtaksperiode, second: Vedtaksperiode
  * tidslinjer. Tidslinjene går fra nyeste til eldste dato, venstre til høyre, og det er den nyeste perioden som velges
  * by default ved mount av komponenten.
  */
-const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
+const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
     const [skalastørrelse, setSkalastørrelse] = useState(Skalastørrelse.HalvtÅr);
     const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
 
@@ -69,7 +71,7 @@ const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
                 aktivtIntervall
             }}
         >
-            <div className={styles.container}>
+            <div className={classNames(styles.container, className)}>
                 <div className={styles.header}>
                     <Intervallvelger />
                     <Tidsskala />
