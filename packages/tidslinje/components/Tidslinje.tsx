@@ -35,16 +35,17 @@ const sammenlignVedtaksperioder = (first: Vedtaksperiode, second: Vedtaksperiode
     return 0;
 };
 
+/**
+ * Sammensatt tidslinje av én eller flere enkelttidslinjer for å lett kunne se og fatte vedtak på perioder på tvers av
+ * tidslinjer. Tidslinjene går fra nyeste til eldste dato, venstre til høyre, og det er den nyeste perioden som velges
+ * by default ved mount av komponenten.
+ */
 const Tidslinje = ({ tidslinjer, onSelect }: TidslinjeProps) => {
     const [skalastørrelse, setSkalastørrelse] = useState(Skalastørrelse.HalvtÅr);
     const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
 
     const intervaller = tidslinjer
-        .reduce(
-            (alleIntervaller: Vedtaksperiode[], tidslinje) =>
-                alleIntervaller.concat(tidslinje.vedtaksperioder),
-            []
-        )
+        .flatMap(tidslinje => tidslinje.vedtaksperioder)
         .sort(sammenlignVedtaksperioder);
 
     const sisteDag = [...intervaller].shift()!.tom;
