@@ -20,3 +20,13 @@ export const behandletInnhold = () => {
         </BehandletInnhold>
     );
 };
+
+export const utenChildren = () => {
+    return (
+        <BehandletInnhold
+            tittel="Inngangsvilkår vurdert første sykdomsdag"
+            saksbehandler="Hanne Jansen"
+            vurderingsdato="01.05.2017"
+        />
+    );
+};
