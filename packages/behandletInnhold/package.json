@@ -8,7 +8,8 @@
     "build": "npm run clean && webpack -p && npm run injectStyles",
     "clean": "rm -rf ./dist",
     "tsc": "tsc -p tsconfig.json",
-    "injectStyles": "echo \"import './main.css';\" >> dist/index.js"
+    "injectStyles": "echo \"import './main.css';\" >> dist/index.js",
+    "prepublish": "npm run clean && npm run build"
   },
   "author": "NAV",
   "license": "MIT",

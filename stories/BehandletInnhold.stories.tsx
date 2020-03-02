@@ -3,7 +3,10 @@ import BehandletInnhold from '../packages/behandletInnhold';
 
 export default {
     component: BehandletInnhold,
-    title: 'BehandletInnhold'
+    title: 'Behandlet innhold',
+    parameters: {
+        componentSubtitle: 'Varsel som wrapper data en saksbehandler har fattet en vurdering på.'
+    }
 };
 
 export const behandletInnhold = () => {

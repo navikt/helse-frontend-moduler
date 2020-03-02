@@ -1,6 +1,7 @@
-import Periodetabell from './Periodetabell';
+import Sykmeldingstabell from './sykmeldingstabell/Sykmeldingstabell';
+import Utbetalingstabell from './utbetalingstabell/Utbetalingstabell';
 import { Dagtype, Dag } from './types';
 
-export { Dagtype, Dag };
+export { Dagtype, Dag, Utbetalingstabell, Sykmeldingstabell };
 
-export default Periodetabell;
+export default { Utbetalingstabell, Sykmeldingstabell };

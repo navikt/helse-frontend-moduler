@@ -1,10 +1,10 @@
 import React from 'react';
-import Tabell, { Body, Footer, Header, Rad } from '../packages/tabell/Tabell';
+import Tabell, { Body, Footer, Header, Rad } from '../../packages/tabell/Tabell';
 import { withKnobs, number } from '@storybook/addon-knobs';
 
 export default {
     component: Tabell,
-    title: 'Tabell',
+    title: 'Tabeller/Tabell',
     decorators: [withKnobs]
 };
 

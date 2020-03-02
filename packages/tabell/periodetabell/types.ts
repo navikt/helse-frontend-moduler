@@ -20,4 +20,5 @@ export interface Dag {
     kilde?: Kilde;
     oppgave?: OppgaveStatus;
     gradering?: number;
+    utbetaling?: number;
 }

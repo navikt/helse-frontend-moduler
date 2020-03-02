@@ -2,14 +2,17 @@ import React, { ReactNode } from 'react';
 import styles from './Tabell.less';
 
 type TableElementProps = {
-    children: ReactNode[];
+    children: ReactNode | ReactNode[];
     className?: string;
 };
+
+const asArray = (children: ReactNode | ReactNode[]) =>
+    Array.isArray(children) ? children : [children];
 
 export const Header = ({ children }: TableElementProps) => (
     <thead>
         <tr>
-            {children.map((node, i) => (
+            {asArray(children).map((node, i) => (
                 <th key={i}>{node}</th>
             ))}
         </tr>
@@ -19,7 +22,7 @@ export const Header = ({ children }: TableElementProps) => (
 export const Footer = ({ children }: TableElementProps) => (
     <tfoot>
         <tr>
-            {children.map((node, i) => (
+            {asArray(children).map((node, i) => (
                 <td key={i}>{node}</td>
             ))}
         </tr>
@@ -31,7 +34,7 @@ export const Body = ({ children }: TableElementProps) => {
 };
 
 export const Rad = ({ children, className }: TableElementProps) => {
-    const cells = children.map((cell, i) => <td key={i}>{cell}</td>);
+    const cells = asArray(children).map((cell, i) => <td key={i}>{cell}</td>);
     return <tr className={className}>{cells}</tr>;
 };
 
