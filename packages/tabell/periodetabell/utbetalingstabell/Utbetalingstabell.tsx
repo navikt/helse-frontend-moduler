@@ -78,7 +78,7 @@ const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabel
                         <p />
                         <p>Totalt</p>
                         <p />
-                        <p>{utbetalingerTotalt}</p>
+                        <p>{utbetalingerTotalt} kr</p>
                     </Footer>
                 </Tabell>
             </div>
