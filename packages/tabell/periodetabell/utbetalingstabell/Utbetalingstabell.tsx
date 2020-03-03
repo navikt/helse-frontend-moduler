@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Dag, Dagtype } from '../types';
 import UtbetalingContext from './UtbetalingContext';
 import Overstyring from '../Overstyring';
-import { Body, Header, Rad } from '../../Tabell';
+import { Body, Footer, Header, Rad } from '../../Tabell';
 import classNames from 'classnames';
 import Utbetalingsrad from './Utbetalingsrad';
 import styles from '../Periodetabell.less';
@@ -16,6 +16,8 @@ interface Utbetalingstabell {
 
 const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabell) => {
     const [overstyrer, setOverstyrer] = useState(false);
+
+    const utbetalingerTotalt = dager.reduce((totalt, dagen) => totalt + (dagen.utbetaling ?? 0), 0);
 
     function oppdaterFelt<T>(index: number, nyVerdi: T, feltNavn: string) {
         if (!setDager) return;
@@ -72,6 +74,12 @@ const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabel
                             </Rad>
                         ))}
                     </Body>
+                    <Footer>
+                        <p />
+                        <p>Totalt</p>
+                        <p />
+                        <p>{utbetalingerTotalt}</p>
+                    </Footer>
                 </Tabell>
             </div>
         </UtbetalingContext.Provider>

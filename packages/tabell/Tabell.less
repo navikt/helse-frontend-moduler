@@ -26,7 +26,6 @@
     }
 
     tfoot tr td {
-        border-bottom: 1px solid @greyNormal;
         padding: 0.375rem 1rem;
         font-weight: 600;
 
@@ -43,6 +42,10 @@
         > * {
             margin: 0;
         }
+    }
+
+    tbody tr:last-of-type td {
+        border-color: @greyNormal;
     }
 
     tr > td:last-of-type {
