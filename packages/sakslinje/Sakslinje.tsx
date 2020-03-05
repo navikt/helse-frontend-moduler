@@ -1,15 +1,17 @@
 import React, { ReactNode } from 'react';
 import styles from './Sakslinje.less';
+import classNames from 'classnames';
 
 export interface SaksmenyProps {
     venstre?: ReactNode | ReactNode[];
     midt?: ReactNode | ReactNode[];
     høyre?: ReactNode | ReactNode[];
+    className?: string;
 }
 
-const Sakslinje = ({ venstre, midt, høyre }: SaksmenyProps) => {
+const Sakslinje = ({ venstre, midt, høyre, className }: SaksmenyProps) => {
     return (
-        <div className={styles.sakslinje}>
+        <div className={classNames(styles.sakslinje, className)}>
             {venstre}
             {midt && (
                 <>
