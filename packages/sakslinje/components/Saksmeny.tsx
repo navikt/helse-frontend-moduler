@@ -33,9 +33,9 @@ const Dropdown = () => {
             </button>
             {show && (
                 <ul ref={ref}>
-                    <li>Item 1</li>
-                    <li>Item 2</li>
-                    <li>Item 3</li>
+                    <li>Førstegangsbehandling</li>
+                    <li>Beslutter</li>
+                    <li>Revurdering</li>
                 </ul>
             )}
         </>

@@ -10,11 +10,19 @@ export interface SaksmenyProps {
 const Sakslinje = ({ venstre, midt, høyre }: SaksmenyProps) => {
     return (
         <div className={styles.sakslinje}>
-            <div>{venstre}</div>
-            <span className={styles.divider} />
-            <div>{midt}</div>
-            <span className={styles.divider} />
-            <div>{høyre}</div>
+            {venstre}
+            {midt && (
+                <>
+                    <span className={styles.divider} />
+                    {midt}
+                </>
+            )}
+            {høyre && (
+                <>
+                    <span className={styles.divider} />
+                    {høyre}
+                </>
+            )}
         </div>
     );
 };

@@ -1,7 +1,7 @@
 import React from 'react';
-import Sakslinje from '../packages/saksmeny';
-import Arbeidsgiver from '../packages/saksmeny/components/Arbeidsgiver';
-import Saksmeny from '../packages/saksmeny/components/Saksmeny';
+import Sakslinje from '../packages/sakslinje';
+import Arbeidsgiver from '../packages/sakslinje/components/Arbeidsgiver';
+import Saksmeny from '../packages/sakslinje/components/Saksmeny';
 
 export default {
     component: Sakslinje,
