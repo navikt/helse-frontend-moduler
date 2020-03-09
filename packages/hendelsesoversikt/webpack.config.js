@@ -5,7 +5,7 @@ module.exports = {
     ...baseConfig,
     output: {
         ...baseConfig.output,
-        library: 'helse-frontend-header',
+        library: 'helse-frontend-hendelsesoversikt',
         path: path.resolve(__dirname, 'dist')
     }
 };
