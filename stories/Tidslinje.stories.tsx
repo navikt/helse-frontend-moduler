@@ -1,6 +1,6 @@
 import React from 'react';
-import Tidslinje from '../packages/tidslinje';
-import { SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
+import Tidslinje, { VedtaksperiodeStatus } from '../packages/tidslinje';
+import { SammensattTidslinje } from '../packages/tidslinje/types';
 import { withA11y } from '@storybook/addon-a11y';
 
 export default {
@@ -20,31 +20,31 @@ const mockdata: SammensattTidslinje = {
                     id: '1234',
                     fom: '2020-01-01',
                     tom: '2020-01-15',
-                    status: VedtaksperiodeStatus.Venter
+                    status: VedtaksperiodeStatus.IngenUtbetaling
                 },
                 {
                     id: '2345',
                     fom: '2020-01-16',
                     tom: '2020-01-30',
-                    status: VedtaksperiodeStatus.Venter
+                    status: VedtaksperiodeStatus.Oppgaver
                 },
                 {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.Utbetalt
+                    status: VedtaksperiodeStatus.TilUtbetaling
                 },
                 {
                     id: '4567',
                     fom: '2019-09-16',
                     tom: '2019-10-31',
-                    status: VedtaksperiodeStatus.Utbetalt
+                    status: 'ukjent'
                 },
                 {
                     id: '5678',
                     fom: '2019-07-16',
                     tom: '2019-08-30',
-                    status: VedtaksperiodeStatus.Utbetalt
+                    status: VedtaksperiodeStatus.Avslag
                 }
             ]
         },
@@ -66,7 +66,12 @@ const mockdata: SammensattTidslinje = {
 };
 
 export const tidslinje = () => {
-    return <Tidslinje tidslinjer={mockdata.tidslinjer.slice(0, 1)} onSelect={value => console.log(value)} />;
+    return (
+        <Tidslinje
+            tidslinjer={mockdata.tidslinjer.slice(0, 1)}
+            onSelect={value => console.log(value)}
+        />
+    );
 };
 
 export const flereArbeidsgivere = () => {

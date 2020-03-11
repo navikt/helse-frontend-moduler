@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { EnkelTidslinje, Inntektstype, VedtaksperiodeStatus } from '../types';
+import { EnkelTidslinje, Inntektstype } from '../types';
 import { isoDato, kalkulerPosisjonOgBredde } from '../calc';
 import { TidslinjeContext } from './Tidslinje';
 import IkonArbeidsgiver from '../icons/IkonArbeidsgiver';
@@ -13,21 +13,6 @@ const ikon = (inntektstype: Inntektstype) => {
             return <IkonArbeidsgiver />;
         case 'ytelse':
             return <IkonInfotrygd />;
-    }
-};
-
-const status = (type: VedtaksperiodeStatus) => {
-    switch (type) {
-        case VedtaksperiodeStatus.TilUtbetaling:
-            return 'tilUtbetaling';
-        case VedtaksperiodeStatus.Utbetalt:
-            return 'utbetalt';
-        case VedtaksperiodeStatus.Venter:
-            return 'venter';
-        case VedtaksperiodeStatus.Oppgaver:
-            return 'oppgaver';
-        case VedtaksperiodeStatus.Avslag:
-            return 'avslag';
     }
 };
 
@@ -62,7 +47,7 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
                             styles.periode,
                             periode.erAvkuttet && styles.avkuttet,
                             periode.width < 3 && styles.mini,
-                            styles[status(periode.value.status)]
+                            styles[periode.value.status]
                         )}
                         key={index}
                         onClick={() => onSelect(periode.value)}
