@@ -32,7 +32,6 @@ export enum VedtaksperiodeStatus {
     Oppgaver = 'oppgaver',
     Venter = 'venter',
     Avslag = 'avslag',
-    Avsluttet = 'avsluttet',
     IngenUtbetaling = 'ingenUtbetaling'
 }
 
