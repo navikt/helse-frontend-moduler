@@ -1,6 +1,6 @@
 import React from 'react';
-import Tidslinje, { VedtaksperiodeStatus } from '../packages/tidslinje';
-import { SammensattTidslinje } from '../packages/tidslinje/types';
+import Tidslinje from '../packages/tidslinje';
+import { SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
 import { withA11y } from '@storybook/addon-a11y';
 
 export default {
@@ -38,7 +38,7 @@ const mockdata: SammensattTidslinje = {
                     id: '4567',
                     fom: '2019-09-16',
                     tom: '2019-10-31',
-                    status: 'ukjent'
+                    status: VedtaksperiodeStatus.Utbetalt
                 },
                 {
                     id: '5678',
