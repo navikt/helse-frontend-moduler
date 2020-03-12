@@ -23,7 +23,9 @@ const layout = (intervall: Intervall, skalastørrelse: Skalastørrelse, sisteDag
 };
 
 const Datointervaller = () => {
-    const { onSelect, intervaller, aktivtIntervall, skalastørrelse, sisteDag } = useContext(TidslinjeContext);
+    const { onSelect, intervaller, aktivtIntervall, skalastørrelse, sisteDag } = useContext(
+        TidslinjeContext
+    );
 
     const onClick = (intervall: Intervall) => {
         onSelect(intervall);
@@ -35,7 +37,9 @@ const Datointervaller = () => {
                 .map((intervall: Intervall) => layout(intervall, skalastørrelse, sisteDag))
                 .map((intervall: PosisjonertIntervall) => {
                     const className =
-                        intervall.value.id === aktivtIntervall?.id ? styles.aktivtDatointervall : styles.datoinvervall;
+                        intervall.value.id === aktivtIntervall?.id
+                            ? styles.aktivtDatointervall
+                            : styles.datoinvervall;
                     return (
                         <button
                             className={className}
@@ -45,6 +49,7 @@ const Datointervaller = () => {
                                 left: `${intervall.left}%`,
                                 width: `${intervall.width}%`
                             }}
+                            disabled={intervall.value.disabled}
                             aria-label={`${intervall.value.status} fra ${intervall.value.fom} til og med ${intervall.value.tom}`}
                         />
                     );

@@ -5,6 +5,7 @@ export interface Vedtaksperiode {
     fom: string;
     tom: string;
     status: VedtaksperiodeStatus;
+    disabled?: boolean;
 }
 
 export type Intervall = Vedtaksperiode;

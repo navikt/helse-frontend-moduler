@@ -74,6 +74,51 @@ export const tidslinje = () => {
     );
 };
 
+export const medInaktivPeriode = () => {
+    const tidslinjer = [
+        {
+            id: '1234567890',
+            inntektsnavn: 'Sykepleiehuset AS',
+            inntektstype: 'arbeidsgiver',
+            vedtaksperioder: [
+                {
+                    id: '2345',
+                    fom: '2020-01-16',
+                    tom: '2020-01-30',
+                    status: VedtaksperiodeStatus.Venter,
+                    disabled: true
+                },
+                {
+                    id: '1234',
+                    fom: '2020-01-01',
+                    tom: '2020-01-15',
+                    status: VedtaksperiodeStatus.Oppgaver
+                },
+                {
+                    id: '3456',
+                    fom: '2019-12-01',
+                    tom: '2019-12-31',
+                    status: VedtaksperiodeStatus.IngenUtbetaling
+                },
+                {
+                    id: '4567',
+                    fom: '2019-09-16',
+                    tom: '2019-10-31',
+                    status: VedtaksperiodeStatus.Utbetalt
+                },
+                {
+                    id: '5678',
+                    fom: '2019-07-16',
+                    tom: '2019-08-30',
+                    status: VedtaksperiodeStatus.Avslag
+                }
+            ]
+        }
+    ];
+
+    return <Tidslinje tidslinjer={tidslinjer} onSelect={value => console.log(value)} />;
+};
+
 export const flereArbeidsgivere = () => {
     return <Tidslinje tidslinjer={mockdata.tidslinjer} onSelect={value => console.log(value)} />;
 };

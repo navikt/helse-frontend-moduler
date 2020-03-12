@@ -53,12 +53,14 @@ const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
     const sisteDag = [...intervaller].shift()!.tom;
 
     const onVelgIntervall = (intervall: Intervall) => {
+        if (intervall.disabled) return;
         setAktivtIntervall(intervall);
         onSelect(intervall);
     };
 
     useEffect(() => {
-        setAktivtIntervall(intervaller[0]);
+        const førsteGyldigeIntervall = intervaller.find(intervall => !intervall.disabled);
+        setAktivtIntervall(førsteGyldigeIntervall);
     }, []);
 
     return (
