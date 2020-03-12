@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { TidslinjeContext } from './Tidslinje';
 import { Intervall, Skalastørrelse } from '../types';
 import { isoDato, kalkulerPosisjonOgBredde } from '../calc';
-import { Dayjs } from 'dayjs';
 import styles from './Datointervaller.less';
+import classNames from 'classnames';
+import { Dayjs } from 'dayjs';
 
 interface PosisjonertIntervall {
     left: number;
@@ -11,7 +12,11 @@ interface PosisjonertIntervall {
     value: Intervall;
 }
 
-const layout = (intervall: Intervall, skalastørrelse: Skalastørrelse, sisteDag: Dayjs) => {
+const tilPosisjonertIntervall = (
+    intervall: Intervall,
+    skalastørrelse: Skalastørrelse,
+    sisteDag: Dayjs
+): PosisjonertIntervall => {
     const { left, width } = kalkulerPosisjonOgBredde(
         isoDato(intervall.fom),
         isoDato(intervall.tom),
@@ -27,35 +32,31 @@ const Datointervaller = () => {
         TidslinjeContext
     );
 
-    const onClick = (intervall: Intervall) => {
-        onSelect(intervall);
-    };
+    const onClick = (intervall: Intervall) => onSelect(intervall);
 
-    return (
-        <div className={styles.container}>
-            {intervaller
-                .map((intervall: Intervall) => layout(intervall, skalastørrelse, sisteDag))
-                .map((intervall: PosisjonertIntervall) => {
-                    const className =
-                        intervall.value.id === aktivtIntervall?.id
-                            ? styles.aktivtDatointervall
-                            : styles.datoinvervall;
-                    return (
-                        <button
-                            className={className}
-                            key={intervall.value.fom}
-                            onClick={() => onClick(intervall.value)}
-                            style={{
-                                left: `${intervall.left}%`,
-                                width: `${intervall.width}%`
-                            }}
-                            disabled={intervall.value.disabled}
-                            aria-label={`${intervall.value.status} fra ${intervall.value.fom} til og med ${intervall.value.tom}`}
-                        />
-                    );
-                })}
-        </div>
-    );
+    const posisjonerteIntervaller = intervaller
+        .map(intervall => tilPosisjonertIntervall(intervall, skalastørrelse, sisteDag))
+        .map(posisjonertIntervall => {
+            const className =
+                posisjonertIntervall.value.id === aktivtIntervall?.id
+                    ? styles.aktivtDatointervall
+                    : styles.datoinvervall;
+            return (
+                <button
+                    className={classNames(className)}
+                    key={posisjonertIntervall.value.fom}
+                    onClick={() => onClick(posisjonertIntervall.value)}
+                    style={{
+                        left: `${posisjonertIntervall.left}%`,
+                        width: `${posisjonertIntervall.width}%`
+                    }}
+                    disabled={posisjonertIntervall.value.disabled}
+                    aria-label={`${posisjonertIntervall.value.status} fra ${posisjonertIntervall.value.fom} til og med ${posisjonertIntervall.value.tom}`}
+                />
+            );
+        });
+
+    return <div className={styles.container}>{posisjonerteIntervaller}</div>;
 };
 
 export default Datointervaller;

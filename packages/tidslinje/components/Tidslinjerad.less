@@ -128,3 +128,18 @@
 .ingenUtbetaling {
   .colors(#e0f5fb, #66cbec, #9fcdda);
 }
+
+.sammenhengendeFraHøyre {
+  border-bottom-right-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.sammenhengendeFraVenstre {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+.sammenhengendeFraBegge {
+  composes: sammenhengendeFraHøyre;
+  composes: sammenhengendeFraVenstre;
+}
