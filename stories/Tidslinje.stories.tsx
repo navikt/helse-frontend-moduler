@@ -1,6 +1,6 @@
 import React from 'react';
 import Tidslinje from '../packages/tidslinje';
-import { SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
+import { Inntektstype, SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
 import { withA11y } from '@storybook/addon-a11y';
 
 export default {
@@ -20,7 +20,8 @@ const mockdata: SammensattTidslinje = {
                     id: '2345',
                     fom: '2020-01-16',
                     tom: '2020-01-30',
-                    status: VedtaksperiodeStatus.Venter
+                    status: VedtaksperiodeStatus.Venter,
+                    disabled: true
                 },
                 {
                     id: '1234',
@@ -32,7 +33,8 @@ const mockdata: SammensattTidslinje = {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.IngenUtbetaling
+                    status: VedtaksperiodeStatus.IngenUtbetaling,
+                    disabled: true
                 },
                 {
                     id: '4567',
@@ -66,12 +68,7 @@ const mockdata: SammensattTidslinje = {
 };
 
 export const tidslinje = () => {
-    return (
-        <Tidslinje
-            tidslinjer={mockdata.tidslinjer.slice(0, 1)}
-            onSelect={value => console.log(value)}
-        />
-    );
+    return <Tidslinje tidslinjer={mockdata.tidslinjer.slice(0, 1)} onSelect={value => console.log(value)} />;
 };
 
 export const medInaktivPeriode = () => {
@@ -79,7 +76,7 @@ export const medInaktivPeriode = () => {
         {
             id: '1234567890',
             inntektsnavn: 'Sykepleiehuset AS',
-            inntektstype: 'arbeidsgiver',
+            inntektstype: 'arbeidsgiver' as Inntektstype,
             vedtaksperioder: [
                 {
                     id: '2345',
@@ -98,7 +95,8 @@ export const medInaktivPeriode = () => {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.IngenUtbetaling
+                    status: VedtaksperiodeStatus.IngenUtbetaling,
+                    disabled: true
                 },
                 {
                     id: '4567',

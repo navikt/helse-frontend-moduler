@@ -19,13 +19,16 @@ export interface TidslinjeProps {
 interface TidslinjeContextType {
     sisteDag: Dayjs;
     skalastørrelse: Skalastørrelse;
-    onSelect: (selected?: Vedtaksperiode) => void;
+    onSelect: (selected?: Intervall) => void;
+    onFocus: (focused?: Intervall) => void;
     intervaller: Intervall[];
     aktivtIntervall?: Intervall;
+    intervallMedFokus?: Intervall;
 }
 
 export const TidslinjeContext = createContext<TidslinjeContextType>({
     onSelect: _ => null,
+    onFocus: _ => null,
     sisteDag: dayjs(),
     skalastørrelse: Skalastørrelse.HalvtÅr,
     intervaller: []
@@ -45,10 +48,9 @@ const sammenlignVedtaksperioder = (first: Vedtaksperiode, second: Vedtaksperiode
 const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
     const [skalastørrelse, setSkalastørrelse] = useState(Skalastørrelse.HalvtÅr);
     const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
+    const [intervallMedFokus, setIntervallMedFokus] = useState<Intervall>();
 
-    const intervaller = tidslinjer
-        .flatMap(tidslinje => tidslinje.vedtaksperioder)
-        .sort(sammenlignVedtaksperioder);
+    const intervaller = tidslinjer.flatMap(tidslinje => tidslinje.vedtaksperioder).sort(sammenlignVedtaksperioder);
 
     const sisteDag = [...intervaller].shift()!.tom;
 
@@ -56,6 +58,10 @@ const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
         if (intervall.disabled) return;
         setAktivtIntervall(intervall);
         onSelect(intervall);
+    };
+
+    const onFokusérIntervall = (intervall: Intervall) => {
+        setIntervallMedFokus(intervall);
     };
 
     useEffect(() => {
@@ -67,10 +73,12 @@ const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
         <TidslinjeContext.Provider
             value={{
                 onSelect: onVelgIntervall,
+                onFocus: onFokusérIntervall,
                 intervaller,
                 skalastørrelse,
                 sisteDag: isoDato(sisteDag),
-                aktivtIntervall
+                aktivtIntervall,
+                intervallMedFokus
             }}
         >
             <div className={classNames(styles.container, className)}>
@@ -79,10 +87,10 @@ const Tidslinje = ({ tidslinjer, onSelect, className }: TidslinjeProps) => {
                     <Tidsskala />
                 </div>
                 <div className={styles.tidslinjerader}>
+                    <Datointervaller />
                     {tidslinjer.map(tidslinje => (
                         <Tidslinjerad key={tidslinje.id} {...tidslinje} />
                     ))}
-                    <Datointervaller />
                 </div>
                 <div className={styles.footer}>
                     <Skalaknapp

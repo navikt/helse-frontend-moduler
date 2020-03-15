@@ -7,7 +7,6 @@
   height: 100%;
   border: none;
   background: none;
-  mix-blend-mode: multiply;
   padding: 0;
 
   &::-moz-focus-inner {
@@ -16,7 +15,6 @@
 
   &:hover,
   &:focus {
-    background: @colorHover;
     outline: none;
   }
 }
@@ -24,30 +22,30 @@
 .aktivtDatointervall {
   composes: datoinvervall;
   background: @colorActive;
+  z-index: 100;
   box-shadow:
-          0.5px 0 0 0 @navBla,
-          -0.5px 0 0 0 @navBla,
-          inset 0.5px 0 0 0 @navBla,
-          inset -0.5px 0 0 0 @navBla;
+          inset 2px 0 0 -1px @navBla,
+          inset -2px 0 0 -1px @navBla;
 
   .dot() {
     content: '';
     position: absolute;
-    top: -3px;
-    width: 6px;
-    height: 6px;
+    top: -2px;
+    width: 3px;
+    height: 3px;
     border-radius: 50%;
     background: @navBla;
+    box-shadow: 0 0 0 1px @navBla;
   }
 
   &:before {
     .dot();
-    left: -3px;
+    left: -1px;
   }
 
   &:after {
     .dot();
-    right: -3px;
+    right: -1px;
   }
 }
 

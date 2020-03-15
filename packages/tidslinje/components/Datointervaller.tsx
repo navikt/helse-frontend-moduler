@@ -27,15 +27,17 @@ const tilPosisjonertIntervall = (
     return { left, width: justertBredde, value: intervall };
 };
 
-const Datointervaller = () => {
-    const { onSelect, intervaller, aktivtIntervall, skalastørrelse, sisteDag } = useContext(
-        TidslinjeContext
-    );
+const duplikatintervall = (intervallet: PosisjonertIntervall, i: number, alleIntervaller: PosisjonertIntervall[]) =>
+    !alleIntervaller
+        .slice(i + 1)
+        .find(other => other.value.fom === intervallet.value.fom && other.value.tom === intervallet.value.tom);
 
-    const onClick = (intervall: Intervall) => onSelect(intervall);
+const Datointervaller = () => {
+    const { intervaller, aktivtIntervall, onFocus, onSelect, skalastørrelse, sisteDag } = useContext(TidslinjeContext);
 
     const posisjonerteIntervaller = intervaller
         .map(intervall => tilPosisjonertIntervall(intervall, skalastørrelse, sisteDag))
+        .filter(duplikatintervall)
         .map(posisjonertIntervall => {
             const className =
                 posisjonertIntervall.value.id === aktivtIntervall?.id
@@ -45,11 +47,14 @@ const Datointervaller = () => {
                 <button
                     className={classNames(className)}
                     key={posisjonertIntervall.value.fom}
-                    onClick={() => onClick(posisjonertIntervall.value)}
                     style={{
                         left: `${posisjonertIntervall.left}%`,
                         width: `${posisjonertIntervall.width}%`
                     }}
+                    onClick={() => onSelect(posisjonertIntervall.value)}
+                    onFocus={() => onFocus(posisjonertIntervall.value)}
+                    onBlur={() => onFocus(undefined)}
+                    tabIndex={0}
                     disabled={posisjonertIntervall.value.disabled}
                     aria-label={`${posisjonertIntervall.value.status} fra ${posisjonertIntervall.value.fom} til og med ${posisjonertIntervall.value.tom}`}
                 />
