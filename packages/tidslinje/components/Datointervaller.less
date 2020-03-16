@@ -2,12 +2,25 @@
 @colorActive: #e5f3ff;
 @navBla: #0067c5;
 
+.dot(@size) {
+  content: '';
+  position: absolute;
+  top: -2px;
+  width: @size;
+  height: @size;
+  border-radius: 50%;
+  background: @navBla;
+  box-shadow: 0 0 0 (@size - 2px) @navBla;
+  transition: all 0.1s ease;
+}
+
 .datoinvervall {
   position: absolute;
   height: 100%;
   border: none;
   background: none;
   padding: 0;
+  transition: all 0.1s ease;
 
   &::-moz-focus-inner {
     border: 0;
@@ -16,6 +29,16 @@
   &:hover,
   &:focus {
     outline: none;
+  }
+
+  &:before {
+    .dot(0);
+    left: -1px;
+  }
+
+  &:after {
+    .dot(0);
+    right: -1px;
   }
 }
 
@@ -27,24 +50,13 @@
           inset 2px 0 0 -1px @navBla,
           inset -2px 0 0 -1px @navBla;
 
-  .dot() {
-    content: '';
-    position: absolute;
-    top: -2px;
-    width: 3px;
-    height: 3px;
-    border-radius: 50%;
-    background: @navBla;
-    box-shadow: 0 0 0 1px @navBla;
-  }
-
   &:before {
-    .dot();
+    .dot(3px);
     left: -1px;
   }
 
   &:after {
-    .dot();
+    .dot(3px);
     right: -1px;
   }
 }
