@@ -5,10 +5,11 @@ import IkonMeldinger from '../icons/IkonMeldinger';
 interface MeldingerknappProps {
     onClick: () => void;
     aktiv?: boolean;
+    disabled?: boolean;
 }
 
-const Meldingerknapp = ({ aktiv, onClick }: MeldingerknappProps) => (
-    <Filterknapp onClick={onClick} aktiv={aktiv}>
+const Meldingerknapp = ({ aktiv, onClick, disabled }: MeldingerknappProps) => (
+    <Filterknapp onClick={onClick} aktiv={aktiv} disabled={disabled}>
         <IkonMeldinger />
     </Filterknapp>
 );

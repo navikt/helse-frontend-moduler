@@ -1,13 +1,13 @@
 import React from 'react';
-import Hendelsesoversikt from '../packages/hendelsesoversikt';
-import { Hendelsetype } from '../packages/hendelsesoversikt/types';
+import Logg from '../packages/logg';
+import { Hendelsetype } from '../packages/logg/types';
 
 export default {
-    component: Hendelsesoversikt,
-    title: 'Hendelsesoversikt'
+    component: Logg,
+    title: 'Logg'
 };
 
-export const hendelsesoversikt = () => {
+export const logg = () => {
     const hendelser = [
         {
             id: '123',
@@ -28,7 +28,7 @@ export const hendelsesoversikt = () => {
             type: Hendelsetype.Dokumenter
         }
     ];
-    return <Hendelsesoversikt hendelser={hendelser} />;
+    return <Logg hendelser={hendelser} />;
 };
 
 export const medHistorikk = () => {
@@ -59,5 +59,5 @@ export const medHistorikk = () => {
             type: Hendelsetype.Dokumenter
         }
     ];
-    return <Hendelsesoversikt hendelser={hendelser} />;
+    return <Logg hendelser={hendelser} />;
 };
