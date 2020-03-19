@@ -1,6 +1,6 @@
 import React from 'react';
 import Tidslinje from '../packages/tidslinje';
-import { Inntektstype, SammensattTidslinje, VedtaksperiodeStatus } from '../packages/tidslinje/types';
+import { Inntektstype, SammensattTidslinje, Vedtaksperiodetilstand } from '../packages/tidslinje/types';
 import { withA11y } from '@storybook/addon-a11y';
 
 export default {
@@ -20,33 +20,33 @@ const mockdata: SammensattTidslinje = {
                     id: '2345',
                     fom: '2020-01-16',
                     tom: '2020-01-30',
-                    status: VedtaksperiodeStatus.Venter,
+                    status: Vedtaksperiodetilstand.Venter,
                     disabled: true
                 },
                 {
                     id: '1234',
                     fom: '2020-01-01',
                     tom: '2020-01-15',
-                    status: VedtaksperiodeStatus.Oppgaver
+                    status: Vedtaksperiodetilstand.Oppgaver
                 },
                 {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.IngenUtbetaling,
+                    status: Vedtaksperiodetilstand.IngenUtbetaling,
                     disabled: true
                 },
                 {
                     id: '4567',
                     fom: '2019-09-16',
                     tom: '2019-10-31',
-                    status: VedtaksperiodeStatus.Utbetalt
+                    status: Vedtaksperiodetilstand.Utbetalt
                 },
                 {
                     id: '5678',
                     fom: '2019-07-16',
                     tom: '2019-08-30',
-                    status: VedtaksperiodeStatus.Avslag
+                    status: Vedtaksperiodetilstand.Avslag
                 }
             ]
         },
@@ -60,7 +60,7 @@ const mockdata: SammensattTidslinje = {
                     id: '34561',
                     fom: '2019-11-01',
                     tom: '2019-11-30',
-                    status: VedtaksperiodeStatus.Avslag
+                    status: Vedtaksperiodetilstand.Avslag
                 }
             ]
         }
@@ -82,33 +82,33 @@ export const medInaktivPeriode = () => {
                     id: '2345',
                     fom: '2020-01-16',
                     tom: '2020-01-30',
-                    status: VedtaksperiodeStatus.Venter,
+                    status: Vedtaksperiodetilstand.Venter,
                     disabled: true
                 },
                 {
                     id: '1234',
                     fom: '2020-01-01',
                     tom: '2020-01-15',
-                    status: VedtaksperiodeStatus.Oppgaver
+                    status: Vedtaksperiodetilstand.Oppgaver
                 },
                 {
                     id: '3456',
                     fom: '2019-12-01',
                     tom: '2019-12-31',
-                    status: VedtaksperiodeStatus.IngenUtbetaling,
+                    status: Vedtaksperiodetilstand.IngenUtbetaling,
                     disabled: true
                 },
                 {
                     id: '4567',
                     fom: '2019-09-16',
                     tom: '2019-10-31',
-                    status: VedtaksperiodeStatus.Utbetalt
+                    status: Vedtaksperiodetilstand.Utbetalt
                 },
                 {
                     id: '5678',
                     fom: '2019-07-16',
                     tom: '2019-08-30',
-                    status: VedtaksperiodeStatus.Avslag
+                    status: Vedtaksperiodetilstand.Avslag
                 }
             ]
         }

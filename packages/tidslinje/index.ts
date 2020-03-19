@@ -6,8 +6,8 @@ import {
     Vedtaksperiode,
     EnkelTidslinje,
     Skalastørrelse,
-    VedtaksperiodeStatus
+    Vedtaksperiodetilstand
 } from './types';
 
-export { Intervall, Skalapunkt, Inntektstype, Vedtaksperiode, EnkelTidslinje, Skalastørrelse, VedtaksperiodeStatus };
+export { Intervall, Skalapunkt, Inntektstype, Vedtaksperiode, EnkelTidslinje, Skalastørrelse, Vedtaksperiodetilstand };
 export default Tidslinje;

@@ -4,7 +4,7 @@ export interface Vedtaksperiode {
     id: string;
     fom: string;
     tom: string;
-    status: VedtaksperiodeStatus;
+    status: Vedtaksperiodetilstand;
     disabled?: boolean;
 }
 
@@ -27,13 +27,14 @@ export enum Skalastørrelse {
     TreÅr = 36
 }
 
-export enum VedtaksperiodeStatus {
+export enum Vedtaksperiodetilstand {
     TilUtbetaling = 'tilUtbetaling',
     Utbetalt = 'utbetalt',
     Oppgaver = 'oppgaver',
     Venter = 'venter',
     Avslag = 'avslag',
-    IngenUtbetaling = 'ingenUtbetaling'
+    IngenUtbetaling = 'ingenUtbetaling',
+    Ukjent = 'ukjent'
 }
 
 export interface Skalapunkt {
