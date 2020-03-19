@@ -34,7 +34,8 @@ export enum Vedtaksperiodetilstand {
     Venter = 'venter',
     Avslag = 'avslag',
     IngenUtbetaling = 'ingenUtbetaling',
-    Ukjent = 'ukjent'
+    Ukjent = 'ukjent',
+    Feilet = 'feilet'
 }
 
 export interface Skalapunkt {
