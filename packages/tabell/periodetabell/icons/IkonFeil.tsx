@@ -3,7 +3,7 @@ import { IconProps } from './types';
 
 const IkonFeil = ({ color = '#000', width = 17, height = 17 }: IconProps) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width={width - 1} height={height} viewBox="-1 0 26 26">
+        <svg xmlns="http://www.w3.org/2000/svg" width={width - 1} height={height} viewBox="-1 0 26 24">
             <g stroke={color} strokeLinejoin="round" strokeWidth={2} strokeMiterlimit="10" fill="none">
                 <path
                     strokeLinecap="round"

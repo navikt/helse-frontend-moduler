@@ -8,7 +8,7 @@ const IkonLøst = ({ color = '#000', width = 17, height = 17 }: IconProps) => (
         y="0px"
         width={width - 1}
         height={height}
-        viewBox="-1 -1 26 26"
+        viewBox="-1 -1 26 24"
         enableBackground="new 0 0 24 24"
         xmlSpace="preserve"
     >
