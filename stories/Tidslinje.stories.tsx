@@ -71,6 +71,62 @@ export const tidslinje = () => {
     return <Tidslinje tidslinjer={mockdata.tidslinjer.slice(0, 1)} onSelect={value => console.log(value)} />;
 };
 
+export const tidslinjeMedMangeVedtaksperioder = () => {
+    const tidslinje = mockdata.tidslinjer.slice(0, 1)[0];
+    const oppdaterteVedtaksperioder = [
+        ...tidslinje.vedtaksperioder,
+        {
+            id: '6567',
+            fom: '2019-07-01',
+            tom: '2019-07-30',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '7567',
+            fom: '2019-06-01',
+            tom: '2019-06-31',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '8567',
+            fom: '2019-05-01',
+            tom: '2019-05-30',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '9567',
+            fom: '2019-04-01',
+            tom: '2019-04-31',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '1667',
+            fom: '2019-03-01',
+            tom: '2019-03-28',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '2667',
+            fom: '2019-02-01',
+            tom: '2019-02-31',
+            status: Vedtaksperiodetilstand.Utbetalt
+        },
+        {
+            id: '3667',
+            fom: '2019-01-01',
+            tom: '2010-01-30',
+            status: Vedtaksperiodetilstand.Utbetalt
+        }
+    ];
+    const mockdataMedMangeTidslinjer = [
+        {
+            ...tidslinje,
+            vedtaksperioder: oppdaterteVedtaksperioder
+        }
+    ];
+    return <Tidslinje tidslinjer={mockdataMedMangeTidslinjer} onSelect={value => console.log(value)} />;
+};
+
 export const medInaktivPeriode = () => {
     const tidslinjer = [
         {
