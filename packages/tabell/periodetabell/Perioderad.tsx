@@ -3,13 +3,14 @@ import IkonAdvarsel from './icons/IkonAdvarsel';
 import IkonLøst from './icons/IkonLøst';
 import IkonFastsattAvSaksbehandler from './icons/IkonFastsattAvSaksbehandler';
 import { ikon } from './icons/Ikon';
-import { Dagtype, Kilde, OppgaveStatus } from './types';
+import { Dagstatus, Dagtype, Kilde } from './types';
 import SykmeldingContext from './sykmeldingstabell/SykmeldingContext';
 import Select from './input/Select';
 import styles from './Perioderad.less';
+import IkonFeil from './icons/IkonFeil';
 
 export interface StatusProps {
-    status?: OppgaveStatus;
+    status?: Dagstatus;
     overstyrer?: boolean;
 }
 
@@ -26,8 +27,8 @@ export interface GraderingProps extends StatusProps {
     gradering?: number;
 }
 
-export const kildelenke = (kilde?: Kilde, status?: OppgaveStatus) => {
-    if (status === 'løst') return <IkonFastsattAvSaksbehandler />;
+export const kildelenke = (kilde?: Kilde, status?: Dagstatus) => {
+    if (status === Dagstatus.Suksess) return <IkonFastsattAvSaksbehandler />;
     return kilde?.link ? (
         <a className={styles.aktivKildelenke} href={kilde?.link}>
             {kilde?.label}
@@ -39,16 +40,16 @@ export const kildelenke = (kilde?: Kilde, status?: OppgaveStatus) => {
 
 export const Status = ({ status }: StatusProps) => (
     <div className={styles.status}>
-        {status === 'advarsel' && <IkonAdvarsel />}
-        {status === 'løst' && <IkonLøst />}
+        {status === Dagstatus.Advarsel && <IkonAdvarsel />}
+        {status === Dagstatus.Suksess && <IkonLøst />}
+        {status === Dagstatus.Feil && <IkonFeil />}
     </div>
 );
 
 export const Sykmeldingsperiode = ({ type, dato, kilde, status, i }: SykmeldingsperiodeProps) => {
     const { overstyrer, oppdaterType } = useContext(SykmeldingContext);
 
-    const onChange = (event: React.ChangeEvent<HTMLSelectElement>) =>
-        oppdaterType(i, event.target.value as Dagtype);
+    const onChange = (event: React.ChangeEvent<HTMLSelectElement>) => oppdaterType(i, event.target.value as Dagtype);
 
     const renderType =
         overstyrer && type !== Dagtype.Helg ? (
@@ -78,8 +79,7 @@ export const Sykmeldingsperiode = ({ type, dato, kilde, status, i }: Sykmeldings
 export const Gradering = ({ gradering, kilde, status, i }: GraderingProps) => {
     const { overstyrer, oppdaterGradering } = useContext(SykmeldingContext);
 
-    const onChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-        oppdaterGradering(i, parseInt(event.target.value));
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => oppdaterGradering(i, parseInt(event.target.value));
 
     const renderGradering = overstyrer ? (
         <input type="number" value={gradering || ''} onInput={onChange} />
@@ -91,7 +91,7 @@ export const Gradering = ({ gradering, kilde, status, i }: GraderingProps) => {
         <div className={styles.gradering}>
             {gradering !== undefined && renderGradering}
             {kilde && kildelenke(kilde)}
-            {status === 'advarsel' && (
+            {status === Dagstatus.Advarsel && (
                 <a className={styles.oppgavelenke} href="#">
                     Gå til oppgave
                 </a>

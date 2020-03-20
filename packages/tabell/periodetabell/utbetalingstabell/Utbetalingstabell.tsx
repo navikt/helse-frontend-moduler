@@ -17,13 +17,13 @@ interface Utbetalingstabell {
 const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabell) => {
     const [overstyrer, setOverstyrer] = useState(false);
 
-    const utbetalingerTotalt = dager.reduce((totalt, dagen) => totalt + (dagen.utbetaling ?? 0), 0);
+    const utbetalingerTotalt = dager
+        .filter(dag => dag.utbetaling !== undefined && typeof dag.utbetaling !== 'string')
+        .reduce((totalt, dagen) => totalt + (dagen.utbetaling as number), 0);
 
     function oppdaterFelt<T>(index: number, nyVerdi: T, feltNavn: string) {
         if (!setDager) return;
-        const nyeDager = dager.map((dag, i) =>
-            i === index ? { ...dag, [feltNavn]: nyVerdi } : dag
-        );
+        const nyeDager = dager.map((dag, i) => (i === index ? { ...dag, [feltNavn]: nyVerdi } : dag));
         setDager(nyeDager);
     }
 
@@ -40,13 +40,9 @@ const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabel
     };
 
     return (
-        <UtbetalingContext.Provider
-            value={{ dager, oppdaterGradering, oppdaterType, oppdaterUtbetaling, overstyrer }}
-        >
+        <UtbetalingContext.Provider value={{ dager, oppdaterGradering, oppdaterType, oppdaterUtbetaling, overstyrer }}>
             <div className={classNames(styles.container, className)}>
-                {setDager && (
-                    <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />
-                )}
+                {setDager && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
                 <Tabell>
                     <Header>
                         <p />
@@ -58,19 +54,15 @@ const Utbetalingstabell = ({ dager = [], setDager, className }: Utbetalingstabel
                         {dager.map((dag, i) => (
                             <Rad
                                 className={classNames(
-                                    dag.oppgave && styles[dag.oppgave],
+                                    dag.status && styles[dag.status],
                                     dag.type === Dagtype.Helg && styles.disabled
                                 )}
                                 key={i}
                             >
-                                <Utbetalingsrad.Status status={dag.oppgave} />
-                                <Utbetalingsrad.Sykmeldingsperiode
-                                    {...dag}
-                                    status={dag.oppgave}
-                                    i={i}
-                                />
+                                <Utbetalingsrad.Status status={dag.status} />
+                                <Utbetalingsrad.Sykmeldingsperiode {...dag} status={dag.status} i={i} />
                                 <Utbetalingsrad.Gradering {...dag} i={i} />
-                                <Utbetalingsrad.Utbetaling {...dag} status={dag.oppgave} i={i} />
+                                <Utbetalingsrad.Utbetaling {...dag} status={dag.status} i={i} />
                             </Rad>
                         ))}
                     </Body>

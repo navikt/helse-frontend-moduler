@@ -118,14 +118,14 @@ export const medAktivOppgave = () => {
             dato: '25.02.2019',
             gradering: 100,
             kilde: { label: 'SM', link: '#' },
-            oppgave: 'advarsel'
+            status: 'advarsel'
         },
         {
             type: Dagtype.Ubestemt,
             dato: '26.02.2019',
             gradering: 100,
             kilde: { label: 'SM', link: '#' },
-            oppgave: 'advarsel'
+            status: 'advarsel'
         },
         {
             type: Dagtype.Ferie,
@@ -141,7 +141,7 @@ export const medAktivOppgave = () => {
         }
     ];
 
-    return <Sykmeldingstabell dager={object('Dager med uløst oppgave', dager)} />;
+    return <Sykmeldingstabell dager={object('Dager med uløst status', dager)} />;
 };
 
 export const medFerdigOppgave = () => {
@@ -177,14 +177,14 @@ export const medFerdigOppgave = () => {
             dato: '25.02.2019',
             gradering: 100,
             kilde: { label: 'SM', link: '#' },
-            oppgave: 'løst'
+            status: 'løst'
         },
         {
             type: Dagtype.Syk,
             dato: '26.02.2019',
             gradering: 100,
             kilde: { label: 'SM', link: '#' },
-            oppgave: 'løst'
+            status: 'løst'
         },
         {
             type: Dagtype.Ferie,
@@ -200,7 +200,7 @@ export const medFerdigOppgave = () => {
         }
     ];
 
-    return <Sykmeldingstabell dager={object('Dager med løst oppgave', dager)} />;
+    return <Sykmeldingstabell dager={object('Dager med løst status', dager)} />;
 };
 
 export const medManuellOverstyring = () => {

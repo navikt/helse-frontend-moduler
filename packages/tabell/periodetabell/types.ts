@@ -1,4 +1,9 @@
-export type OppgaveStatus = 'ingen' | 'advarsel' | 'løst';
+export enum Dagstatus {
+    Advarsel = 'advarsel',
+    Suksess = 'suksess',
+    Feil = 'feil',
+    Inaktiv = 'inaktiv'
+}
 
 export type Kilde = {
     label: 'SM' | 'IM' | 'SØ';
@@ -17,9 +22,10 @@ export enum Dagtype {
 
 export interface Dag {
     dato: string;
-    type?: Dagtype;
+    type: Dagtype;
     kilde?: Kilde;
-    oppgave?: OppgaveStatus;
+    status?: Dagstatus;
     gradering?: number;
-    utbetaling?: number;
+    utbetaling?: number | string;
+    feilmelding?: string;
 }

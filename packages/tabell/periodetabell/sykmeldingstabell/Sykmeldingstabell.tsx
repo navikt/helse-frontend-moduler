@@ -19,9 +19,7 @@ const Sykmeldingstabell = ({ dager = [], setDager, className }: PeriodetabellPro
 
     function oppdaterFelt<T>(index: number, nyVerdi: T, feltNavn: string) {
         if (!setDager) return;
-        const nyeDager = dager.map((dag, i) =>
-            i === index ? { ...dag, [feltNavn]: nyVerdi } : dag
-        );
+        const nyeDager = dager.map((dag, i) => (i === index ? { ...dag, [feltNavn]: nyVerdi } : dag));
         setDager(nyeDager);
     }
 
@@ -36,9 +34,7 @@ const Sykmeldingstabell = ({ dager = [], setDager, className }: PeriodetabellPro
     return (
         <SykmeldingContext.Provider value={{ dager, oppdaterGradering, oppdaterType, overstyrer }}>
             <div className={classNames(styles.container, className)}>
-                {setDager && (
-                    <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />
-                )}
+                {setDager && <Overstyring åpen={overstyrer} onOverstyring={() => setOverstyrer(o => !o)} />}
                 <Tabell>
                     <Header>
                         <p />
@@ -49,18 +45,14 @@ const Sykmeldingstabell = ({ dager = [], setDager, className }: PeriodetabellPro
                         {dager.map((dag, i) => (
                             <Rad
                                 className={classNames(
-                                    dag.oppgave && styles[dag.oppgave],
+                                    dag.status && styles[dag.status],
                                     dag.type === Dagtype.Helg && styles.disabled
                                 )}
                                 key={i}
                             >
-                                <Perioderad.Status status={dag.oppgave} />
-                                <Perioderad.Sykmeldingsperiode
-                                    {...dag}
-                                    status={dag.oppgave}
-                                    i={i}
-                                />
-                                <Perioderad.Gradering {...dag} status={dag.oppgave} i={i} />
+                                <Perioderad.Status status={dag.status} />
+                                <Perioderad.Sykmeldingsperiode {...dag} status={dag.status} i={i} />
+                                <Perioderad.Gradering {...dag} status={dag.status} i={i} />
                             </Rad>
                         ))}
                     </Body>
