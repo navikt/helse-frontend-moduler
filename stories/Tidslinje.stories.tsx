@@ -78,43 +78,43 @@ export const tidslinjeMedMangeVedtaksperioder = () => {
         {
             id: '6567',
             fom: '2019-07-01',
-            tom: '2019-07-30',
+            tom: '2019-07-15',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '7567',
             fom: '2019-06-01',
-            tom: '2019-06-31',
+            tom: '2019-06-30',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '8567',
             fom: '2019-05-01',
-            tom: '2019-05-30',
+            tom: '2019-05-31',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '9567',
             fom: '2019-04-01',
-            tom: '2019-04-31',
+            tom: '2019-04-30',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '1667',
             fom: '2019-03-01',
-            tom: '2019-03-28',
+            tom: '2019-03-31',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '2667',
             fom: '2019-02-01',
-            tom: '2019-02-31',
+            tom: '2019-02-28',
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
             id: '3667',
             fom: '2019-01-01',
-            tom: '2010-01-30',
+            tom: '2010-01-31',
             status: Vedtaksperiodetilstand.Utbetalt
         }
     ];
@@ -164,6 +164,12 @@ export const medInaktivPeriode = () => {
                     id: '5678',
                     fom: '2019-07-16',
                     tom: '2019-08-30',
+                    status: Vedtaksperiodetilstand.Avslag
+                },
+                {
+                    id: '56782',
+                    fom: '2018-07-16',
+                    tom: '2018-08-30',
                     status: Vedtaksperiodetilstand.Avslag
                 }
             ]

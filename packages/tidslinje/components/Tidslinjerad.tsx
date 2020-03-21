@@ -18,9 +18,10 @@ type Sammenheng = 'høyre' | 'venstre' | 'begge';
 interface PosisjonertVedtaksperiode {
     left: number;
     width: number;
-    erAvkuttet: boolean;
-    sammenheng?: Sammenheng;
     value: Vedtaksperiode;
+    erAvkuttet: boolean;
+    erUtenforSynligTidslinje: boolean;
+    sammenheng?: Sammenheng;
 }
 
 const ikon = (inntektstype: Inntektstype) => {
@@ -41,7 +42,14 @@ const tilPosisjonertVedtaksperiode = (periode: Vedtaksperiode, skalastørrelse: 
     );
     const erAvkuttet = left + width > 100;
     const justertBredde = left + width > 100 ? 100 - left : width;
-    return { left, width: justertBredde, value: periode, erAvkuttet };
+    const erUtenforSynligTidslinje = left >= 100;
+    return {
+        left,
+        width: justertBredde,
+        value: periode,
+        erAvkuttet,
+        erUtenforSynligTidslinje
+    };
 };
 
 const nyesteFørst = (p1: PosisjonertVedtaksperiode, p2: PosisjonertVedtaksperiode) => p1.left - p2.left;
@@ -82,6 +90,7 @@ const Tidslinjerad = ({ inntektstype, inntektsnavn, vedtaksperioder }: EnkelTids
         classNames(
             styles.periode,
             periode.erAvkuttet && styles.avkuttet,
+            periode.erUtenforSynligTidslinje && styles.usynlig,
             periode.width < 3 && styles.mini,
             periode.sammenheng === 'begge' && styles.sammenhengendeFraBegge,
             periode.sammenheng === 'høyre' && styles.sammenhengendeFraHøyre,

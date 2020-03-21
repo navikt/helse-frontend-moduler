@@ -10,6 +10,7 @@ interface PosisjonertIntervall {
     left: number;
     width: number;
     value: Intervall;
+    erUtenforSynligTidslinje: boolean;
 }
 
 const tilPosisjonertIntervall = (
@@ -24,7 +25,8 @@ const tilPosisjonertIntervall = (
         sisteDag
     );
     const justertBredde = left + width > 100 ? 100 - left : width;
-    return { left, width: justertBredde, value: intervall };
+    const erUtenforSynligTidslinje = left >= 100;
+    return { left, width: justertBredde, value: intervall, erUtenforSynligTidslinje };
 };
 
 const duplikatintervall = (intervallet: PosisjonertIntervall, i: number, alleIntervaller: PosisjonertIntervall[]) =>
@@ -32,11 +34,14 @@ const duplikatintervall = (intervallet: PosisjonertIntervall, i: number, alleInt
         .slice(i + 1)
         .find(other => other.value.fom === intervallet.value.fom && other.value.tom === intervallet.value.tom);
 
+const utenforTidslinje = (intervallet: PosisjonertIntervall) => !intervallet.erUtenforSynligTidslinje;
+
 const Datointervaller = () => {
     const { intervaller, aktivtIntervall, onFocus, onSelect, skalastørrelse, sisteDag } = useContext(TidslinjeContext);
 
     const posisjonerteIntervaller = intervaller
         .map(intervall => tilPosisjonertIntervall(intervall, skalastørrelse, sisteDag))
+        .filter(utenforTidslinje)
         .filter(duplikatintervall)
         .map(posisjonertIntervall => {
             const className =

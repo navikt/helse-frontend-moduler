@@ -82,6 +82,7 @@ const dagerSomOverskriderMaksdato = [
     { ...dagerMedKildelenker[6], status: Dagstatus.Feil, feilmelding: 'Siste utbetalingsdag' },
     ...dagerMedKildelenker.slice(7).map(dag => ({
         ...dag,
+        type: Dagtype.Avvist,
         status: Dagstatus.Inaktiv,
         utbetaling: 'Ingen utbetaling'
     }))
