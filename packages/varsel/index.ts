@@ -1,4 +1,5 @@
 import Varsel, { Varseltype } from './Varsel';
+import Oppgavevarsel from './Oppgavevarsel';
 
-export { Varseltype };
+export { Varseltype, Oppgavevarsel };
 export default Varsel;

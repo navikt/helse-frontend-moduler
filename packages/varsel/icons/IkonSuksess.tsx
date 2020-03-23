@@ -2,7 +2,7 @@ import React from 'react';
 import { IconProps } from './types';
 import Ikon from './Ikon';
 
-const IkonSuksess = ({ fill = '#1c6937', stroke = '#ffffff', width = 20, height = 20 }: IconProps) => {
+const IkonSuksess = ({ fill = '#1c6937', stroke = '#ffffff', width, height }: IconProps) => {
     return (
         <Ikon height={height} width={width}>
             <path d="M12 0C5.383 0 0 5.384 0 12s5.383 12 12 12c6.616 0 12-5.384 12-12S18.616 0 12 0z" fill={fill} />

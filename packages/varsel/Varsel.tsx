@@ -6,10 +6,14 @@ import IkonFeil from './icons/IkonFeil';
 import styles from './Varsel.less';
 import classNames from 'classnames';
 
-export type Varseltype = 'info' | 'suksess' | 'advarsel' | 'feil';
+export enum Varseltype {
+    Info = 'info',
+    Suksess = 'suksess',
+    Advarsel = 'advarsel',
+    Feil = 'feil'
+}
 
 export interface VarselProps {
-    text: string;
     type?: Varseltype;
     children?: ReactNode | ReactNode[];
     className?: string;
@@ -17,13 +21,13 @@ export interface VarselProps {
 
 const ikon = (type: Varseltype) => {
     switch (type) {
-        case 'suksess':
+        case Varseltype.Suksess:
             return <IkonSuksess />;
-        case 'advarsel':
+        case Varseltype.Advarsel:
             return <IkonAdvarsel />;
-        case 'feil':
+        case Varseltype.Feil:
             return <IkonFeil />;
-        case 'info':
+        case Varseltype.Info:
         default:
             return <IkonInfo />;
     }
@@ -35,14 +39,11 @@ const ikon = (type: Varseltype) => {
  *
  * `Varsel` kan ta en valgfri `children` prop. Denne vil rendres til høyre for varselteksten.
  */
-const Varsel = ({ text, children, className = 'Varsel', type = 'info' }: VarselProps) => {
-    return (
-        <div className={classNames(className, styles.container, styles[type])}>
-            {ikon(type)}
-            <p>{text}</p>
-            {children}
-        </div>
-    );
-};
+const Varsel = ({ children, className = 'Varsel', type = Varseltype.Info }: VarselProps) => (
+    <div className={classNames(className, styles.container, styles[type])}>
+        {ikon(type)}
+        {children}
+    </div>
+);
 
 export default Varsel;

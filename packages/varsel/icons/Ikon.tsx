@@ -3,7 +3,7 @@ import { IconProps } from './types';
 
 type Children = { children: ReactNode | ReactNode[] };
 
-const Ikon = ({ width = 20, height = 20, children }: IconProps & Children) => {
+const Ikon = ({ width = 24, height = 24, children }: IconProps & Children) => {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"

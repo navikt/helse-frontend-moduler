@@ -1,6 +1,7 @@
 import React from 'react';
-import Varsel from '../packages/varsel';
+import Varsel, { Varseltype } from '../packages/varsel';
 import styled from '@emotion/styled';
+import Oppgavevarsel from '../packages/varsel/Oppgavevarsel';
 
 export default {
     component: Varsel,
@@ -19,18 +20,14 @@ const VarselContainer = styled('div')`
 export const alleVarsler = () => {
     return (
         <VarselContainer>
-            <Varsel text="Dette er et infovarsel" />
-            <Varsel text="Dette er et advarselsvarsel" type="advarsel" />
-            <Varsel text="Dette er et suksessvarsel" type="suksess" />
-            <Varsel text="Dette er et feilvarsel" type="feil" />
+            <Varsel>Dette er et infovarsel</Varsel>
+            <Varsel type={Varseltype.Advarsel}>Dette er et advarselsvarsel</Varsel>
+            <Varsel type={Varseltype.Suksess}>Dette er et suksessvarsel</Varsel>
+            <Varsel type={Varseltype.Feil}>Dette er et feilvarsel</Varsel>
         </VarselContainer>
     );
 };
 
 export const varselMedOppgave = () => {
-    return (
-        <Varsel text="Oppgave: Du har en ventende oppgave" type="advarsel">
-            <a href="#">Gå til oppgave</a>
-        </Varsel>
-    );
+    return <Oppgavevarsel oppgavelenke="#">Du har en ventende oppgave</Oppgavevarsel>;
 };

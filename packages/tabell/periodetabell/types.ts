@@ -15,6 +15,7 @@ export enum Dagtype {
     Helg = 'Helg',
     Ferie = 'Ferie',
     Avvist = 'Avvist',
+    Foreldet = 'Foreldet',
     Ubestemt = 'Ubestemt',
     Arbeidsdag = 'Arbeidsdag',
     Egenmelding = 'Egenmelding'
