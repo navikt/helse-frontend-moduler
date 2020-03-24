@@ -4,6 +4,7 @@ import IkonSyk from './IkonSyk';
 import IkonFerie from './IkonFerie';
 import IkonEgenmelding from './IkonEgenmelding';
 import { Dagtype } from '../types';
+import IkonArbeidsgiverperiode from './IkonArbeidsgiverperiode';
 
 type Children = { children: ReactNode | ReactNode[] };
 
@@ -17,6 +18,8 @@ export const ikon = (dagtype?: Dagtype) => {
             return <IkonEgenmelding />;
         case Dagtype.Egenmelding:
             return <IkonEgenmelding />;
+        case Dagtype.Arbeidsgiverperiode:
+            return <IkonArbeidsgiverperiode />;
         case Dagtype.Ubestemt:
         case Dagtype.Helg:
         default:

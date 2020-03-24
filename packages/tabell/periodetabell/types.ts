@@ -18,7 +18,8 @@ export enum Dagtype {
     Foreldet = 'Foreldet',
     Ubestemt = 'Ubestemt',
     Arbeidsdag = 'Arbeidsdag',
-    Egenmelding = 'Egenmelding'
+    Egenmelding = 'Egenmelding',
+    Arbeidsgiverperiode = 'Arbeidsgiverperiode'
 }
 
 export interface Dag {

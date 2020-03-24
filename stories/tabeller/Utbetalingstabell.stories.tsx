@@ -2,11 +2,24 @@ import React, { useState } from 'react';
 import { Dag, Dagtype, Utbetalingstabell } from '../../packages/tabell/periodetabell';
 import { Dagstatus, Kilde } from '../../packages/tabell/periodetabell/types';
 import { object, withKnobs } from '@storybook/addon-knobs';
+import dayjs, { Dayjs } from 'dayjs';
 
 export default {
     component: Utbetalingstabell,
     title: 'Tabeller/Utbetalingstabell',
     decorators: [withKnobs]
+};
+
+const enArbeidsgiverperiodedag = (dato: string) => ({
+    dato,
+    type: Dagtype.Arbeidsgiverperiode
+});
+
+const enPeriode = (fom: Dayjs, tom: Dayjs, dagCreator: (dato: string) => Dag) => {
+    const antallDager = tom.diff(fom, 'day') + 1;
+    return Array(antallDager)
+        .fill({})
+        .map((_, i) => dagCreator(dayjs(fom.add(i, 'day')).format('DD.MM.YYYY')));
 };
 
 const dager: Dag[] = [
@@ -88,6 +101,11 @@ const dagerSomOverskriderMaksdato = [
     }))
 ];
 
+const dagerMedArbeidsgiverperiode = [
+    ...enPeriode(dayjs('2019-02-02'), dayjs('2019-02-18'), enArbeidsgiverperiodedag),
+    ...dagerMedKildelenker
+];
+
 export const enkelUtbetalingstabell = () => {
     return <Utbetalingstabell dager={object('Dager', dager)} />;
 };
@@ -106,6 +124,10 @@ export const medLøsteOppgaver = () => {
 
 export const medDagerSomOverskriderMaksdato = () => {
     return <Utbetalingstabell dager={dagerSomOverskriderMaksdato} />;
+};
+
+export const medArbeidsgiverperiode = () => {
+    return <Utbetalingstabell dager={dagerMedArbeidsgiverperiode} />;
 };
 
 export const medManuellOverstyring = () => {
