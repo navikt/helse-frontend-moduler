@@ -84,7 +84,7 @@ export const Gradering = ({ gradering, kilde, status, i }: GraderingProps) => {
     const renderGradering = overstyrer ? (
         <input type="number" value={gradering || ''} onInput={onChange} />
     ) : (
-        <span>{`${gradering}%`}</span>
+        <span>{gradering ? `${gradering}%` : undefined}</span>
     );
 
     return (
