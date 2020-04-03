@@ -41,7 +41,7 @@ const tilPosisjonertVedtaksperiode = (periode: Vedtaksperiode, skalastørrelse: 
         sisteDag
     );
     const erAvkuttet = left + width > 100;
-    const justertBredde = left + width > 100 ? 100 - left : width;
+    const justertBredde = erAvkuttet ? 100 - left : width;
     const erUtenforSynligTidslinje = left >= 100;
     return {
         left,
