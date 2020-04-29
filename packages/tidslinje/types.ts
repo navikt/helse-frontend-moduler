@@ -35,7 +35,8 @@ export enum Vedtaksperiodetilstand {
     Avslag = 'avslag',
     IngenUtbetaling = 'ingenUtbetaling',
     Ukjent = 'ukjent',
-    Feilet = 'feilet'
+    Feilet = 'feilet',
+    TilInfotrygd = 'tilInfotrygd'
 }
 
 export interface Skalapunkt {
