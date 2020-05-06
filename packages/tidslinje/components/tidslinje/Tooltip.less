@@ -1,0 +1,39 @@
+.tooltip {
+    position: absolute;
+    padding: 0.5rem 1rem;
+    background: #59514b;
+    border-radius: 4px;
+    color: #fff;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(calc(-100% - 10px));
+    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.5);
+    animation-timing-function: ease-out;
+    animation-duration: 0.05s;
+    animation-name: fadeIn;
+    cursor: default;
+
+    &:before {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background: #59514b;
+        left: 50%;
+        bottom: 0;
+        transform: translateX(-50%) translateY(50%) rotate(45deg);
+        box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        padding: 0.25rem 0.5rem;
+    }
+
+    to {
+        opacity: 1;
+        padding: 0.5rem 1rem;
+    }
+}
