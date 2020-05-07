@@ -64,6 +64,7 @@ const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: Sy
         perioder: rad.perioder.map((periode: Sykepengeperiode) => {
             const status = periodeStatus(periode.status);
             return {
+                id: periode.id,
                 fom: periode.fom,
                 tom: periode.tom,
                 status,
