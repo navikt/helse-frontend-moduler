@@ -10,7 +10,7 @@ import { TidslinjeProps } from './Tidslinje';
 
 const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntallDager: number): PosisjonertPeriode => {
     const posisjonertPeriode = {
-        id: nanoid(),
+        id: periode.id || nanoid(),
         disabled: periode.disabled,
         fom: dayjs(periode.fom).startOf('day'),
         tom: dayjs(periode.tom).endOf('day'),

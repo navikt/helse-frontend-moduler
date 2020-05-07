@@ -12,6 +12,7 @@ export interface Periode {
     fom: Date;
     tom: Date;
     status: PeriodeStatus;
+    id?: string;
     disabled?: boolean;
     className?: string;
     etikett?: ReactNode;

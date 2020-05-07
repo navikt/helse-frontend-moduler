@@ -18,6 +18,7 @@ export enum Vedtaksperiodetilstand {
 }
 
 export interface Sykepengeperiode {
+    id: string;
     fom: Date;
     tom: Date;
     status: Vedtaksperiodetilstand;

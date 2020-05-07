@@ -18,38 +18,45 @@ const rader = [
     {
         perioder: [
             {
+                id: '123',
                 fom: new Date('2019-11-05'),
                 tom: new Date('2019-11-26'),
                 status: Vedtaksperiodetilstand.Venter,
                 etikett: enEtikett('Venter på tidligere vedtaksperiode')
             },
             {
+                id: '234',
                 fom: new Date('2019-10-18'),
                 tom: new Date('2019-11-04'),
                 status: Vedtaksperiodetilstand.Oppgaver
             },
             {
+                id: '345',
                 fom: new Date('2019-10-02'),
                 tom: new Date('2019-10-17'),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
+                id: '456',
                 fom: new Date('2019-08-02'),
                 tom: new Date('2019-08-17'),
                 status: Vedtaksperiodetilstand.Ukjent,
                 etikett: enEtikett('Ukjent tilstand på vedtaksperioden')
             },
             {
+                id: '567',
                 fom: new Date('2019-06-01'),
                 tom: new Date('2019-06-25'),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
+                id: '678',
                 fom: new Date('2019-05-05'),
                 tom: new Date('2019-05-30'),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
+                id: '789',
                 fom: new Date('2019-04-20'),
                 tom: new Date('2019-05-04'),
                 status: Vedtaksperiodetilstand.IngenUtbetaling,
@@ -60,11 +67,13 @@ const rader = [
     {
         perioder: [
             {
+                id: '135',
                 fom: new Date('2019-02-10'),
                 tom: new Date('2019-02-25'),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
+                id: '246',
                 fom: new Date('2019-02-26'),
                 tom: new Date('2019-03-15'),
                 status: Vedtaksperiodetilstand.Utbetalt
@@ -74,11 +83,13 @@ const rader = [
     {
         perioder: [
             {
+                id: '357',
                 fom: new Date('2019-10-18'),
                 tom: new Date('2019-11-04'),
                 status: Vedtaksperiodetilstand.Oppgaver
             },
             {
+                id: '468',
                 fom: new Date('2019-08-02'),
                 tom: new Date('2019-08-17'),
                 status: Vedtaksperiodetilstand.Annullert,
@@ -90,11 +101,13 @@ const rader = [
                 )
             },
             {
+                id: '579',
                 fom: new Date('2019-10-02'),
                 tom: new Date('2019-10-17'),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
+                id: '680',
                 fom: new Date('2019-04-02'),
                 tom: new Date('2019-04-17'),
                 status: Vedtaksperiodetilstand.Avslag
