@@ -5,6 +5,7 @@ import Sykepengetidslinje, {
 } from '../packages/tidslinje/components/sykepengetidslinje/Sykepengetidslinje';
 import { Periode } from '../packages/tidslinje';
 import './styles.css';
+import dayjs from 'dayjs';
 
 export default {
     title: 'Tidslinje/Sykepengetidslinje',
@@ -125,6 +126,41 @@ export const tidslinje = () => {
             rader={rader}
             startDato={startDato}
             sluttDato={sluttDato}
+            onSelectPeriode={onSelectPeriode}
+        />
+    );
+};
+
+export const kortSammenhengende = () => {
+    const rader = [
+        {
+            perioder: [
+                {
+                    id: 'abc',
+                    fom: new Date('2020-01-01'),
+                    tom: new Date('2020-01-31'),
+                    status: Vedtaksperiodetilstand.Utbetalt
+                },
+                {
+                    id: 'bcd',
+                    fom: new Date('2020-02-01'),
+                    tom: new Date('2020-02-14'),
+                    status: Vedtaksperiodetilstand.Oppgaver
+                }
+            ]
+        }
+    ];
+    const onSelectPeriode = (periode: Periode) => console.log(periode.status, periode.fom, periode.tom);
+    return (
+        <Sykepengetidslinje
+            rader={rader}
+            startDato={dayjs('2020-02-14')
+                .subtract(60, 'day')
+                .endOf('day')
+                .toDate()}
+            sluttDato={dayjs('2020-02-15')
+                .endOf('day')
+                .toDate()}
             onSelectPeriode={onSelectPeriode}
         />
     );

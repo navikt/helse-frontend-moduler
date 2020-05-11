@@ -46,7 +46,7 @@ export const dagsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: num
 
 export const månedsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: number): Skalaetikett[] => {
     const førsteMåned = start.startOf('month');
-    const antallMåneder = slutt.diff(start, 'month') + 1;
+    const antallMåneder = Math.ceil(slutt.diff(start, 'month', true)) + 1;
     return new Array(antallMåneder).fill(førsteMåned).map((denneMåneden, i) => {
         const måned = denneMåneden.add(i, 'month');
         return {
@@ -58,7 +58,7 @@ export const månedsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: 
 
 export const årsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: number): Skalaetikett[] => {
     const førsteÅr = start.startOf('year');
-    const antallÅr = slutt.diff(start, 'year') + 1;
+    const antallÅr = slutt.diff(start, 'year') + 2;
     return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
         const år = detteÅret.add(i, 'year');
         return {
@@ -81,7 +81,6 @@ const skalaEtiketter = (start: Dayjs, slutt: Dayjs): Skalaetikett[] => {
 
 const Skalaetiketter = ({ start, slutt }: SkalaetiketterProps) => {
     const etiketter = useMemo(() => skalaEtiketter(start, slutt).filter(erSynlig), [start, slutt]);
-
     return (
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
             {etiketter.map(etikett => (

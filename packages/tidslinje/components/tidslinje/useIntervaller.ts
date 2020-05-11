@@ -30,7 +30,7 @@ export const useIntervaller = (
             .map(
                 (periode: EnkelPeriode): Intervall => {
                     const left = breddeMellomDatoer(periode.tom, sluttDato, totaltAntallDager);
-                    const width = breddeMellomDatoer(periode.fom.subtract(6, 'hour'), periode.tom, totaltAntallDager);
+                    const width = breddeMellomDatoer(periode.fom, periode.tom, totaltAntallDager);
                     return {
                         id: nanoid(),
                         fom: periode.fom,

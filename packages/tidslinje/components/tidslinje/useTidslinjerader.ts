@@ -15,17 +15,11 @@ const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntal
         fom: dayjs(periode.fom).startOf('day'),
         tom: dayjs(periode.tom).endOf('day'),
         status: periode.status,
-        left: 0,
-        width: 0,
         className: periode.className,
         etikett: periode.etikett
     };
     const left = breddeMellomDatoer(posisjonertPeriode.tom, tidslinjeSlutt, totaltAntallDager);
-    const width = breddeMellomDatoer(
-        posisjonertPeriode.fom.subtract(1, 'day'),
-        posisjonertPeriode.tom,
-        totaltAntallDager
-    );
+    const width = breddeMellomDatoer(posisjonertPeriode.fom, posisjonertPeriode.tom, totaltAntallDager);
     const cropped = left + width > 100;
     const outOfBounds = left >= 100;
     return {
@@ -78,4 +72,4 @@ export const senesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
               rader
                   .flatMap(raden => raden.perioder)
                   .reduce((senest, perioden) => (perioden.tom > senest ? perioden.tom : senest), new Date(0))
-          ).endOf('day');
+          ).add(1, 'day');
