@@ -155,10 +155,10 @@ export const kortSammenhengende = () => {
         <Sykepengetidslinje
             rader={rader}
             startDato={dayjs('2020-02-14')
-                .subtract(60, 'day')
+                .subtract(1, 'year')
                 .endOf('day')
                 .toDate()}
-            sluttDato={dayjs('2020-02-15')
+            sluttDato={dayjs('2020-02-14')
                 .endOf('day')
                 .toDate()}
             onSelectPeriode={onSelectPeriode}
