@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import Intervaller from './Intervaller';
 import Tidslinjerad from './Tidslinjerad';
 import Skalaetiketter from './Skalaetiketter';
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { erLike } from './calc';
 import { useIntervaller } from './useIntervaller';
 import { EnkelTidslinje, Periode } from '../types.external';
@@ -16,6 +16,7 @@ export interface TidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: Periode;
 }
 
 export interface InternalTidslinjeProps {
@@ -23,9 +24,10 @@ export interface InternalTidslinjeProps {
     startDato: Dayjs;
     sluttDato: Dayjs;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: Periode;
 }
 
-const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: InternalTidslinjeProps) => {
+const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode, aktivPeriode }: InternalTidslinjeProps) => {
     const [intervaller, setIntervaller] = useIntervaller(rader, startDato, sluttDato);
     const [aktivtIntervall, setAktivtIntervall] = useState<Intervall>();
 
@@ -40,6 +42,7 @@ const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: InternalTid
 
     const onSelectPeriodeWrapper = (periode: PosisjonertPeriode) => {
         onSelectPeriode?.({
+            id: periode.id,
             fom: periode.fom.toDate(),
             tom: periode.tom.toDate(),
             disabled: periode.disabled,
@@ -52,10 +55,19 @@ const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: InternalTid
         setAktivtIntervall(intervaller.find(intervall => intervall.active) || intervaller[0]);
     }, [intervaller]);
 
+    useEffect(() => {
+        if (aktivPeriode) {
+            aktiverIntervallForPeriode({
+                fom: dayjs(aktivPeriode.fom).startOf('day'),
+                tom: dayjs(aktivPeriode.tom).endOf('day')
+            });
+        }
+    }, [aktivPeriode]);
+
     return (
         <div className={classNames('tidslinje', styles.tidslinje)}>
             <Skalaetiketter start={startDato} slutt={sluttDato} />
-            <div className={styles.rader}>
+            <div className={classNames('tidslinjerader', styles.rader)}>
                 <Intervaller intervaller={intervaller} />
                 {rader.map(tidslinje => (
                     <Tidslinjerad
@@ -70,10 +82,18 @@ const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: InternalTid
     );
 };
 
-export default ({ startDato, sluttDato, rader, onSelectPeriode }: TidslinjeProps) => {
+export default ({ startDato, sluttDato, rader, onSelectPeriode, aktivPeriode }: TidslinjeProps) => {
     const _startDato = tidligsteDato({ startDato, rader });
     const _sluttDato = senesteDato({ sluttDato, rader });
     const _rader = useTidslinjerader(rader, _startDato, _sluttDato);
 
-    return <Tidslinje rader={_rader} startDato={_startDato} sluttDato={_sluttDato} onSelectPeriode={onSelectPeriode} />;
+    return (
+        <Tidslinje
+            rader={_rader}
+            startDato={_startDato}
+            sluttDato={_sluttDato}
+            onSelectPeriode={onSelectPeriode}
+            aktivPeriode={aktivPeriode}
+        />
+    );
 };

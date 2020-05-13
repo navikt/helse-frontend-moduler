@@ -36,9 +36,16 @@ export interface SykepengetidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: Sykepengeperiode;
 }
 
-const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: SykepengetidslinjeProps) => {
+const Sykepengetidslinje = ({
+    rader,
+    startDato,
+    sluttDato,
+    onSelectPeriode,
+    aktivPeriode
+}: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodeStatus => {
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
@@ -60,22 +67,32 @@ const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: Sy
         }
     };
 
+    const toPeriode = (periode: Sykepengeperiode): Periode => {
+        const status = periodeStatus(periode.status);
+        return {
+            id: periode.id,
+            fom: periode.fom,
+            tom: periode.tom,
+            status,
+            disabled: periode.disabled || status === PeriodeStatus.Inaktiv || status === PeriodeStatus.Ukjent,
+            className: classNames(periode.className, styles[periode.status]),
+            etikett: periode.etikett
+        };
+    };
+
     const _rader: EnkelTidslinje[] = rader.map((rad: EnkelSykepengetidslinje) => ({
-        perioder: rad.perioder.map((periode: Sykepengeperiode) => {
-            const status = periodeStatus(periode.status);
-            return {
-                id: periode.id,
-                fom: periode.fom,
-                tom: periode.tom,
-                status,
-                disabled: periode.disabled || status === PeriodeStatus.Inaktiv || status === PeriodeStatus.Ukjent,
-                className: classNames(periode.className, styles[periode.status]),
-                etikett: periode.etikett
-            };
-        })
+        perioder: rad.perioder.map(toPeriode)
     }));
 
-    return <Tidslinje rader={_rader} startDato={startDato} sluttDato={sluttDato} onSelectPeriode={onSelectPeriode} />;
+    return (
+        <Tidslinje
+            rader={_rader}
+            startDato={startDato}
+            sluttDato={sluttDato}
+            onSelectPeriode={onSelectPeriode}
+            aktivPeriode={aktivPeriode !== undefined ? toPeriode(aktivPeriode) : undefined}
+        />
+    );
 };
 
 export default Sykepengetidslinje;
