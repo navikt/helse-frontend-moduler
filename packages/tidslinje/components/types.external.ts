@@ -13,9 +13,10 @@ export interface Periode {
     tom: Date;
     status: PeriodeStatus;
     id?: string;
+    active?: boolean;
     disabled?: boolean;
     className?: string;
-    etikett?: ReactNode;
+    disabledLabel?: ReactNode;
 }
 
 export interface EnkelTidslinje {

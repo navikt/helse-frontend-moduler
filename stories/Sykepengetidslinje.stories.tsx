@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import Sykepengetidslinje, {
+    EnkelSykepengetidslinje,
     Vedtaksperiodetilstand
 } from '../packages/tidslinje/components/sykepengetidslinje/Sykepengetidslinje';
 import { Periode } from '../packages/tidslinje';
@@ -20,48 +21,76 @@ const rader = [
         perioder: [
             {
                 id: '123',
-                fom: new Date('2019-11-05'),
-                tom: new Date('2019-11-26'),
+                fom: dayjs(new Date('2019-11-05'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-11-26'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Venter,
-                etikett: enEtikett('Venter på tidligere vedtaksperiode')
+                disabledLabel: enEtikett('Venter på tidligere vedtaksperiode')
             },
             {
                 id: '234',
-                fom: new Date('2019-10-18'),
-                tom: new Date('2019-11-04'),
+                fom: dayjs(new Date('2019-10-18'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-11-04'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Oppgaver
             },
             {
                 id: '345',
-                fom: new Date('2019-10-02'),
-                tom: new Date('2019-10-17'),
+                fom: dayjs(new Date('2019-10-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-10-17'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
                 id: '456',
-                fom: new Date('2019-08-02'),
-                tom: new Date('2019-08-17'),
+                fom: dayjs(new Date('2019-08-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-08-17'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Ukjent,
-                etikett: enEtikett('Ukjent tilstand på vedtaksperioden')
+                disabledLabel: enEtikett('Ukjent tilstand på vedtaksperioden')
             },
             {
                 id: '567',
-                fom: new Date('2019-06-01'),
-                tom: new Date('2019-06-25'),
+                fom: dayjs(new Date('2019-06-01'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-06-25'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
                 id: '678',
-                fom: new Date('2019-05-05'),
-                tom: new Date('2019-05-30'),
+                fom: dayjs(new Date('2019-05-05'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-05-30'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
                 id: '789',
-                fom: new Date('2019-04-20'),
-                tom: new Date('2019-05-04'),
+                fom: dayjs(new Date('2019-04-20'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-05-04'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.IngenUtbetaling,
-                etikett: enEtikett('Ingenting utbetalinger for perioden')
+                disabledLabel: enEtikett('Ingenting utbetalinger for perioden')
             }
         ]
     },
@@ -69,14 +98,22 @@ const rader = [
         perioder: [
             {
                 id: '135',
-                fom: new Date('2019-02-10'),
-                tom: new Date('2019-02-25'),
+                fom: dayjs(new Date('2019-02-10'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-02-25'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
                 id: '246',
-                fom: new Date('2019-02-26'),
-                tom: new Date('2019-03-15'),
+                fom: dayjs(new Date('2019-02-26'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-03-15'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             }
         ]
@@ -85,16 +122,24 @@ const rader = [
         perioder: [
             {
                 id: '357',
-                fom: new Date('2019-10-18'),
-                tom: new Date('2019-11-04'),
+                fom: dayjs(new Date('2019-10-18'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-11-04'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Oppgaver
             },
             {
                 id: '468',
-                fom: new Date('2019-08-02'),
-                tom: new Date('2019-08-17'),
+                fom: dayjs(new Date('2019-08-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-08-17'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Annullert,
-                etikett: (
+                disabledLabel: (
                     <span className="flex-column">
                         {enEtikett('Annullert')}
                         {enEtikett('Hans Hansen 20.04.2020')}
@@ -103,14 +148,22 @@ const rader = [
             },
             {
                 id: '579',
-                fom: new Date('2019-10-02'),
-                tom: new Date('2019-10-17'),
+                fom: dayjs(new Date('2019-10-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-10-17'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
             },
             {
                 id: '680',
-                fom: new Date('2019-04-02'),
-                tom: new Date('2019-04-17'),
+                fom: dayjs(new Date('2019-04-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-04-17'))
+                    .endOf('day')
+                    .toDate(),
                 status: Vedtaksperiodetilstand.Avslag
             }
         ]
@@ -120,10 +173,23 @@ const rader = [
 export const tidslinje = () => {
     const startDato = new Date('2019-02-01');
     const sluttDato = new Date('2020-01-01');
-    const onSelectPeriode = (periode: Periode) => console.log(periode.status, periode.fom, periode.tom);
+    const [tidslinjerader, setTidslinjerader] = useState<EnkelSykepengetidslinje[]>(rader);
+
+    const onSelectPeriode = (periode: Periode) => {
+        setTidslinjerader(rader =>
+            rader.map(rad => ({
+                ...rad,
+                perioder: rad.perioder.map(p => ({
+                    ...p,
+                    active: p.tom.getTime() === periode.tom.getTime() && p.fom.getTime() === p.fom.getTime()
+                }))
+            }))
+        );
+    };
+
     return (
         <Sykepengetidslinje
-            rader={rader}
+            rader={tidslinjerader}
             startDato={startDato}
             sluttDato={sluttDato}
             onSelectPeriode={onSelectPeriode}
@@ -137,14 +203,22 @@ export const kortSammenhengende = () => {
             perioder: [
                 {
                     id: 'abc',
-                    fom: new Date('2020-01-01'),
-                    tom: new Date('2020-01-31'),
+                    fom: dayjs(new Date('2020-01-01'))
+                        .startOf('day')
+                        .toDate(),
+                    tom: dayjs(new Date('2020-01-31'))
+                        .endOf('day')
+                        .toDate(),
                     status: Vedtaksperiodetilstand.Utbetalt
                 },
                 {
                     id: 'bcd',
-                    fom: new Date('2020-02-01'),
-                    tom: new Date('2020-02-14'),
+                    fom: dayjs(new Date('2020-02-01'))
+                        .startOf('day')
+                        .toDate(),
+                    tom: dayjs(new Date('2020-02-14'))
+                        .endOf('day')
+                        .toDate(),
                     status: Vedtaksperiodetilstand.Oppgaver
                 }
             ]

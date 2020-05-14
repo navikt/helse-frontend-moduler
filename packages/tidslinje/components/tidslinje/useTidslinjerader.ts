@@ -16,7 +16,8 @@ const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntal
         tom: dayjs(periode.tom).endOf('day'),
         status: periode.status,
         className: periode.className,
-        etikett: periode.etikett
+        disabledLabel: periode.disabledLabel,
+        active: periode.active
     };
     const left = breddeMellomDatoer(posisjonertPeriode.tom, tidslinjeSlutt, totaltAntallDager);
     const width = breddeMellomDatoer(posisjonertPeriode.fom, posisjonertPeriode.tom, totaltAntallDager);

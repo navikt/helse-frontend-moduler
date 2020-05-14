@@ -61,7 +61,6 @@ export const årsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: num
     const antallÅr = Math.ceil(slutt.diff(start, 'year', true)) + 1;
     return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
         const år = detteÅret.add(i, 'year');
-        console.log(år.year(), breddeMellomDatoer(år, slutt, totaltAntallDager));
         return {
             left: breddeMellomDatoer(år, slutt, totaltAntallDager),
             label: formatertÅr(år)

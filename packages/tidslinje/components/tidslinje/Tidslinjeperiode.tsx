@@ -1,14 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Tooltip from './Tooltip';
-import { EnkelPeriode, Intervall, PosisjonertPeriode } from '../types.internal';
+import { PosisjonertPeriode } from '../types.internal';
 import classNames from 'classnames';
-import styles from './Tidslinjerad.less';
+import styles from './Tidslinjeperiode.less';
 import { overlapper } from './calc';
+import { TidslinjeContext } from './Tidslinje';
 
 interface TidslinjeperiodeProps {
     periode: PosisjonertPeriode;
-    onSelectPeriode?: (periode: EnkelPeriode) => void;
-    aktivtIntervall?: Intervall;
 }
 
 const ariaLabel = (periode: PosisjonertPeriode): string => {
@@ -17,35 +16,46 @@ const ariaLabel = (periode: PosisjonertPeriode): string => {
     return `${periode.status} fra ${fom} til og med ${tom}`;
 };
 
-const Tidslinjeperiode = ({ periode, onSelectPeriode, aktivtIntervall }: TidslinjeperiodeProps) => {
-    const [visEtikett, setVisEtikett] = useState(false);
+const Tidslinjeperiode = ({ periode }: TidslinjeperiodeProps) => {
+    const { onSelectPeriode, aktivtIntervall, timelinePixelWidth } = useContext(TidslinjeContext);
+    const [visDisabledLabel, setVisDisabledLabel] = useState(false);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
-    const className = classNames(
-        styles.periode,
-        periode.width < 3 && styles.mini,
-        periode.cropped && styles.avkuttet,
-        periode.outOfBounds && styles.usynlig,
-        periode.sammenheng === 'begge' && styles.sammenhengendeFraBegge,
-        periode.sammenheng === 'høyre' && styles.sammenhengendeFraHøyre,
-        periode.sammenheng === 'venstre' && styles.sammenhengendeFraVenstre,
-        overlapper(periode, aktivtIntervall) && styles.active,
-        styles[periode.status],
-        periode.className
+    const relativeWidth = timelinePixelWidth ? (timelinePixelWidth / 100) * periode.width : Number.MAX_SAFE_INTEGER;
+
+    const className = useMemo(
+        () =>
+            classNames(
+                styles.periode,
+                relativeWidth < 30 && styles.mini,
+                periode.cropped && styles.avkuttet,
+                periode.outOfBounds && styles.usynlig,
+                periode.sammenheng === 'begge' && styles.sammenhengendeFraBegge,
+                periode.sammenheng === 'høyre' && styles.sammenhengendeFraHøyre,
+                periode.sammenheng === 'venstre' && styles.sammenhengendeFraVenstre,
+                overlapper(periode, aktivtIntervall) && styles.active,
+                styles[periode.status],
+                periode.className
+            ),
+        [aktivtIntervall, timelinePixelWidth]
     );
 
     const onClick = () => {
-        setVisEtikett(!visEtikett);
-        onSelectPeriode?.(periode);
+        if (periode.disabledLabel) {
+            setVisDisabledLabel(!visDisabledLabel);
+        } else {
+            onSelectPeriode?.(periode);
+        }
     };
 
     useEffect(() => {
-        if (visEtikett) {
-            const clickHandler = () => setVisEtikett(false);
+        if (visDisabledLabel) {
+            const clickHandler = () => setVisDisabledLabel(false);
             document.addEventListener('click', clickHandler);
             return () => document.removeEventListener('click', clickHandler);
         }
         return () => null;
-    }, [visEtikett]);
+    }, [visDisabledLabel]);
 
     return (
         <button
@@ -53,12 +63,13 @@ const Tidslinjeperiode = ({ periode, onSelectPeriode, aktivtIntervall }: Tidslin
             onClick={onClick}
             aria-label={ariaLabel(periode)}
             tabIndex={-1}
+            ref={buttonRef}
             style={{
                 left: `${periode.left}%`,
                 width: `${periode.width}%`
             }}
         >
-            {periode.etikett && visEtikett && <Tooltip>{periode.etikett}</Tooltip>}
+            {periode.disabledLabel && visDisabledLabel && <Tooltip>{periode.disabledLabel}</Tooltip>}
         </button>
     );
 };

@@ -1,6 +1,6 @@
 import { Dayjs } from 'dayjs';
 import { EnkelPeriode, InternalEnkelTidslinje, Intervall, PosisjonertPeriode } from '../types.internal';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { useMemo } from 'react';
 import { erSynlig } from './filter';
 import { breddeMellomDatoer, erLike } from './calc';
 import { nanoid } from 'nanoid';
@@ -14,17 +14,12 @@ const harMinstEnAktivPeriode = (intervallet: Intervall, perioder: PosisjonertPer
     return overlappendePerioder.find(perioden => !perioden.disabled) !== undefined;
 };
 
-export const useIntervaller = (
-    rader: InternalEnkelTidslinje[],
-    startDato: Dayjs,
-    sluttDato: Dayjs
-): [Intervall[], Dispatch<SetStateAction<Intervall[]>>] => {
-    const [intervaller, setIntervaller] = useState<Intervall[]>([]);
-
-    useEffect(() => {
+export const useIntervaller = (rader: InternalEnkelTidslinje[], startDato: Dayjs, sluttDato: Dayjs): Intervall[] =>
+    useMemo(() => {
         const totaltAntallDager = sluttDato.diff(startDato, 'day');
         const perioder = rader.flatMap(rad => rad.perioder);
-        const nyeIntervaller = perioder
+        const aktivPeriode = perioder.find(periode => periode.active);
+        return perioder
             .sort(sisteEnklePeriode)
             .filter(identiskePerioder)
             .map(
@@ -36,16 +31,11 @@ export const useIntervaller = (
                         fom: periode.fom,
                         tom: periode.tom,
                         left: left,
-                        width: width + left > 100 ? 100 - left : width
+                        width: width + left > 100 ? 100 - left : width,
+                        active: erLike(periode, aktivPeriode)
                     };
                 }
             )
             .filter(erSynlig)
             .filter(intervallet => harMinstEnAktivPeriode(intervallet, perioder));
-
-        nyeIntervaller[0].active = true;
-        setIntervaller(nyeIntervaller);
     }, [rader]);
-
-    return [intervaller, setIntervaller];
-};

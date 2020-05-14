@@ -11,7 +11,7 @@ export const breddeMellomDatoer = (start: Dayjs, slutt: Dayjs, totaltAntallDatoe
     return Math.abs((dagerMellomDatoer / totaltAntallDatoer) * 100);
 };
 
-export const erLike = (p1: EnkelPeriode, p2: EnkelPeriode) => p1.fom.isSame(p2.fom) && p1.tom.isSame(p2.tom);
+export const erLike = (p1: EnkelPeriode, p2?: EnkelPeriode) => p2 && p1.fom.isSame(p2.fom) && p1.tom.isSame(p2.tom);
 
 export const erDelAv = (p1: EnkelPeriode, p2?: EnkelPeriode) => p2 && p1.fom.isBefore(p2.fom) && p1.tom.isAfter(p2.tom);
 

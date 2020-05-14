@@ -24,7 +24,8 @@ export interface Sykepengeperiode {
     status: Vedtaksperiodetilstand;
     disabled?: boolean;
     className?: string;
-    etikett?: ReactNode;
+    disabledLabel?: ReactNode;
+    active?: boolean;
 }
 
 export interface EnkelSykepengetidslinje {
@@ -36,16 +37,9 @@ export interface SykepengetidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
-    aktivPeriode?: Sykepengeperiode;
 }
 
-const Sykepengetidslinje = ({
-    rader,
-    startDato,
-    sluttDato,
-    onSelectPeriode,
-    aktivPeriode
-}: SykepengetidslinjeProps) => {
+const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodeStatus => {
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
@@ -76,7 +70,8 @@ const Sykepengetidslinje = ({
             status,
             disabled: periode.disabled || status === PeriodeStatus.Inaktiv || status === PeriodeStatus.Ukjent,
             className: classNames(periode.className, styles[periode.status]),
-            etikett: periode.etikett
+            disabledLabel: periode.disabledLabel,
+            active: periode.active
         };
     };
 
@@ -84,15 +79,7 @@ const Sykepengetidslinje = ({
         perioder: rad.perioder.map(toPeriode)
     }));
 
-    return (
-        <Tidslinje
-            rader={_rader}
-            startDato={startDato}
-            sluttDato={sluttDato}
-            onSelectPeriode={onSelectPeriode}
-            aktivPeriode={aktivPeriode !== undefined ? toPeriode(aktivPeriode) : undefined}
-        />
-    );
+    return <Tidslinje rader={_rader} startDato={startDato} sluttDato={sluttDato} onSelectPeriode={onSelectPeriode} />;
 };
 
 export default Sykepengetidslinje;

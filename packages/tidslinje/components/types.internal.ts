@@ -24,12 +24,13 @@ export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
     id: string;
     width: number;
     status: PeriodeStatus;
+    active?: boolean;
     cropped?: boolean;
     disabled?: boolean;
     outOfBounds?: boolean;
     sammenheng?: 'venstre' | 'høyre' | 'begge';
     className?: string;
-    etikett?: ReactNode;
+    disabledLabel?: ReactNode;
 }
 
 export interface Skalaetikett extends PosisjonertElement {
