@@ -1,0 +1,45 @@
+.behandletAvInfotrygd {
+    @iconSize: 24px;
+    @marginLeft: @iconSize + 10px;
+
+    position: relative;
+    margin-left: @marginLeft;
+
+    &:before {
+        @padding: 4px;
+        position: absolute;
+        left: -@marginLeft;
+        content: '';
+        padding: @padding;
+        height: @iconSize - @padding * 2;
+        width: @iconSize - @padding * 2;
+        background-color: #78706A;
+        border-radius: 50%;
+        background-image: url("data:image/svg+xml;charset=UTF-8,%3c?xml version='1.0' encoding='UTF-8'?%3e%3csvg width='24px' height='24px' viewBox='0 0 24 24' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'%3e%3ctitle%3eArtboard%3c/title%3e%3cg id='Artboard' stroke='none' stroke-width='1' fill='none' fill-rule='evenodd'%3e%3cg id='Group-2' transform='translate(0.000000, 0.000000)' fill='%2378706A'%3e%3cellipse id='Oval' cx='12' cy='11.8562874' rx='12' ry='11.8562874'%3e%3c/ellipse%3e%3c/g%3e%3cg id='Fill/32-content/box-4' transform='translate(0, 0.5)' fill='%23E7E9E9'%3e%3cpath d='M16,2.86517962 L16,11.677006 L15.776,11.9744012 L8,14.4158084 L8,4.99598801 L16,2.86517962 Z M-3.33333444e-08,2.95320357 L7.33333333,4.99913173 L7.33333333,14.4158084 L0.223999968,11.9744012 L-3.33333444e-08,11.677006 L-3.33333444e-08,2.95320357 Z M8.028,0.675269432 L8.084,0.684071828 L15.194,2.43386225 L7.68666667,4.42760478 C7.67933333,4.42697603 7.674,4.42320358 7.66666667,4.42320358 C7.658,4.42320358 7.65133333,4.42697603 7.64333333,4.42823352 L7.64333333,4.42823352 L0.647999969,2.47284429 L7.916,0.684071828 C7.97066667,0.670868235 8.02866667,0.670868235 8.084,0.684071828 Z' id='Combined-Shape'%3e%3c/path%3e%3c/g%3e%3c/g%3e%3c/svg%3e");
+        background-origin: content-box;
+        background-repeat: no-repeat;
+    }
+    &:after {
+        @lineWidth: 4px;
+        position: absolute;
+        content: '';
+        background-color: #78706A;
+        border-radius: @lineWidth / 2;
+        width: @lineWidth;
+        height: calc(100% - @marginLeft);
+        left: calc(-@marginLeft + @iconSize / 2 - @lineWidth / 2);
+        top: @marginLeft;
+    }
+}
+
+.noChildren:after {
+    display: none;
+}
+
+.tittel {
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #3e3832;
+    margin-bottom: 1rem;
+}
