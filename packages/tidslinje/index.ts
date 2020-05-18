@@ -1,10 +1,11 @@
 import Tidslinje from './components/tidslinje/Tidslinje';
 import { Periode, PeriodeStatus } from './components/types.external';
 import Sykepengetidslinje, {
-    Vedtaksperiodetilstand,
-    Sykepengeperiode
+    EnkelSykepengetidslinje,
+    Sykepengeperiode,
+    Vedtaksperiodetilstand
 } from './components/sykepengetidslinje/Sykepengetidslinje';
 
-export { Sykepengetidslinje, Sykepengeperiode, Vedtaksperiodetilstand };
+export { Sykepengetidslinje, Sykepengeperiode, Vedtaksperiodetilstand, EnkelSykepengetidslinje };
 export { Periode, PeriodeStatus };
 export { Tidslinje };
