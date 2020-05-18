@@ -7,6 +7,7 @@ import styles from './Sykepengetidslinje.less';
 export enum Vedtaksperiodetilstand {
     TilUtbetaling = 'tilUtbetaling',
     Utbetalt = 'utbetalt',
+    UtbetaltIInfotrygd = 'utbetaltIInfotrygd',
     Oppgaver = 'oppgaver',
     Venter = 'venter',
     Avslag = 'avslag',
@@ -51,6 +52,7 @@ const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: Sy
             case Vedtaksperiodetilstand.TilInfotrygd:
             case Vedtaksperiodetilstand.IngenUtbetaling:
             case Vedtaksperiodetilstand.Annullert:
+            case Vedtaksperiodetilstand.UtbetaltIInfotrygd:
                 return PeriodeStatus.Inaktiv;
             case Vedtaksperiodetilstand.Avslag:
             case Vedtaksperiodetilstand.Feilet:

@@ -115,6 +115,18 @@ const rader = [
                     .endOf('day')
                     .toDate(),
                 status: Vedtaksperiodetilstand.Utbetalt
+            },
+            {
+                id: '689',
+                fom: dayjs(new Date('2019-04-02'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-04-17'))
+                    .endOf('day')
+                    .toDate(),
+                status: Vedtaksperiodetilstand.UtbetaltIInfotrygd,
+                disabled: true,
+                disabledLabel: enEtikett('Utbetalt i Infotrygd')
             }
         ]
     },
