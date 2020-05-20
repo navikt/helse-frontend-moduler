@@ -90,7 +90,7 @@ const rader = [
                     .endOf('day')
                     .toDate(),
                 status: Vedtaksperiodetilstand.IngenUtbetaling,
-                disabledLabel: enEtikett('Ingenting utbetalinger for perioden')
+                disabledLabel: enEtikett('Ingen utbetalinger for perioden')
             }
         ]
     },
@@ -177,6 +177,32 @@ const rader = [
                     .endOf('day')
                     .toDate(),
                 status: Vedtaksperiodetilstand.Avslag
+            }
+        ]
+    },
+    {
+        perioder: [
+            {
+                id: 'asdo',
+                fom: dayjs(new Date('2019-09-18'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-11-04'))
+                    .endOf('day')
+                    .toDate(),
+                status: Vedtaksperiodetilstand.Infotrygdferie,
+                disabledLabel: enEtikett('Ferie')
+            },
+            {
+                id: 'asdo',
+                fom: dayjs(new Date('2019-09-01'))
+                    .startOf('day')
+                    .toDate(),
+                tom: dayjs(new Date('2019-09-17'))
+                    .endOf('day')
+                    .toDate(),
+                status: Vedtaksperiodetilstand.Infotrygdukjent,
+                disabledLabel: enEtikett('Ukjent periode fra Infotrygd')
             }
         ]
     }

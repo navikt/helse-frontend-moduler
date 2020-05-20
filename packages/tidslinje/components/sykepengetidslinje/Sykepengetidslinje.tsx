@@ -15,7 +15,9 @@ export enum Vedtaksperiodetilstand {
     Ukjent = 'ukjent',
     Feilet = 'feilet',
     TilInfotrygd = 'tilInfotrygd',
-    Annullert = 'annullert'
+    Annullert = 'annullert',
+    Infotrygdferie = 'infotrygdferie',
+    Infotrygdukjent = 'infotrygdukjent'
 }
 
 export interface Sykepengeperiode {
@@ -53,6 +55,8 @@ const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: Sy
             case Vedtaksperiodetilstand.IngenUtbetaling:
             case Vedtaksperiodetilstand.Annullert:
             case Vedtaksperiodetilstand.UtbetaltIInfotrygd:
+            case Vedtaksperiodetilstand.Infotrygdferie:
+            case Vedtaksperiodetilstand.Infotrygdukjent:
                 return PeriodeStatus.Inaktiv;
             case Vedtaksperiodetilstand.Avslag:
             case Vedtaksperiodetilstand.Feilet:
