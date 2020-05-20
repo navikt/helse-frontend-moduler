@@ -14,7 +14,6 @@ const Intervaller = ({ intervaller }: IntervallerProps) => (
                 key={intervall.id}
                 className={classNames(styles.intervall, intervall.active && styles.aktivtIntervall)}
                 style={{ left: `${intervall.left}%`, width: `${intervall.width}%` }}
-                tabIndex={intervall.focusable ? 0 : -1}
             />
         ))}
     </div>
