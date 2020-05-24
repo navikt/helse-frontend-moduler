@@ -1,8 +1,10 @@
 .colors(@background, @border, @hover) {
     background: @background;
     border: 1px solid @border;
-    &:hover, &.active {
+    &:hover {
         box-shadow: inset 0 0 0 1px @border;
+    }
+    &:hover, &.active, &:focus {
         background: @hover;
     }
 }
@@ -15,11 +17,8 @@
     position: absolute;
     cursor: pointer;
     border: 1px dashed #59514b;
-    z-index: 1000;
-    transition: all 0.1s ease;
     &:hover, &.active {
         border-width: 1px;
-        background: #e7e9e9;
         box-shadow: none;
     }
 
@@ -51,18 +50,13 @@
     @borderColor: #ba3a26;
     .colors(#f1d8d4, #ba3a26, #e3b0a8);
     background: repeating-linear-gradient(110deg, @borderColor, @borderColor 1px, #f1d8d4 1px, #f1d8d4 7px);
-    &:hover, &.active {
+    &:hover, &.active, &:focus {
         background: repeating-linear-gradient(110deg, @borderColor, @borderColor 1px, #e3b0a8 1px, #e3b0a8 7px);
     }
 }
 
 .inaktiv {
     .colors(#e7e9e9, #78706a, #c3c3c3);
-    &:hover, &.active {
-        border-width: 1px;
-        background: #e7e9e9;
-        box-shadow: none;
-    }
 }
 
 .suksess {

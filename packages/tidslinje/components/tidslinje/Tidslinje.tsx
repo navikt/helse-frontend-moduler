@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback } from 'react';
 import styles from './Tidslinje.less';
 import classNames from 'classnames';
-import Intervaller from './Intervaller';
+import { AktivPeriodeBakgrunn, AktivPeriodeBorder } from './AktivPeriode';
 import Tidslinjerad from './Tidslinjerad';
 import Skalaetiketter from './Skalaetiketter';
 import { Dayjs } from 'dayjs';
-import { useIntervaller } from './useIntervaller';
-import { EnkelTidslinje, Periode } from '../types.external';
+import { EnkelPeriode, EnkelTidslinje, Periode } from '../types.external';
 import { senesteDato, tidligsteDato, useTidslinjerader } from './useTidslinjerader';
 import { InternalEnkelTidslinje, Intervall, PosisjonertPeriode } from '../types.internal';
 
@@ -15,6 +14,7 @@ export interface TidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: EnkelPeriode;
 }
 
 export interface InternalTidslinjeProps {
@@ -22,6 +22,7 @@ export interface InternalTidslinjeProps {
     startDato: Dayjs;
     sluttDato: Dayjs;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: EnkelPeriode;
 }
 
 interface TidslinjeContextType {
@@ -31,60 +32,64 @@ interface TidslinjeContextType {
 }
 
 export const TidslinjeContext = React.createContext<TidslinjeContextType>({
-    onSelectPeriode: _ => null,
-    aktivtIntervall: undefined,
-    timelinePixelWidth: undefined
+    onSelectPeriode: _ => null
 });
 
-const Tidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: InternalTidslinjeProps) => {
-    const intervaller = useIntervaller(rader, startDato, sluttDato);
-    const aktivtIntervall = intervaller.find(i => i.active);
+const Tidslinje = React.memo(
+    ({ rader, startDato, sluttDato, onSelectPeriode, aktivPeriode }: InternalTidslinjeProps) => {
+        const onSelectPeriodeWrapper = useCallback(
+            (periode: PosisjonertPeriode) => {
+                onSelectPeriode?.({
+                    id: periode.id,
+                    fom: periode.fom.toDate(),
+                    tom: periode.tom.toDate(),
+                    disabled: periode.disabled,
+                    status: periode.status
+                });
+            },
+            [onSelectPeriode]
+        );
 
-    const timelineRef = useRef<HTMLDivElement>(null);
-    const [timelinePixelWidth, setTimelinePixelWidth] = useState();
-
-    const onSelectPeriodeWrapper = (periode: PosisjonertPeriode) => {
-        onSelectPeriode?.({
-            id: periode.id,
-            fom: periode.fom.toDate(),
-            tom: periode.tom.toDate(),
-            disabled: periode.disabled,
-            status: periode.status
-        });
-    };
-
-    useEffect(() => {
-        const resizeHandler = () => setTimelinePixelWidth(timelineRef.current?.offsetWidth);
-        resizeHandler();
-        window.addEventListener('resize', resizeHandler);
-        return () => window.removeEventListener('resize', resizeHandler);
-    }, []);
-
-    return (
-        <div className={classNames('tidslinje', styles.tidslinje)} ref={timelineRef}>
-            <Skalaetiketter start={startDato} slutt={sluttDato} />
-            <div className={classNames('tidslinjerader', styles.rader)}>
-                <Intervaller intervaller={intervaller} />
-                <TidslinjeContext.Provider
-                    value={{
-                        onSelectPeriode: onSelectPeriodeWrapper,
-                        aktivtIntervall,
-                        timelinePixelWidth
-                    }}
-                >
+        return (
+            <div className={classNames('tidslinje', styles.tidslinje)}>
+                <Skalaetiketter start={startDato} slutt={sluttDato} />
+                <div className={classNames('tidslinjerader', styles.rader)}>
+                    <AktivPeriodeBakgrunn
+                        tidslinjestart={startDato}
+                        tidslinjeslutt={sluttDato}
+                        aktivPeriode={aktivPeriode}
+                    />
                     {rader.map(tidslinje => (
-                        <Tidslinjerad key={tidslinje.id} {...tidslinje} />
+                        <Tidslinjerad
+                            key={tidslinje.id}
+                            {...tidslinje}
+                            onSelectPeriode={onSelectPeriodeWrapper}
+                            aktivPeriode={aktivPeriode}
+                        />
                     ))}
-                </TidslinjeContext.Provider>
+                    <AktivPeriodeBorder
+                        tidslinjestart={startDato}
+                        tidslinjeslutt={sluttDato}
+                        aktivPeriode={aktivPeriode}
+                    />
+                </div>
             </div>
-        </div>
-    );
-};
+        );
+    }
+);
 
-export default ({ startDato, sluttDato, rader, onSelectPeriode }: TidslinjeProps) => {
+export default React.memo(({ startDato, sluttDato, rader, onSelectPeriode, aktivPeriode }: TidslinjeProps) => {
     const _startDato = tidligsteDato({ startDato, rader });
     const _sluttDato = senesteDato({ sluttDato, rader });
     const _rader = useTidslinjerader(rader, _startDato, _sluttDato);
 
-    return <Tidslinje rader={_rader} startDato={_startDato} sluttDato={_sluttDato} onSelectPeriode={onSelectPeriode} />;
-};
+    return (
+        <Tidslinje
+            rader={_rader}
+            startDato={_startDato}
+            sluttDato={_sluttDato}
+            onSelectPeriode={onSelectPeriode}
+            aktivPeriode={aktivPeriode}
+        />
+    );
+});

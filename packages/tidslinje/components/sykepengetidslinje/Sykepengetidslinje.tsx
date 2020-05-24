@@ -1,8 +1,9 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { EnkelTidslinje, Periode, PeriodeStatus } from '../types.external';
 import Tidslinje from '../tidslinje/Tidslinje';
 import classNames from 'classnames';
 import styles from './Sykepengetidslinje.less';
+import dayjs from 'dayjs';
 
 export enum Vedtaksperiodetilstand {
     TilUtbetaling = 'tilUtbetaling',
@@ -40,9 +41,16 @@ export interface SykepengetidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
+    aktivPeriode?: { fom: Date; tom: Date };
 }
 
-const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: SykepengetidslinjeProps) => {
+const Sykepengetidslinje = ({
+    rader,
+    startDato,
+    sluttDato,
+    onSelectPeriode,
+    aktivPeriode
+}: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodeStatus => {
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
@@ -76,16 +84,27 @@ const Sykepengetidslinje = ({ rader, startDato, sluttDato, onSelectPeriode }: Sy
             status,
             disabled: periode.disabled || status === PeriodeStatus.Inaktiv || status === PeriodeStatus.Ukjent,
             className: classNames(periode.className, styles[periode.status]),
-            disabledLabel: periode.disabledLabel,
-            active: periode.active
+            disabledLabel: periode.disabledLabel
         };
     };
 
-    const _rader: EnkelTidslinje[] = rader.map((rad: EnkelSykepengetidslinje) => ({
-        perioder: rad.perioder.map(toPeriode)
-    }));
+    const _rader: EnkelTidslinje[] = useMemo(
+        () =>
+            rader.map((rad: EnkelSykepengetidslinje) => ({
+                perioder: rad.perioder.map(toPeriode)
+            })),
+        [rader]
+    );
 
-    return <Tidslinje rader={_rader} startDato={startDato} sluttDato={sluttDato} onSelectPeriode={onSelectPeriode} />;
+    return (
+        <Tidslinje
+            rader={_rader}
+            startDato={startDato}
+            sluttDato={sluttDato}
+            onSelectPeriode={onSelectPeriode}
+            aktivPeriode={aktivPeriode}
+        />
+    );
 };
 
 export default Sykepengetidslinje;

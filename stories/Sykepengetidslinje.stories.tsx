@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
 import Sykepengetidslinje, {
-    EnkelSykepengetidslinje,
     Vedtaksperiodetilstand
 } from '../packages/tidslinje/components/sykepengetidslinje/Sykepengetidslinje';
 import { Periode } from '../packages/tidslinje';
@@ -179,59 +178,31 @@ const rader = [
                 status: Vedtaksperiodetilstand.Avslag
             }
         ]
-    },
-    {
-        perioder: [
-            {
-                id: 'asdo',
-                fom: dayjs(new Date('2019-09-18'))
-                    .startOf('day')
-                    .toDate(),
-                tom: dayjs(new Date('2019-11-04'))
-                    .endOf('day')
-                    .toDate(),
-                status: Vedtaksperiodetilstand.Infotrygdferie,
-                disabledLabel: enEtikett('Ferie')
-            },
-            {
-                id: 'asdo',
-                fom: dayjs(new Date('2019-09-01'))
-                    .startOf('day')
-                    .toDate(),
-                tom: dayjs(new Date('2019-09-17'))
-                    .endOf('day')
-                    .toDate(),
-                status: Vedtaksperiodetilstand.Infotrygdukjent,
-                disabledLabel: enEtikett('Ukjent periode fra Infotrygd')
-            }
-        ]
     }
 ];
 
+const startDato = new Date('2019-02-01');
+const sluttDato = new Date('2020-01-01');
+
 export const tidslinje = () => {
-    const startDato = new Date('2019-02-01');
-    const sluttDato = new Date('2020-01-01');
-    const [tidslinjerader, setTidslinjerader] = useState<EnkelSykepengetidslinje[]>(rader);
+    const [aktivPeriode, setAktivPeriode] = useState<{ fom: Date; tom: Date }>(rader[0].perioder[1]);
 
-    const onSelectPeriode = (periode: Periode) => {
-        setTidslinjerader(rader =>
-            rader.map(rad => ({
-                ...rad,
-                perioder: rad.perioder.map(p => ({
-                    ...p,
-                    active: p.tom.getTime() === periode.tom.getTime() && p.fom.getTime() === p.fom.getTime()
-                }))
-            }))
-        );
-    };
+    const onSelectPeriode = useCallback((periode: Periode) => {
+        console.log(periode);
+        setAktivPeriode(periode);
+    }, []);
 
-    return (
-        <Sykepengetidslinje
-            rader={tidslinjerader}
-            startDato={startDato}
-            sluttDato={sluttDato}
-            onSelectPeriode={onSelectPeriode}
-        />
+    return useMemo(
+        () => (
+            <Sykepengetidslinje
+                rader={rader}
+                startDato={startDato}
+                sluttDato={sluttDato}
+                onSelectPeriode={onSelectPeriode}
+                aktivPeriode={aktivPeriode}
+            />
+        ),
+        [aktivPeriode]
     );
 };
 

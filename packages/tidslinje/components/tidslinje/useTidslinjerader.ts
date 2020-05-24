@@ -16,8 +16,7 @@ const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntal
         tom: dayjs(periode.tom).endOf('day'),
         status: periode.status,
         className: periode.className,
-        disabledLabel: periode.disabledLabel,
-        active: periode.active
+        disabledLabel: periode.disabledLabel
     };
     const left = breddeMellomDatoer(posisjonertPeriode.tom, tidslinjeSlutt, totaltAntallDager);
     const width = breddeMellomDatoer(posisjonertPeriode.fom, posisjonertPeriode.tom, totaltAntallDager);
@@ -58,19 +57,30 @@ export const useTidslinjerader = (
     }, [rader, startDato, sluttDato]);
 
 export const tidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
-    startDato
-        ? dayjs(startDato)
-        : dayjs(
-              rader
-                  .flatMap(raden => raden.perioder)
-                  .reduce((tidligst, perioden) => (perioden.fom < tidligst ? perioden.fom : tidligst), new Date())
-          ).startOf('day');
+    useMemo(
+        () =>
+            startDato
+                ? dayjs(startDato)
+                : dayjs(
+                      rader
+                          .flatMap(raden => raden.perioder)
+                          .reduce(
+                              (tidligst, perioden) => (perioden.fom < tidligst ? perioden.fom : tidligst),
+                              new Date()
+                          )
+                  ).startOf('day'),
+        [startDato, rader]
+    );
 
 export const senesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
-    sluttDato
-        ? dayjs(sluttDato)
-        : dayjs(
-              rader
-                  .flatMap(raden => raden.perioder)
-                  .reduce((senest, perioden) => (perioden.tom > senest ? perioden.tom : senest), new Date(0))
-          ).add(1, 'day');
+    useMemo(
+        () =>
+            sluttDato
+                ? dayjs(sluttDato)
+                : dayjs(
+                      rader
+                          .flatMap(raden => raden.perioder)
+                          .reduce((senest, perioden) => (perioden.tom > senest ? perioden.tom : senest), new Date(0))
+                  ).add(1, 'day'),
+        [sluttDato, rader]
+    );

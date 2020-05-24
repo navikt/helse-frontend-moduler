@@ -8,12 +8,14 @@ export enum PeriodeStatus {
     Inaktiv = 'inaktiv'
 }
 
-export interface Periode {
+export interface EnkelPeriode {
     fom: Date;
     tom: Date;
+}
+
+export interface Periode extends EnkelPeriode {
     status: PeriodeStatus;
     id?: string;
-    active?: boolean;
     disabled?: boolean;
     className?: string;
     disabledLabel?: ReactNode;

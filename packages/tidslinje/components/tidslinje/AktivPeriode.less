@@ -1,4 +1,3 @@
-@colorHover: #f0f2f2;
 @colorActive: #e5f3ff;
 @navBla: #0067c5;
 
@@ -13,15 +12,17 @@
     box-shadow: 0 0 0 (@size - 2px) @navBla;
 }
 
-.intervaller {
+.container {
     position: absolute;
     bottom: 0;
     right: 0;
     height: 100%;
     width: 100%;
+    user-select: none;
+    pointer-events: none;
 }
 
-.intervall {
+.aktivPeriode {
     position: absolute;
     height: 100%;
     border: none;
@@ -38,36 +39,24 @@
     }
 
     &:before {
-        .dot(0);
+        .dot(3px);
         left: -1px;
     }
 
     &:after {
-        .dot(0);
+        .dot(3px);
         right: -1px;
-    }
-
-    &:focus {
-        background: @colorActive;
     }
 }
 
-.aktivtIntervall {
-    composes: intervall;
-    background: @colorActive;
-    mix-blend-mode: darken;
-    z-index: 100;
+.aktivPeriodeBorder {
+    composes: aktivPeriode;
     box-shadow:
         inset 2px 0 0 -1px @navBla,
         inset -2px 0 0 -1px @navBla;
+}
 
-    &:before {
-        .dot(3px);
-        left: -1px;
-    }
-
-    &:after {
-        .dot(3px);
-        right: -1px;
-    }
+.aktivPeriodeBakgrunn {
+    composes: aktivPeriode;
+    background: @colorActive;
 }
