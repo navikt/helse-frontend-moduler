@@ -10,21 +10,9 @@ export interface BehandletInnholdProps {
     vurderingsdato?: string;
 }
 
-const BehandletInnhold = ({
-    tittel,
-    saksbehandler,
-    vurderingsdato,
-    children,
-    className
-}: BehandletInnholdProps) => {
+const BehandletInnhold = ({ tittel, saksbehandler, vurderingsdato, children, className }: BehandletInnholdProps) => {
     return (
-        <div
-            className={classNames(
-                styles.behandletInnhold,
-                !children && styles.noChildren,
-                className
-            )}
-        >
+        <div className={classNames(styles.behandletInnhold, !children && styles.noChildren, className)}>
             <p className={styles.tittel}>{tittel}</p>
             <p className={styles.undertekst}>
                 Behandlet av {saksbehandler}

@@ -6,8 +6,7 @@ type TableElementProps = {
     className?: string;
 };
 
-const asArray = (children: ReactNode | ReactNode[]) =>
-    Array.isArray(children) ? children : [children];
+const asArray = (children: ReactNode | ReactNode[]) => (Array.isArray(children) ? children : [children]);
 
 export const Header = ({ children }: TableElementProps) => (
     <thead>

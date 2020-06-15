@@ -17,7 +17,7 @@
     "storybook": "lerna run clean && start-storybook --port 2468",
     "storybook-ci": "lerna run clean && start-storybook --port 2468 --ci",
     "deploy-storybook": "lerna run clean && storybook-to-ghpages",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix",
+    "lint": "eslint 'packages/**/*.{js,ts,tsx}' --fix",
     "build": "lerna run build",
     "test": "jest",
     "clean": "rm -rf ./build"
@@ -84,7 +84,7 @@
     "typescript": "^3.7.5"
   },
   "lint-staged": {
-    "*.{ts,tsx}": [
+    "packages/**/*.{js,ts,tsx}": [
       "eslint --fix"
     ]
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 import Logg from '../packages/logg';
-import { Hendelsetype } from '../packages/logg/types';
+import { Hendelsestatus, Hendelsetype } from '../packages/logg/types';
 
 export default {
     component: Logg,
@@ -33,6 +33,20 @@ export const logg = () => {
 
 export const medHistorikk = () => {
     const hendelser = [
+        {
+            id: '129',
+            navn: 'Faresignaler oppdaget',
+            dato: '17.05.2019',
+            type: Hendelsetype.Historikk,
+            status: Hendelsestatus.Advarsel,
+            beskrivelse: (
+                <ul>
+                    <li>Har hatt andre inntekter</li>
+                    <li>Store avvik inntekt</li>
+                    <li>Få tungtveiende vurderinger</li>
+                </ul>
+            )
+        },
         {
             id: '012',
             navn: 'Manuelt behandlet',

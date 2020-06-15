@@ -25,10 +25,7 @@ const Dropdown = () => {
 
     return (
         <>
-            <button
-                className={show ? styles.lukknapp : styles.åpneknapp}
-                onClick={() => setShow(!show)}
-            >
+            <button className={show ? styles.lukknapp : styles.åpneknapp} onClick={() => setShow(!show)}>
                 {aktivBehandlingstype}
             </button>
             {show && (

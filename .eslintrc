@@ -11,6 +11,7 @@
     "plugin:prettier/recommended"
 
   ],
+  "ignorePatterns": ["node_modules", "webpack.*"],
   "parserOptions": {
     "ecmaVersion": 2020,
     "sourceType": "module",

@@ -9,8 +9,7 @@ interface ArbeidsgiverProps {
 const Arbeidsgiver = ({ tekst }: ArbeidsgiverProps) => {
     const formatertTekst = Array.isArray(tekst)
         ? tekst.reduce(
-              (acc: string[], cur: string, i) =>
-                  i !== tekst.length - 1 ? acc.concat([cur, '/']) : acc.concat([cur]),
+              (acc: string[], cur: string, i) => (i !== tekst.length - 1 ? acc.concat([cur, '/']) : acc.concat([cur])),
               []
           )
         : [tekst];

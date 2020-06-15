@@ -8,20 +8,16 @@ module.exports = {
             {
                 test: /\.(ts|tsx)?$/,
                 use: 'ts-loader',
-                exclude: /node_modules/,
+                exclude: /node_modules/
             },
             {
                 test: /\.(less|css)?$/,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    { loader: 'css-loader', options: { modules: true } },
-                    'less-loader'
-                ]
+                use: [MiniCssExtractPlugin.loader, { loader: 'css-loader', options: { modules: true } }, 'less-loader']
             }
-        ],
+        ]
     },
     resolve: {
-        extensions: [ '.tsx', '.ts', '.js' ],
+        extensions: ['.tsx', '.ts', '.js']
     },
     output: {
         filename: 'index.js',
