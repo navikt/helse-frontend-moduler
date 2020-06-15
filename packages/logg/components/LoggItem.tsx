@@ -11,7 +11,7 @@ const LoggItem = ({ hendelse }: LoggItemProps) => (
     <li className={classNames(styles.loggItem, styles[hendelse.status ?? Hendelsestatus.Normal])}>
         <p className={styles.hendelsesnavn}>{hendelse.navn}</p>
         <p className={styles.hendelsesdato}>{hendelse.dato}</p>
-        {hendelse.beskrivelse && <p className={styles.hendelsesbeskrivelse}>{hendelse.beskrivelse}</p>}
+        {hendelse.beskrivelse && hendelse.beskrivelse}
     </li>
 );
 
