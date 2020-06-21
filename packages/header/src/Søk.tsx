@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import IkonSøk from './icons/IkonSøk';
+import IkonSøk from '../icons/IkonSøk';
 import styles from './Søk.less';
 
 export interface SøkProps {

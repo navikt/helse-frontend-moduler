@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import IkonSystem from './icons/IkonSystem';
+import IkonSystem from '../icons/IkonSystem';
 import classNames from 'classnames';
 import styles from './Header.less';
 
@@ -11,9 +11,8 @@ export type Brukerinfo = {
 };
 
 export interface HeaderProps {
-    tittel: string;
+    tittel: ReactNode;
     brukerinfo: Brukerinfo;
-    tittelHref?: string;
     children?: ReactNode | ReactNode[];
 }
 
@@ -34,13 +33,11 @@ export const Bruker = ({ navn, ident, enhet, rolle }: Brukerinfo) => {
     );
 };
 
-const Header = ({ tittel, children, brukerinfo, tittelHref = '/' }: HeaderProps) => {
+const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
     return (
-        <div className={styles.header}>
+        <header className={styles.header}>
             <div className={styles.rad}>
-                <h1 className={styles.tittel}>
-                    <a href={tittelHref}>{tittel}</a>
-                </h1>
+                <h1 className={styles.tittel}>{tittel}</h1>
                 <div className={styles.avdeler} />
                 {children}
             </div>
@@ -51,7 +48,7 @@ const Header = ({ tittel, children, brukerinfo, tittelHref = '/' }: HeaderProps)
                 <div className={styles.avdeler} />
                 <Bruker {...brukerinfo} />
             </div>
-        </div>
+        </header>
     );
 };
 

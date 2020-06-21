@@ -11,19 +11,15 @@ const Bruker = ({ navn, ident }: Brukerinfo) => (
     </div>
 );
 
-const HeaderEnkel = ({ tittel, children, brukerinfo, tittelHref = '/' }: HeaderProps) => {
-    return (
-        <div className={styles.header}>
-            <div className={styles.rad}>
-                <h1 className={styles.tittel}>
-                    <a href={tittelHref}>{tittel}</a>
-                </h1>
-                <div className={styles.avdeler} />
-                {children}
-            </div>
-            <Bruker {...brukerinfo} />
+const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => (
+    <header className={styles.header}>
+        <div className={styles.rad}>
+            <h1 className={styles.tittel}>{tittel}</h1>
+            <div className={styles.avdeler} />
+            {children}
         </div>
-    );
-};
+        <Bruker {...brukerinfo} />
+    </header>
+);
 
 export default HeaderEnkel;

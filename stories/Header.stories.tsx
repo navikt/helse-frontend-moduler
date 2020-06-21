@@ -1,8 +1,8 @@
 import React from 'react';
-import Header from '../packages/header';
-import Søk from '../packages/header/Søk';
-import HeaderEnkel from '../packages/header/HeaderEnkel';
-import { Bruker } from '../packages/header/Header';
+import Header from '../packages/header/src';
+import Søk from '../packages/header/src/Søk';
+import HeaderEnkel from '../packages/header/src/HeaderEnkel';
+import { Bruker } from '../packages/header/src/Header';
 
 const brukerinfo = {
     navn: 'Kong Harald',
