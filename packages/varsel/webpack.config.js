@@ -3,9 +3,10 @@ const baseConfig = require('../webpack.base');
 
 module.exports = {
     ...baseConfig,
+    entry: './src/index.ts',
     output: {
         ...baseConfig.output,
         library: 'helse-frontend-varsel',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'lib')
     }
 };

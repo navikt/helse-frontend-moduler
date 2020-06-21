@@ -1,14 +1,13 @@
 {
   "name": "@navikt/helse-frontend-varsel",
-  "version": "2.0.1",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "2.0.2",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/index.d.ts",
   "scripts": {
-    "build": "npm run clean && webpack -p && npm run injectStyles",
-    "clean": "rm -rf ./dist",
-    "tsc": "tsc -p tsconfig.json",
-    "injectStyles": "echo \"import './main.css';\" >> dist/index.js"
+    "build": "npm run clean && webpack --config webpack.config.js",
+    "clean": "rm -rf ./lib",
+    "tsc": "tsc -p tsconfig.json"
   },
   "author": "NAV",
   "license": "MIT",
@@ -17,7 +16,7 @@
   },
   "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3",
   "files": [
-    "dist"
+    "lib"
   ],
   "dependencies": {
     "react": "^16.12.0"

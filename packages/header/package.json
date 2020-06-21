@@ -5,7 +5,7 @@
   "module": "lib/index.js",
   "types": "lib/src/index.d.ts",
   "scripts": {
-    "build": "npm run clean && NODE_ENV=development webpack --config webpack.config.js",
+    "build": "npm run clean && webpack --config webpack.config.js",
     "clean": "rm -rf ./lib",
     "tsc": "tsc -p tsconfig.json"
   },

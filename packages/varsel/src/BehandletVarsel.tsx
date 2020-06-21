@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import styles from './BehandletInnhold.less';
+import styles from './BehandletVarsel.less';
 import classNames from 'classnames';
 
 export interface BehandletInnholdProps {
@@ -10,9 +10,11 @@ export interface BehandletInnholdProps {
     vurderingsdato?: string;
 }
 
-const BehandletInnhold = ({ tittel, saksbehandler, vurderingsdato, children, className }: BehandletInnholdProps) => {
+const BehandletVarsel = ({ tittel, saksbehandler, vurderingsdato, children, className }: BehandletInnholdProps) => {
     return (
-        <div className={classNames(styles.behandletInnhold, !children && styles.noChildren, className)}>
+        <div
+            className={classNames('BehandletVarsel', styles.behandletVarsel, !children && styles.noChildren, className)}
+        >
             <p className={styles.tittel}>{tittel}</p>
             <p className={styles.undertekst}>
                 Behandlet av {saksbehandler}
@@ -23,4 +25,4 @@ const BehandletInnhold = ({ tittel, saksbehandler, vurderingsdato, children, cla
     );
 };
 
-export default BehandletInnhold;
+export default BehandletVarsel;
