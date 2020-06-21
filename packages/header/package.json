@@ -1,12 +1,12 @@
 {
   "name": "@navikt/helse-frontend-header",
-  "version": "1.1.2",
-  "main": "dist/index.js",
-  "module": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "version": "1.1.4",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/src/index.d.ts",
   "scripts": {
     "build": "npm run clean && NODE_ENV=development webpack --config webpack.config.js",
-    "clean": "rm -rf ./dist",
+    "clean": "rm -rf ./lib",
     "tsc": "tsc -p tsconfig.json"
   },
   "author": "NAV",
@@ -16,8 +16,7 @@
   },
   "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3",
   "files": [
-    "dist",
-    "src"
+    "lib"
   ],
   "dependencies": {
     "react": "^16.12.0"
