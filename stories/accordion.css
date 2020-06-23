@@ -1,0 +1,12 @@
+div.content {
+    display: flex;
+}
+
+div.content > p.content:not(:last-of-type) {
+    margin-right: 1rem;
+}
+
+p.content {
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
+}

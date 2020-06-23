@@ -1,7 +1,13 @@
 module.exports = {
-    stories: ['../stories/**/*.stories.(tsx|mdx)'],
+    stories: ['../stories/**/*.stories.(tsx|mdx)', '../packages/**/*.stories.(tsx|mdx)'],
     addons: [
-        '@storybook/addon-docs',
+        {
+            name: '@storybook/addon-docs',
+            options: {
+                configureJSX: true,
+                babelOptions: {}
+            }
+        },
         '@storybook/addon-storysource',
         '@storybook/addon-actions',
         '@storybook/addon-links',

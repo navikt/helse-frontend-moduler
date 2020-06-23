@@ -1,0 +1,54 @@
+import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import { Accordion } from '../packages/accordion/src/Accordion';
+import { withA11y } from '@storybook/addon-a11y';
+import './accordion.css';
+
+<Meta
+    title="Accordion"
+    component={Accordion}
+    decorators={[withA11y]}
+/>
+
+# Accordion
+
+En accordion er en komponent bestående av ett eller flere ekspanderbare panel. Dette er
+en variant med minimal styling og et enkelt API. `Accordion` grupperer sine
+`children`-komponenter parvis og wrapper de i henholdsvis en `Label`- og en
+`Content`-komponent, slik som i eksempelet her:
+
+<Preview withSource="open">
+    <Story name="enkel accordion">
+        <Accordion>
+            <div key="label">En label</div>
+            <div key="content">
+                <p className="content">Dette er noe innhold.</p>
+                <p className="content">Det kan være hva som helst, så lenge det er en gyldig React-node.</p>
+            </div>
+            <div key="label">En annen label</div>
+            <div key="content">
+                <p className="content">Dette er også noe innhold.</p>
+            </div>
+        </Accordion>
+    </Story>
+</Preview>
+
+### Med kun ett panel åpent om gangen
+
+Default er at Accordion tillater flere panel åpne om gangen. For å lukke andre panel
+når et nytt åpnes kan man bruke `exclusiveOpen`-propen slik: `<Accordion exclusiveOpen={true} />`
+
+<Preview>
+    <Story name="med kun ett åpent panel om gangen">
+        <Accordion exclusiveOpen>
+            <div key="label">En label</div>
+            <div key="content">
+                <p className="content">Dette er noe innhold.</p>
+                <p className="content">Det kan være hva som helst, så lenge det er en gyldig React-node.</p>
+            </div>
+            <div key="label">En annen label</div>
+            <div key="content">
+                <p className="content">Dette er også noe innhold.</p>
+            </div>
+        </Accordion>
+    </Story>
+</Preview>
