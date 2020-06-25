@@ -1,0 +1,89 @@
+@itemPadding: 0.75rem;
+@tekstMargin: 2px;
+
+.tekst() {
+  margin: 2px 0;
+  padding: 0;
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  color: #3e3832;
+}
+
+.hendelsesnavn {
+  .tekst();
+  margin-bottom: .50rem;
+  font-weight: 600;
+}
+
+.hendelsesdato {
+  .tekst();
+  font-size: 14px;
+  color: #78706a;
+}
+
+.hendelsesbeskrivelse {
+  .tekst();
+}
+
+.loggItem {
+  position: relative;
+  margin: 0;
+  padding: @itemPadding 0 @itemPadding 2.25rem;
+  font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+
+  &:before {
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 1px;
+    background: #B7B1A9;
+    top: 2px;
+    left: calc(0.5rem + 2px);
+    transform: translateX(-0.5px);
+  }
+
+  &:after {
+    position: absolute;
+    content: '';
+    background: white;
+    border: 2px solid #59514b;
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+    top: calc(@itemPadding + @tekstMargin);
+    left: 0;
+  }
+
+  &.info:after {
+    border: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' kind='info-sirkel-fyll' focusable='false' height='20px' width='20px' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Cpath d='M12 0C5.382 0 0 5.382 0 12s5.382 12 12 12c6.617 0 12-5.382 12-12S18.617 0 12 0z' fill='%23337C9B'%3E%3C/path%3E%3Cpath d='M12 5a1.566 1.566 0 1 1 .11 3.13A1.566 1.566 0 0 1 12 5zm2.976 12.01c.563 0 1.043.431 1.043.991s-.48.992-1.043.992H9.39c-.564 0-1.043-.431-1.043-.992 0-.56.479-.99 1.043-.99h1.6v-5.016h-.986c-.565 0-1.044-.43-1.044-.991 0-.56.48-.991 1.044-.991h2.03c.563 0 1.043.43 1.043.99v6.007h1.899z' fill='%23FFF'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  &.advarsel:after {
+    border: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M12.205-.004l-.214.002a12.225 12.225 0 00-8.517 3.659C1.179 5.977-.053 9.013.002 12.208c.115 6.613 5.296 11.793 11.795 11.793l.212-.002c6.726-.116 12.105-5.595 11.99-12.21C23.883 5.178 18.702-.003 12.204-.003z' fill='%23FFA733' fill-rule='nonzero'%3E%3C/path%3E%3Cpath d='M12.027 19H12a1.499 1.499 0 01-.027-3H12a1.501 1.501 0 01.027 3z' fill='%233E3832'%3E%3C/path%3E%3Cpath d='M12 5a1 1 0 011 1v7a1 1 0 01-2 0V6a1 1 0 011-1z' fill='%233E3832' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  &.suksess:after {
+    border: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' kind='ok-sirkel-fyll' focusable='false' height='20' width='20px' viewBox='0 0 24 24'%3E%3Cg fill-rule='nonzero' fill='none'%3E%3Cpath d='M12 0C5.383 0 0 5.384 0 12s5.383 12 12 12c6.616 0 12-5.384 12-12S18.616 0 12 0z' fill='%231C6937'%3E%3C/path%3E%3Cpath d='M9.64 14.441l6.46-5.839a.997.997 0 0 1 1.376.044.923.923 0 0 1-.046 1.334l-7.15 6.464a.993.993 0 0 1-.662.252.992.992 0 0 1-.69-.276l-2.382-2.308a.923.923 0 0 1 0-1.334.997.997 0 0 1 1.377 0l1.717 1.663z' fill='%23FFF'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  &.feil:after {
+    border: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' kind='feil-sirkel-fyll' focusable='false' height='20px' width='20px' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M11.999 0C5.395 0 .013 5.372 0 11.976a11.923 11.923 0 0 0 3.498 8.493A11.925 11.925 0 0 0 11.977 24H12c6.603 0 11.986-5.373 12-11.978C24.013 5.406 18.64.012 11.999 0z' fill-rule='nonzero' fill='%23A13A28'%3E%3C/path%3E%3Cpath d='M12 10.651l3.372-3.372a.954.954 0 1 1 1.349 1.35L13.349 12l3.372 3.372a.954.954 0 1 1-1.35 1.349L12 13.349 8.628 16.72a.954.954 0 1 1-1.349-1.35L10.651 12 7.28 8.628A.954.954 0 1 1 8.63 7.28L12 10.651z' fill='%23FFF' fill-rule='nonzero'%3E%3C/path%3E%3C/g%3E%3C/svg%3E");
+    height: 1.25rem;
+    width: 1.25rem;
+  }
+
+  &:first-of-type:before {
+    top: calc(@tekstMargin + @itemPadding);
+    height: calc(100% - @tekstMargin + @itemPadding);
+  }
+}

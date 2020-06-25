@@ -9,7 +9,7 @@ interface FilterknappProps {
     disabled?: boolean;
 }
 
-const Filterknapp = ({ children, onClick, aktiv, disabled }: FilterknappProps) => (
+export const Filterknapp = ({ children, onClick, aktiv, disabled }: FilterknappProps) => (
     <button
         onClick={onClick}
         disabled={disabled}
@@ -18,5 +18,3 @@ const Filterknapp = ({ children, onClick, aktiv, disabled }: FilterknappProps) =
         {children}
     </button>
 );
-
-export default Filterknapp;

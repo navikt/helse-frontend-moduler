@@ -39,11 +39,38 @@ const ikon = (type: Varseltype) => {
  *
  * `Varsel` kan ta en valgfri `children` prop. Denne vil rendres til høyre for varselteksten.
  */
-const Varsel = ({ children, className = 'Varsel', type = Varseltype.Info }: VarselProps) => (
+export const Varsel = ({ children, className = 'Varsel', type = Varseltype.Info }: VarselProps) => (
     <div className={classNames(className, styles.container, styles[type])}>
         {ikon(type)}
         {children}
     </div>
 );
 
-export default Varsel;
+export interface SpesifiktVarselProps {
+    children?: ReactNode | ReactNode[];
+    className?: string;
+}
+
+export const Infovarsel = ({ children, className }: SpesifiktVarselProps) => (
+    <Varsel className={className} type={Varseltype.Info}>
+        {children}
+    </Varsel>
+);
+
+export const Advarselvarsel = ({ children, className }: SpesifiktVarselProps) => (
+    <Varsel className={className} type={Varseltype.Advarsel}>
+        {children}
+    </Varsel>
+);
+
+export const Suksessvarsel = ({ children, className }: SpesifiktVarselProps) => (
+    <Varsel className={className} type={Varseltype.Suksess}>
+        {children}
+    </Varsel>
+);
+
+export const Feilvarsel = ({ children, className }: SpesifiktVarselProps) => (
+    <Varsel className={className} type={Varseltype.Feil}>
+        {children}
+    </Varsel>
+);

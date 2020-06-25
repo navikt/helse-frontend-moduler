@@ -1,0 +1,44 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { withA11y } from '@storybook/addon-a11y';
+import { Header, HeaderEnkel, Søk, Bruker } from '../../packages/header/src';
+import { brukerinfo, onSøk } from './exampleData';
+
+<Meta title="Header" component={Header} decorators={[withA11y]} />
+
+# Header
+
+Sideheader for interne flater
+
+<Preview>
+    <Story name="header">
+        <Header tittel="NAV Sykepenger" brukerinfo={brukerinfo} />
+    </Story>
+</Preview>
+
+<Props of={Header} />
+
+Brukerinfo er et objekt som ser slik ut:
+
+<Props of={Bruker} />
+
+### Med søkefelt
+
+Komponenten tar en `children`-prop, som f.eks. kan være et søkefelt. Dette rendres i midten mellom tittelen og systemikonet.
+
+<Preview>
+    <Story name="med søkefelt">
+        <Header tittel="NAV Sykepenger" brukerinfo={brukerinfo}>
+            <Søk onSøk={onSøk} />
+        </Header>
+    </Story>
+</Preview>
+
+### Uten popover
+
+<Preview>
+    <Story name="uten popover">
+        <HeaderEnkel tittel="NAV Sykepenger" brukerinfo={brukerinfo}>
+            <Søk onSøk={onSøk} />
+        </HeaderEnkel>
+    </Story>
+</Preview>

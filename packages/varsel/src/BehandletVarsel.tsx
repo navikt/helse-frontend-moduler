@@ -10,19 +10,19 @@ export interface BehandletInnholdProps {
     vurderingsdato?: string;
 }
 
-const BehandletVarsel = ({ tittel, saksbehandler, vurderingsdato, children, className }: BehandletInnholdProps) => {
-    return (
-        <div
-            className={classNames('BehandletVarsel', styles.behandletVarsel, !children && styles.noChildren, className)}
-        >
-            <p className={styles.tittel}>{tittel}</p>
-            <p className={styles.undertekst}>
-                Behandlet av {saksbehandler}
-                {vurderingsdato && ` - ${vurderingsdato}`}
-            </p>
-            {children}
-        </div>
-    );
-};
-
-export default BehandletVarsel;
+export const BehandletVarsel = ({
+    tittel,
+    saksbehandler,
+    vurderingsdato,
+    children,
+    className
+}: BehandletInnholdProps) => (
+    <div className={classNames('BehandletVarsel', styles.behandletVarsel, !children && styles.noChildren, className)}>
+        <p className={styles.tittel}>{tittel}</p>
+        <p className={styles.undertekst}>
+            Behandlet av {saksbehandler}
+            {vurderingsdato && ` - ${vurderingsdato}`}
+        </p>
+        {children}
+    </div>
+);

@@ -3,15 +3,15 @@ import IkonSøk from '../icons/IkonSøk';
 import styles from './Søk.less';
 
 export interface SøkProps {
-    onSøk: (value: string) => void;
+    onSøk: (value: string) => Promise<any>; // eslint-disable-line @typescript-eslint/no-explicit-any
 }
 
-const Søk = ({ onSøk }: SøkProps) => {
+export const Søk = ({ onSøk }: SøkProps) => {
     const [value, setValue] = useState('');
 
     const søk = () => {
         if (value.length > 0) {
-            onSøk(value);
+            onSøk(value).then(() => setValue(''));
         }
     };
 
@@ -34,5 +34,3 @@ const Søk = ({ onSøk }: SøkProps) => {
         </div>
     );
 };
-
-export default Søk;

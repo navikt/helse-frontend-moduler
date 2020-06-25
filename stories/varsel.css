@@ -1,0 +1,12 @@
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.evenly-spaced-children > *:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.varsel-content {
+    margin-bottom: 0;
+}

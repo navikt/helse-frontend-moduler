@@ -1,6 +1,5 @@
-import Header from './Header';
-import Søk from './Søk';
-import HeaderEnkel from './HeaderEnkel';
+import { Header, Brukerinfo, Bruker } from './Header';
+import { Søk } from './Søk';
+import { HeaderEnkel } from './HeaderEnkel';
 
-export { Søk, HeaderEnkel };
-export default Header;
+export { Søk, HeaderEnkel, Header, Brukerinfo, Bruker };

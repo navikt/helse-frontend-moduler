@@ -8,13 +8,9 @@ export interface BehandletAvInfotrygdProps {
     className?: string;
 }
 
-const BehandletAvInfotrygdVarsel = ({ tittel, children, className }: BehandletAvInfotrygdProps) => {
-    return (
-        <div className={classNames(styles.behandletAvInfotrygd, !children && styles.noChildren, className)}>
-            <p className={styles.tittel}>{tittel}</p>
-            {children}
-        </div>
-    );
-};
-
-export default BehandletAvInfotrygdVarsel;
+export const BehandletAvInfotrygdVarsel = ({ tittel, children, className }: BehandletAvInfotrygdProps) => (
+    <div className={classNames(styles.behandletAvInfotrygd, !children && styles.noChildren, className)}>
+        <p className={styles.tittel}>{tittel}</p>
+        {children}
+    </div>
+);

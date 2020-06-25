@@ -1,4 +1,4 @@
-import { Meta, Preview, Story } from '@storybook/addon-docs/blocks';
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import { Accordion } from '../packages/accordion/src/Accordion';
 import { withA11y } from '@storybook/addon-a11y';
 import './accordion.css';
@@ -31,6 +31,8 @@ en variant med minimal styling og et enkelt API. `Accordion` grupperer sine
         </Accordion>
     </Story>
 </Preview>
+
+<Props of={Accordion} />
 
 ### Med kun ett panel åpent om gangen
 

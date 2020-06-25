@@ -11,7 +11,7 @@ const Bruker = ({ navn, ident }: Brukerinfo) => (
     </div>
 );
 
-const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => (
+export const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => (
     <header className={styles.header}>
         <div className={styles.rad}>
             <h1 className={styles.tittel}>{tittel}</h1>
@@ -21,5 +21,3 @@ const HeaderEnkel = ({ tittel, children, brukerinfo }: HeaderProps) => (
         <Bruker {...brukerinfo} />
     </header>
 );
-
-export default HeaderEnkel;

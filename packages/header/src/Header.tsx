@@ -33,7 +33,7 @@ export const Bruker = ({ navn, ident, enhet, rolle }: Brukerinfo) => {
     );
 };
 
-const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
+export const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
     return (
         <header className={styles.header}>
             <div className={styles.rad}>
@@ -51,5 +51,3 @@ const Header = ({ tittel, children, brukerinfo }: HeaderProps) => {
         </header>
     );
 };
-
-export default Header;

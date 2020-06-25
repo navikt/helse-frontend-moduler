@@ -1,0 +1,105 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { withA11y } from '@storybook/addon-a11y';
+import {
+    Varsel,
+    Varseltype,
+    Advarselvarsel,
+    Feilvarsel,
+    Suksessvarsel,
+    Infovarsel
+} from '../packages/varsel/src/Varsel';
+import { Oppgavevarsel, BehandletVarsel, BehandletAvInfotrygdVarsel } from '../packages/varsel/src';
+import './varsel.css';
+
+<Meta
+    title="Varsel"
+    component={Varsel}
+    decorators={[withA11y]}
+    subcomponents={[
+        Advarselvarsel,
+        Feilvarsel,
+        Suksessvarsel,
+        Infovarsel,
+        Oppgavevarsel,
+        BehandletVarsel,
+        BehandletAvInfotrygdVarsel
+    ]}
+/>
+
+# Varsel
+
+Varsler for å formidle hendelser,tilstander og viktig informasjon til bruker.
+Dette kan for eksempel være informasjon knyttet til endringer, hendelser utløst av bruker eller et system, eller status på en vedtaksperiode.
+
+### Varsel
+
+`Varsel` kan ta en valgfri `children` prop. Denne vil rendres til høyre for varselteksten.
+
+<Preview>
+    <Story name="varselstriper">
+        <div className="flex-column evenly-spaced-children">
+            <Infovarsel>Dette er et infovarsel</Infovarsel>
+            <Advarselvarsel>Dette er et advarselsvarsel</Advarselvarsel>
+            <Suksessvarsel>Dette er et suksessvarsel</Suksessvarsel>
+            <Feilvarsel>Dette er et feilvarsel</Feilvarsel>
+        </div>
+    </Story>
+</Preview>
+
+<Props of={Advarselvarsel} />
+
+### Oppgavevarsel
+
+Et varsel med lenke til en oppgave som må løses av saksbehandler.
+
+<Preview>
+    <Story name="oppgavevarsel">
+        <div className="flex-column">
+            <Oppgavevarsel oppgavelenke="#">Du har en ventende oppgave</Oppgavevarsel>
+        </div>
+    </Story>
+</Preview>
+
+<Props of={Oppgavevarsel} />
+
+### Innhold som er behandlet av saksbehandler
+
+Et varsel som indikerer at innholdet allerede har blitt behandlet av en saksbehandler.
+
+<Preview>
+    <Story name="behandlet av saksbehandler">
+        <div className="flex-column">
+            <BehandletVarsel
+                tittel="Inngangsvilkår vurdert første sykdomsdag"
+                saksbehandler="Hanne Jansen"
+                vurderingsdato="01.05.2017"
+            >
+                <p className="varsel-content">
+                    Dette varselet indikerer at innholdet har blitt vurdert <br />
+                    og behandlet av en saksbehandler.
+                </p>
+            </BehandletVarsel>
+        </div>
+    </Story>
+</Preview>
+
+<Props of={BehandletVarsel} />
+
+### Innhold som er behandlet i Infotrygd
+
+Et varsel som indikerer at innholdet allerede har blitt behandlet av en saksbehandler i Infotrygd.
+
+<Preview>
+    <Story name="behandlet i Infotrygd">
+        <div className="flex-column evenly-spaced-children">
+            <BehandletAvInfotrygdVarsel tittel="Inngangsvilkår vurdert i Infotrygd">
+                <p className="varsel-content">
+                    Dette varselet indikerer at innholdet har blitt vurdert <br />
+                    og behandlet av en saksbehandler i Infotrygd.
+                </p>
+            </BehandletAvInfotrygdVarsel>
+        </div>
+    </Story>
+</Preview>
+
+<Props of={BehandletAvInfotrygdVarsel} />

@@ -1,0 +1,13 @@
+.liste {
+    list-style: inside;
+    padding: 0;
+    margin-top: 0.5rem;
+}
+
+.liste > li:not(:last-of-type) {
+    margin-bottom: 0.25rem;
+}
+
+.filterknapp {
+    font-size: 20px;
+}
