@@ -29,13 +29,14 @@ const formatertMåned = (dato: Dayjs): string => {
 
 const formatertÅr = (dato: Dayjs): string => `${dato.year()}`;
 
-export const dagsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: number, inkrement = 2): Skalaetikett[] => {
-    const førsteDag = start.startOf('day');
+export const dagsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: number): Skalaetikett[] => {
+    const inkrement = Math.ceil(totaltAntallDager / 10);
+    const sisteDag = slutt.startOf('day');
     return new Array(totaltAntallDager)
-        .fill(førsteDag)
+        .fill(sisteDag)
         .map((denneDagen, i) => {
             if (i % inkrement !== 0) return null;
-            const dag = denneDagen.add(i, 'day');
+            const dag = denneDagen.subtract(i, 'day');
             return {
                 left: breddeMellomDatoer(dag, slutt, totaltAntallDager),
                 label: formatertDag(dag)
@@ -45,8 +46,10 @@ export const dagsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: num
 };
 
 export const månedsetiketter = (start: Dayjs, slutt: Dayjs, totaltAntallDager: number): Skalaetikett[] => {
-    const førsteMåned = start.startOf('month');
-    const antallMåneder = Math.ceil(slutt.diff(start, 'month', true)) + 1;
+    const startmåned = start.startOf('month');
+    const sluttmåned = slutt.startOf('month');
+    const førsteMåned = startmåned.add(1, 'month');
+    const antallMåneder = sluttmåned.diff(startmåned, 'month');
     return new Array(antallMåneder).fill(førsteMåned).map((denneMåneden, i) => {
         const måned = denneMåneden.add(i, 'month');
         return {

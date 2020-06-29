@@ -1,9 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react';
 import { withA11y } from '@storybook/addon-a11y';
-import Sykepengetidslinje, {
-    Vedtaksperiodetilstand
-} from '../packages/tidslinje/components/sykepengetidslinje/Sykepengetidslinje';
-import { Periode } from '../packages/tidslinje';
+import { Periode, Sykepengetidslinje, Vedtaksperiodetilstand } from '../packages/tidslinje/src';
 import './styles.css';
 import dayjs from 'dayjs';
 

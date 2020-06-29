@@ -1,9 +1,9 @@
 import React, { ReactNode, useMemo } from 'react';
-import { EnkelTidslinje, Periode, PeriodeStatus } from '../types.external';
-import Tidslinje from '../tidslinje/Tidslinje';
+import { Periode } from '../types.external';
+import { Tidslinje } from '../..';
 import classNames from 'classnames';
 import styles from './Sykepengetidslinje.less';
-import dayjs from 'dayjs';
+import { Periodestatus } from '../types.internal';
 
 export enum Vedtaksperiodetilstand {
     TilUtbetaling = 'tilUtbetaling',
@@ -29,35 +29,30 @@ export interface Sykepengeperiode {
     disabled?: boolean;
     className?: string;
     disabledLabel?: ReactNode;
-    active?: boolean;
-}
-
-export interface EnkelSykepengetidslinje {
-    perioder: Sykepengeperiode[];
 }
 
 export interface SykepengetidslinjeProps {
-    rader: EnkelSykepengetidslinje[];
+    rader: Sykepengeperiode[][];
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
     aktivPeriode?: { fom: Date; tom: Date };
 }
 
-const Sykepengetidslinje = ({
+export const Sykepengetidslinje = ({
     rader,
     startDato,
     sluttDato,
     onSelectPeriode,
     aktivPeriode
 }: SykepengetidslinjeProps) => {
-    const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodeStatus => {
+    const periodeStatus = (tilstand: Vedtaksperiodetilstand): Periodestatus => {
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
             case Vedtaksperiodetilstand.Utbetalt:
-                return PeriodeStatus.Suksess;
+                return 'suksess';
             case Vedtaksperiodetilstand.Oppgaver:
-                return PeriodeStatus.Advarsel;
+                return 'advarsel';
             case Vedtaksperiodetilstand.Venter:
             case Vedtaksperiodetilstand.TilInfotrygd:
             case Vedtaksperiodetilstand.IngenUtbetaling:
@@ -65,13 +60,13 @@ const Sykepengetidslinje = ({
             case Vedtaksperiodetilstand.UtbetaltIInfotrygd:
             case Vedtaksperiodetilstand.Infotrygdferie:
             case Vedtaksperiodetilstand.Infotrygdukjent:
-                return PeriodeStatus.Inaktiv;
+                return 'inaktiv';
             case Vedtaksperiodetilstand.Avslag:
             case Vedtaksperiodetilstand.Feilet:
-                return PeriodeStatus.Feil;
+                return 'feil';
             case Vedtaksperiodetilstand.Ukjent:
             default:
-                return PeriodeStatus.Ukjent;
+                return 'ukjent';
         }
     };
 
@@ -82,19 +77,13 @@ const Sykepengetidslinje = ({
             fom: periode.fom,
             tom: periode.tom,
             status,
-            disabled: periode.disabled || status === PeriodeStatus.Inaktiv || status === PeriodeStatus.Ukjent,
+            disabled: periode.disabled || status === 'inaktiv' || status === 'ukjent',
             className: classNames(periode.className, styles[periode.status]),
             disabledLabel: periode.disabledLabel
         };
     };
 
-    const _rader: EnkelTidslinje[] = useMemo(
-        () =>
-            rader.map((rad: EnkelSykepengetidslinje) => ({
-                perioder: rad.perioder.map(toPeriode)
-            })),
-        [rader]
-    );
+    const _rader: Periode[][] = useMemo(() => rader.map((rad: Sykepengeperiode[]) => rad.map(toPeriode)), [rader]);
 
     return (
         <Tidslinje
@@ -106,5 +95,3 @@ const Sykepengetidslinje = ({
         />
     );
 };
-
-export default Sykepengetidslinje;

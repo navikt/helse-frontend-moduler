@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-logg",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/src/index.d.ts",
@@ -16,7 +16,8 @@
   },
   "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3",
   "files": [
-    "dist"
+    "lib",
+    "src"
   ],
   "dependencies": {
     "nanoid": "^3.1.10",

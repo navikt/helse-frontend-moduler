@@ -1,7 +1,7 @@
 import { Dayjs } from 'dayjs';
-import { PeriodeStatus } from './types.external';
 import { ReactNode } from 'react';
 
+export type Periodestatus = 'suksess' | 'advarsel' | 'feil' | 'inaktiv' | 'ukjent';
 export type Percentage = number;
 
 export interface PosisjonertElement {
@@ -23,7 +23,7 @@ export interface Intervall extends EnkelPeriode, PosisjonertElement {
 export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
     id: string;
     width: number;
-    status: PeriodeStatus;
+    status: Periodestatus;
     active?: boolean;
     cropped?: boolean;
     disabled?: boolean;

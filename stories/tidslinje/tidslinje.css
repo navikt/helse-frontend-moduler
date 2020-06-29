@@ -1,0 +1,10 @@
+.tooltip {
+    font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    color: #fff;
+    display: inline-block;
+    width: max-content;
+    max-width: 5.5rem;
+    padding: 0;
+    margin: 0;
+}

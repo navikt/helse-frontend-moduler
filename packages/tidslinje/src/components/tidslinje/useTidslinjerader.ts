@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { nanoid } from 'nanoid';
 import { InternalEnkelTidslinje, PosisjonertPeriode } from '../types.internal';
-import { EnkelTidslinje, Periode } from '../types.external';
+import { Periode } from '../types.external';
 import { breddeMellomDatoer } from './calc';
 import { innenEtDøgn } from './filter';
 import { sistePeriode } from './sort';
@@ -9,17 +9,21 @@ import { useMemo } from 'react';
 import { TidslinjeProps } from './Tidslinje';
 
 const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntallDager: number): PosisjonertPeriode => {
+    const fom = dayjs(periode.fom);
+    const tom = dayjs(periode.tom);
     const posisjonertPeriode = {
         id: periode.id || nanoid(),
         disabled: periode.disabled,
-        fom: dayjs(periode.fom).startOf('day'),
-        tom: dayjs(periode.tom).endOf('day'),
         status: periode.status,
         className: periode.className,
-        disabledLabel: periode.disabledLabel
+        disabledLabel: periode.disabledLabel,
+        fom,
+        tom
     };
-    const left = breddeMellomDatoer(posisjonertPeriode.tom, tidslinjeSlutt, totaltAntallDager);
-    const width = breddeMellomDatoer(posisjonertPeriode.fom, posisjonertPeriode.tom, totaltAntallDager);
+    const displayFom = fom.startOf('day');
+    const displayTom = tom.endOf('day');
+    const left = breddeMellomDatoer(displayTom, tidslinjeSlutt, totaltAntallDager);
+    const width = breddeMellomDatoer(displayFom, displayTom, totaltAntallDager);
     const cropped = left + width > 100;
     const outOfBounds = left >= 100;
     return {
@@ -40,16 +44,12 @@ const medSammenheng = (periode: PosisjonertPeriode, i: number, perioder: Posisjo
     return periode;
 };
 
-export const useTidslinjerader = (
-    rader: EnkelTidslinje[],
-    startDato: Dayjs,
-    sluttDato: Dayjs
-): InternalEnkelTidslinje[] =>
+export const useTidslinjerader = (rader: Periode[][], startDato: Dayjs, sluttDato: Dayjs): InternalEnkelTidslinje[] =>
     useMemo(() => {
         const totaltAntallDager = sluttDato.diff(startDato, 'day');
-        return rader.map(rad => ({
+        return rader.map(perioder => ({
             id: nanoid(),
-            perioder: rad.perioder
+            perioder: perioder
                 .map((periode: Periode) => posisjonertPeriode(periode, sluttDato, totaltAntallDager))
                 .sort(sistePeriode)
                 .map(medSammenheng)
@@ -63,7 +63,7 @@ export const tidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
                 ? dayjs(startDato)
                 : dayjs(
                       rader
-                          .flatMap(raden => raden.perioder)
+                          .flat()
                           .reduce(
                               (tidligst, perioden) => (perioden.fom < tidligst ? perioden.fom : tidligst),
                               new Date()
@@ -79,7 +79,7 @@ export const senesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
                 ? dayjs(sluttDato)
                 : dayjs(
                       rader
-                          .flatMap(raden => raden.perioder)
+                          .flat()
                           .reduce((senest, perioden) => (perioden.tom > senest ? perioden.tom : senest), new Date(0))
                   ).add(1, 'day'),
         [sluttDato, rader]

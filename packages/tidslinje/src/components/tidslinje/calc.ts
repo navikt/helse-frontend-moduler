@@ -8,7 +8,7 @@ dayjs.extend(isSameOrAfter);
 
 export const breddeMellomDatoer = (start: Dayjs, slutt: Dayjs, totaltAntallDatoer: number): Percentage => {
     const dagerMellomDatoer = slutt.diff(start, 'minute') / 60 / 24;
-    return Math.abs((dagerMellomDatoer / totaltAntallDatoer) * 100);
+    return (dagerMellomDatoer / totaltAntallDatoer) * 100;
 };
 
 export const erLike = (p1: EnkelPeriode, p2?: EnkelPeriode) => p2 && p1.fom.isSame(p2.fom) && p1.tom.isSame(p2.tom);

@@ -1,7 +1,6 @@
 import { sisteDato, sisteEnklePeriode, sistePeriode } from './sort';
 import dayjs, { Dayjs } from 'dayjs';
 import { EnkelPeriode, PosisjonertPeriode } from '../types.internal';
-import { PeriodeStatus } from '../types.external';
 
 const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
 
@@ -9,7 +8,7 @@ const enPeriode = ({ fom = enDato(), tom = enDato() } = {}): EnkelPeriode => ({ 
 
 const enPosisjonertPeriode = ({ left = 50 } = {}): PosisjonertPeriode => ({
     id: 'id',
-    status: PeriodeStatus.Suksess,
+    status: 'suksess',
     fom: dayjs(),
     tom: dayjs(),
     width: 123,

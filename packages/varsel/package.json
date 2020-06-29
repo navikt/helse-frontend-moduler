@@ -16,7 +16,8 @@
   },
   "gitHead": "849643531c0cc81589e2e4c280d3e81add7e16f3",
   "files": [
-    "lib"
+    "lib",
+    "src"
   ],
   "dependencies": {
     "react": "^16.12.0"

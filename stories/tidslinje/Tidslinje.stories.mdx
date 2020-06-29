@@ -1,0 +1,74 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { withA11y } from '@storybook/addon-a11y';
+import {
+    rader,
+    sykepengerader,
+    ExampleTidslinje,
+    ExamplePeriode,
+    Tidslinje,
+    onSelectPeriode,
+    aktivPeriode,
+    Sykepengetidslinje,
+    TilpassetTidslinjespenn
+} from './exampleData.tsx';
+
+<Meta title="Tidslinje" component={Tidslinje} subComponents={[Sykepengetidslinje]} decorators={[withA11y]} />
+
+# Tidslinje
+
+Viser perioder på en horisontal tidslinje fra venstre (seneste) mot høyre (tidligste). Komponenten er kontrollert,
+noe som betyr at det er foreldrekomponenten som forteller `<Tidslinje />` hvilken periode som er valgt og hva som
+skal skje når man klikker på/interagerer med en periode. Dette kan gjøres med propene `aktivPeriode` og
+`onSelectPeriode`.
+
+<Preview withSource="open">
+    <Story name="tidslinje">
+        <Tidslinje rader={rader} onSelectPeriode={onSelectPeriode} aktivPeriode={aktivPeriode} />
+    </Story>
+</Preview>
+
+<Props of={ExampleTidslinje} />
+
+En periode er et vanlig js-objekt og ser slik ut:
+
+<Props of={ExamplePeriode} />
+
+Vanlig oppsett av `aktivPeriode` og `onSelectPeriode` kan se slik ut:
+
+```jsx
+const MinTidslinje = ({ rader }) => {
+    const [aktivPeriode, setAktivPeriode] = useState(rader[0][0]);
+    const onSelectPeriode = periode => setAktivPeriode(periode);
+
+    return <Tidslinje rader={rader} aktivPeriode={aktivPeriode} onSelectPeriode={onSelectPeriode} />;
+};
+```
+
+### Sykepengetidslinje
+
+Vi i sykepengeteamet bruker en tilpasset variant av `<Tidslinje />` med egen styling, bl.a.
+ikoner på periodeknappene for å kunne visuelt skille mellom forskjellige periodetyper
+som har samme status ('suksess', 'feil', osv.). Man kan overstyre og legge til ekstra styling
+på periodene ved å gi hvert periodeobjekt en `className`-property, og så bruke denne i egne
+stilark for å tilpasse styling.
+
+<Preview>
+    <Story name="sykepengetidslinje">
+        <Sykepengetidslinje rader={sykepengerader} onSelectPeriode={onSelectPeriode} aktivPeriode={aktivPeriode} />
+    </Story>
+</Preview>
+
+### Tilpasset start- og sluttdato
+
+Tidslinjen har to valgfrie props av type `Date`, `startDato` og `sluttDato`. Disse brukes for å endre perioden
+tidslinjen spenner over. Nedenfor kan du teste ut hvordan det fungerer i praksis, men det kan være lurt å ikke bruke
+slidere for å scrolle langs tidslinjen ettersom det er kostbart å endre disse verdiene for ofte ettersom alle perioder i
+tidslinjen må rerendres og rekalkulere posisjon og størrelse. Da er det bedre å wrappe tidslinjen i et element med
+`overflow-x: scroll` og på den måten la nettleseren håndtere scroll.
+
+
+<Preview>
+    <Story name="tidslinje med justerbart spenn">
+        <TilpassetTidslinjespenn />
+    </Story>
+</Preview>

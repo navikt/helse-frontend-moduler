@@ -1,5 +1,6 @@
 div.content {
     display: flex;
+    flex-direction: column;
 }
 
 div.content > p.content:not(:last-of-type) {
