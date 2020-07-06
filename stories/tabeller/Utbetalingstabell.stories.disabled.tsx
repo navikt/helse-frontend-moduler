@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Dag, Dagtype, Utbetalingstabell } from '../../packages/tabell/periodetabell';
-import { Dagstatus, Kilde } from '../../packages/tabell/periodetabell/types';
+import { Dag, Dagtype, Utbetalingstabell } from '../../packages/tabell/src/periodetabell';
+import { Dagstatus, Kilde } from '../../packages/tabell/src';
 import { object, withKnobs } from '@storybook/addon-knobs';
 import dayjs, { Dayjs } from 'dayjs';
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import Tabell, { Body, Footer, Header, Rad } from '../../packages/tabell/Tabell';
+import { Tabell, Body, Footer, Head, Rad } from '../../packages/tabell/src';
 import { withKnobs, number } from '@storybook/addon-knobs';
 
 export default {
@@ -10,10 +10,10 @@ export default {
 
 export const medToKolonner = () => (
     <Tabell>
-        <Header>
+        <Head>
             <p>Dato</p>
             <p>Gradering</p>
-        </Header>
+        </Head>
         <Body>
             <Rad>
                 <p>19.02.2019</p>
@@ -37,11 +37,11 @@ export const medToKolonner = () => (
 
 export const medTreKolonner = () => (
     <Tabell>
-        <Header>
+        <Head>
             <p>Dato</p>
             <p>Gradering</p>
             <p>Refusjon</p>
-        </Header>
+        </Head>
         <Body>
             <Rad>
                 <p>19.02.2019</p>
@@ -69,11 +69,11 @@ export const medTreKolonner = () => (
 
 export const medFooter = () => (
     <Tabell>
-        <Header>
+        <Head>
             <p>Dato</p>
             <p>Gradering</p>
             <p>Dagsats</p>
-        </Header>
+        </Head>
         <Body>
             <Rad>
                 <p>19.02.2019</p>
@@ -110,12 +110,12 @@ export const variabeltAntallKolonnerOgRader = () => {
 
     return (
         <Tabell>
-            <Header>
+            <Head>
                 {kolonner.map((_, i) => {
                     const navn = `Kolonne_${i + 1}`;
                     return <p key={navn}>{navn}</p>;
                 })}
-            </Header>
+            </Head>
             <Body>
                 {rader.map((_, i) => (
                     <Rad key={i}>

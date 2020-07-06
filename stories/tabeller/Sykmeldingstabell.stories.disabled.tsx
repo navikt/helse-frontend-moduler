@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Dag, Dagtype, Sykmeldingstabell } from '../../packages/tabell/periodetabell';
+import { Dag, Dagtype, Sykmeldingstabell } from '../../packages/tabell/src/periodetabell';
 import { withKnobs, object } from '@storybook/addon-knobs';
 
 export default {

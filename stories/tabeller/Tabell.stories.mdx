@@ -1,0 +1,105 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { Tabell } from '../../packages/tabell/src';
+import { withA11y } from '@storybook/addon-a11y';
+import { rader, headere, TestTabell } from './exampleData';
+import { EnSorterbarHeader, EnUseTabell, EnUseTabellOptions } from './exampleTypes';
+
+<Meta title="Tabell" component={Tabell} decorators={[withA11y]} />
+
+# Tabell
+
+`Tabell` er en wrapper-komponent rundt `table` med minimal styling og fokus på accessibility.
+Utseendemessig minner den om [tabellen i designsystemet](https://design.nav.no/components/tabell) til Nav men
+tilpasset interneflater med f.eks. lavere radhøyde for å kunne vise flere rader på én gang uten at brukeren må scrolle.
+
+```javascript
+const headere = ['Dato', 'Grad', 'Utbetaling'];
+
+const rader = [
+    ['19.02.2019', '100%', '1234 kr'],
+    ['20.02.2019', '50%', '617 kr'],
+    ['21.02.2019', '50%', '617 kr'],
+    ['22.02.2019', '80%', '987 kr']
+];
+```
+
+<Preview withSource="open">
+    <Story name="tabell">
+        <Tabell
+            beskrivelse="en enkel tabell"
+            rader={rader}
+            headere={headere}
+        />
+    </Story>
+</Preview>
+
+<Props of={Tabell} />
+
+<Story name="useTabell">{null}</Story>
+
+# useTabell
+
+`useTabell` er en hook som gjør det lettere å skape komplekse tabeller med sortering, filtrering, mm.
+
+<Props components={{ input: EnUseTabellOptions, output: EnUseTabell }} />
+
+### Sortering
+
+Radene i tabellen kan enkelt sorteres ved å bruke `useTabell`-hooken og gi den modifiserte headere som beskriver hvordan
+innholdet i hver kolonne skal kunne sorteres. `useTabell` holder styr på sorteringsretning og hvilken kolonne som er
+sortert, samt gjør den faktiske sorteringen av radene. Følgende headere modifiserer headerne over til å være sorterbare
+på `Dato`, `Grad` og `Utbetaling`:
+
+```javascript
+const headere = [
+    {
+        render: 'Dato',
+        sortFunction: (a: string, b: string) => new Date(a).getTime() - new Date(b).getTime()
+    },
+    {
+        render: 'Grad',
+        sortFunction: (a: number, b: number) => a - b
+    },
+    {
+        render: 'Utbetaling',
+        sortFunction: (a: number, b: number) => a - b
+    }
+];
+```
+
+I noen tilfeller der det sorteres er det ønskelig å rendre en annen verdi enn råverdien det sorteres på. Her vil vi
+f.eks. heller sortere på tallet `100` enn stringen `"100%"` i `Grad`-kolonnen. Da kan man gi `useTabell` en `renderer`-
+funksjon som forteller hvordan radene i tabellen skal rendres på skjerm. Følgende eksempel viser hvordan dette kan
+gjøres for tabellen vår:
+
+```javascript
+const renderer = rad => [
+    dayjs(rad[0]).format('DD.MM.YYYY'),
+    `${rad[1]}%`,
+    `${rad[2]} kr`
+];
+
+const rader = [
+    ['2019-02-19', 100, 1234],
+    ['2019-02-20', 50, 617],
+    ['2019-02-21', 50, 617],
+    ['2019-02-22', 80, 987]
+];
+
+const MinTabell = () => {
+    const props = useTabell({ rader, headere, renderer });
+
+    return (
+        <Tabell beskrivelse="En sorterbar tabell" {...props} />
+    );
+};
+```
+
+Her ender vi opp med følgende tabell:
+
+<Preview>
+    <Story name="med sortering">
+        <TestTabell />
+    </Story>
+</Preview>
+
