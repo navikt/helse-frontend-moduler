@@ -38,10 +38,10 @@ export interface TabellProps {
 
 const Body = ({ rader }: { rader: ReactNode[][] }) => (
     <tbody>
-        {rader.map(rad => (
-            <tr key={`${rad[0]}`}>
-                {rad.map(element => (
-                    <td key={`${element}`}>{element}</td>
+        {rader.map((rad, i) => (
+            <tr key={i}>
+                {rad.map((element, i) => (
+                    <td key={i}>{element}</td>
                 ))}
             </tr>
         ))}

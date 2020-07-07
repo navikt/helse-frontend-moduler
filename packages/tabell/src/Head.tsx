@@ -125,7 +125,7 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
                     <hr />
                     {filtere.map((filter, i) => (
                         <FilterMenuItem
-                            key={i}
+                            key={filter.label as string}
                             onFilter={() => onFilter(filter)}
                             aktiv={aktiveFiltere.includes(filter)}
                         >
@@ -150,6 +150,7 @@ export const Head = ({ headere, sortering, filtrering }: HeadProps) => (
             {headere.map(tilTabellHeader).map((header, i) => {
                 return (header as FiltrerbarTabellHeader).filtere ? (
                     <FiltrerbarHeader
+                        key={i}
                         onFilter={(header as FiltrerbarTabellHeader).onClick}
                         filtere={(header as FiltrerbarTabellHeader).filtere}
                         aktiveFiltere={filtrering?.filtere ?? []}
