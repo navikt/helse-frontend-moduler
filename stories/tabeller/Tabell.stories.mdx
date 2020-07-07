@@ -1,12 +1,16 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import { Tabell } from '../../packages/tabell/src';
 import { withA11y } from '@storybook/addon-a11y';
-import { rader, headere, TestTabell } from './exampleData';
-import { EnSorterbarHeader, EnUseTabell, EnUseTabellOptions } from './exampleTypes';
+import { rader, headere, SorterbarTabell, FiltrerbarTabell } from './exampleData';
+import { EnSorterbarHeader, EnUseTabell, EnUseTabellOptions, EnSortering, EnFiltrering } from './exampleTypes';
 
 <Meta title="Tabell" component={Tabell} decorators={[withA11y]} />
 
 # Tabell
+
+```sh
+npm i @navikt/helse-frontend-tabell -S
+```
 
 `Tabell` er en wrapper-komponent rundt `table` med minimal styling og fokus på accessibility.
 Utseendemessig minner den om [tabellen i designsystemet](https://design.nav.no/components/tabell) til Nav men
@@ -24,7 +28,7 @@ const rader = [
 ```
 
 <Preview withSource="open">
-    <Story name="tabell">
+    <Story name="Tabell">
         <Tabell
             beskrivelse="en enkel tabell"
             rader={rader}
@@ -33,7 +37,7 @@ const rader = [
     </Story>
 </Preview>
 
-<Props of={Tabell} />
+<Props components={{ Tabell: Tabell, Filtrering: EnFiltrering, Sortering: EnSortering }} />
 
 <Story name="useTabell">{null}</Story>
 
@@ -45,10 +49,16 @@ const rader = [
 
 ### Sortering
 
-Radene i tabellen kan enkelt sorteres ved å bruke `useTabell`-hooken og gi den modifiserte headere som beskriver hvordan
-innholdet i hver kolonne skal kunne sorteres. `useTabell` holder styr på sorteringsretning og hvilken kolonne som er
-sortert, samt gjør den faktiske sorteringen av radene. Følgende headere modifiserer headerne over til å være sorterbare
-på `Dato`, `Grad` og `Utbetaling`:
+<Preview>
+    <Story name="Sortering">
+        <SorterbarTabell />
+    </Story>
+</Preview>
+
+Radene i tabellen kan sorteres ved å gi `useTabell`-hooken headere som beskriver hvordan innholdet i hver kolonne skal
+kunne sorteres. `useTabell` holder styr på sorteringsretning og hvilken kolonne som er sortert, samt gjør den faktiske
+sorteringen av radene. Følgende headere modifiserer headerne over til å være sorterbare på `Dato`, `Grad` og
+`Utbetaling`:
 
 ```javascript
 const headere = [
@@ -95,11 +105,25 @@ const MinTabell = () => {
 };
 ```
 
-Her ender vi opp med følgende tabell:
+### Filtrering
 
 <Preview>
-    <Story name="med sortering">
-        <TestTabell />
+    <Story name="Filtrering">
+        <FiltrerbarTabell />
     </Story>
 </Preview>
 
+Tabellradene kan filtreres ved å gi `useTabell`-hooken headere som beskriver hvordan kolonnene skal filtreres. Hvert
+filter har en `label` som beskriver hva som filtreres samt en funksjon som står for selve filtreringen. Filtrerbare
+kolonner kan kombineres med sorterbare kolonner, men en kolonne kan ikke være både filtrerbar og sorterbar. Headeren for
+`Grad` i tabellen over ser slik ut:
+
+```javascript
+{
+    render: 'Grad',
+    filtere: [
+        { label: '< 100%', func: (grad: number) => grad < 100 },
+        { label: '< 75%', func: (grad: number) => grad < 75 }
+    ]
+}
+```

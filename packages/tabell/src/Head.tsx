@@ -1,7 +1,10 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
-import styles from './Tabell.less';
-import { Sortering } from './Tabell';
+import styles from './Head.less';
+import { tilTabellHeader } from './map';
+import { Header } from './types';
+import { Sortering } from './sortering';
+import { Filter, Filtrering } from './filtrering';
 
 export interface TabellHeader {
     /**
@@ -9,28 +12,20 @@ export interface TabellHeader {
      */
     render: ReactNode;
     /**
-     * Beskriver hvordan radene skal sorteres basert på innholdet i kolonnen.
-     */
-    sortFunction?: (a: ReactNode, b: ReactNode) => number;
-    /**
-     * Filter-funksjoner som bestemmer hvordan radene skal funne filtreres basert på innholdet i kolonnen.
-     */
-    filtere?: ((value: ReactNode) => boolean)[];
-    /**
      * Funksjon som kalles når bruker klikker på headeren.
      */
-    onClick?: () => void;
+    onClick?: (val?: any) => void;
 }
 
-export interface SorterbarTabellHeader {
-    onSort: () => void;
-    direction: 'ascending' | 'descending' | 'none';
+export interface SorterbarTabellHeader extends TabellHeader {
+    sortFunction: (a: ReactNode, b: ReactNode) => number;
+    onClick: () => void;
 }
 
-const erTabellHeader = (header: ReactNode | TabellHeader): boolean => (header as TabellHeader).render !== undefined;
-
-const toTabellHeader = (header: ReactNode | TabellHeader): TabellHeader =>
-    (erTabellHeader(header) ? header : { render: header }) as TabellHeader;
+export interface FiltrerbarTabellHeader extends TabellHeader {
+    filtere: Filter[];
+    onClick: (filter: Filter) => void;
+}
 
 interface KolonneHeaderProps {
     children: ReactNode | ReactNode[];
@@ -52,31 +47,116 @@ const SorterbarHeader = ({ children, direction, onSort }: SorterbarHeaderProps) 
     </th>
 );
 
-interface HeadProps {
-    headere: (ReactNode | TabellHeader)[];
-    sortering?: Sortering;
+interface UseOnInteractOutsideParameters {
+    ref: React.RefObject<HTMLElement>;
+    onInteractOutside: () => void;
+    active: boolean;
 }
 
-export const Head = ({ headere, sortering }: HeadProps) => {
-    const tabellheadere = headere.map(toTabellHeader);
+const useOnInteractOutside = ({ ref, onInteractOutside, active }: UseOnInteractOutsideParameters) => {
+    useEffect(() => {
+        const onInteractWrapper = (event: FocusEvent | MouseEvent) => {
+            if (active && !ref.current?.contains(event.target as HTMLElement)) onInteractOutside();
+        };
+        document.addEventListener('focusin', onInteractWrapper);
+        document.addEventListener('click', onInteractWrapper);
+        return () => {
+            document.removeEventListener('focusin', onInteractWrapper);
+            document.removeEventListener('click', onInteractWrapper);
+        };
+    }, [ref.current, active]);
+};
+
+interface FilterMenuItemProps {
+    children: ReactNode | ReactNode[];
+    onFilter: () => void;
+    aktiv: boolean;
+}
+
+const FilterMenuItem = ({ children, onFilter, aktiv }: FilterMenuItemProps) => (
+    <li>
+        <label className={styles.filterLabel}>
+            <input type="checkbox" checked={aktiv} onChange={onFilter} />
+            {children}
+        </label>
+    </li>
+);
+
+interface FiltrerbarHeaderProps {
+    children: ReactNode | ReactNode[];
+    onFilter: (filter: Filter | Filter[]) => void;
+    filtere: Filter[];
+    aktiveFiltere: Filter[];
+}
+
+const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere }: FiltrerbarHeaderProps) => {
+    const [open, setOpen] = useState(false);
+    const ref = useRef<HTMLTableHeaderCellElement>(null);
+    const onClick = () => setOpen(o => !o);
+
+    useOnInteractOutside({ ref, onInteractOutside: () => setOpen(false), active: open });
+
+    const alleFiltereErAktive = filtere.every(filter => aktiveFiltere.includes(filter));
 
     return (
-        <thead>
-            <tr>
-                {tabellheadere.map((header, i) => {
-                    return header.onClick ? (
-                        <SorterbarHeader
+        <th scope="col" ref={ref}>
+            <button className={classNames(styles.filterHeader, open && styles.open)} onClick={onClick} tabIndex={0}>
+                {children}
+            </button>
+            {open && (
+                <ul className={styles.filterList}>
+                    <FilterMenuItem
+                        onFilter={() => (alleFiltereErAktive ? onFilter([]) : onFilter(filtere))}
+                        aktiv={alleFiltereErAktive}
+                    >
+                        {alleFiltereErAktive ? 'Opphev alle' : 'Velg alle'}
+                    </FilterMenuItem>
+                    <hr />
+                    {filtere.map((filter, i) => (
+                        <FilterMenuItem
                             key={i}
-                            onSort={header.onClick}
-                            direction={i === sortering?.kolonne ? sortering.direction : undefined}
+                            onFilter={() => onFilter(filter)}
+                            aktiv={aktiveFiltere.includes(filter)}
                         >
-                            {header.render}
-                        </SorterbarHeader>
-                    ) : (
-                        <KolonneHeader key={i}>{header.render}</KolonneHeader>
-                    );
-                })}
-            </tr>
-        </thead>
+                            {filter.label}
+                        </FilterMenuItem>
+                    ))}
+                </ul>
+            )}
+        </th>
     );
 };
+
+interface HeadProps {
+    headere: (ReactNode | Header)[];
+    sortering?: Sortering;
+    filtrering?: Filtrering;
+}
+
+export const Head = ({ headere, sortering, filtrering }: HeadProps) => (
+    <thead>
+        <tr>
+            {headere.map(tilTabellHeader).map((header, i) => {
+                return (header as FiltrerbarTabellHeader).filtere ? (
+                    <FiltrerbarHeader
+                        onFilter={(header as FiltrerbarTabellHeader).onClick}
+                        filtere={(header as FiltrerbarTabellHeader).filtere}
+                        aktiveFiltere={filtrering?.filtere ?? []}
+                    >
+                        {header.render}
+                    </FiltrerbarHeader>
+                ) : header.onClick ? (
+                    <SorterbarHeader
+                        key={i}
+                        onSort={(header as SorterbarTabellHeader).onClick}
+                        direction={i === sortering?.kolonne ? sortering.direction : undefined}
+                    >
+                        {header.render}
+                    </SorterbarHeader>
+                ) : (
+                    <KolonneHeader key={i}>{header.render}</KolonneHeader>
+                );
+            })}
+        </tr>
+    </thead>
+);

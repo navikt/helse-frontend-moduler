@@ -2,17 +2,8 @@ import React, { ReactNode } from 'react';
 import styles from './Tabell.less';
 import classNames from 'classnames';
 import { Head, TabellHeader } from './Head';
-
-export interface Sortering {
-    /**
-     * Retningen det sorteres i.
-     */
-    direction: 'ascending' | 'descending' | 'none';
-    /**
-     * Kolonneindeksen det sorteres på.
-     */
-    kolonne?: number;
-}
+import { Sortering } from './sortering';
+import { Filtrering } from './filtrering';
 
 export interface TabellProps {
     /**
@@ -39,23 +30,25 @@ export interface TabellProps {
      * Forteller tabellen hvordan radene er sortert.
      */
     sortering?: Sortering;
+    /**
+     * Forteller tabellen hvilke filtere som er aktive.
+     */
+    filtrering?: Filtrering;
 }
 
-const Body = <T,>({ rader }: { rader: T[][] }) => {
-    return (
-        <tbody>
-            {rader.map(rad => (
-                <tr key={`${rad[0]}`}>
-                    {rad.map(element => (
-                        <td key={`${element}`}>{element}</td>
-                    ))}
-                </tr>
-            ))}
-        </tbody>
-    );
-};
+const Body = ({ rader }: { rader: ReactNode[][] }) => (
+    <tbody>
+        {rader.map(rad => (
+            <tr key={`${rad[0]}`}>
+                {rad.map(element => (
+                    <td key={`${element}`}>{element}</td>
+                ))}
+            </tr>
+        ))}
+    </tbody>
+);
 
-const Footer = <T,>({ footere }: { footere: ReactNode[] }) => (
+const Footer = ({ footere }: { footere: ReactNode[] }) => (
     <tfoot>
         <tr>
             {Object.values(footere).map((value, i) => (
@@ -65,10 +58,18 @@ const Footer = <T,>({ footere }: { footere: ReactNode[] }) => (
     </tfoot>
 );
 
-export const Tabell = <T,>({ rader = [], className, beskrivelse, headere, footere, sortering }: TabellProps) => (
-    <table className={classNames(styles.table, className)}>
+export const Tabell = ({
+    rader = [],
+    className,
+    beskrivelse,
+    headere,
+    footere,
+    sortering,
+    filtrering
+}: TabellProps) => (
+    <table className={classNames('Tabell', styles.table, className)}>
         {beskrivelse && <caption className={styles.caption}>{beskrivelse}</caption>}
-        {headere && <Head headere={headere} sortering={sortering} />}
+        {headere && <Head headere={headere} sortering={sortering} filtrering={filtrering} />}
         <Body rader={rader} />
         {footere && <Footer footere={footere} />}
     </table>
