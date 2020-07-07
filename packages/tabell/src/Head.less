@@ -9,6 +9,10 @@
     font-family: 'Source Sans Pro', Arial, Helvetica, sans-serif;
     font-weight: 600;
     color: #3e3832;
+
+    &:active, &:focus {
+        outline: none;
+    }
 }
 
 .filterHeader {
@@ -18,6 +22,11 @@
     margin-left: -0.5rem;
     height: 2rem;
     border-radius: 0.25rem;
+    transition: box-shadow 0.1s ease;
+
+    &:active, &:focus {
+        box-shadow: 0 0 0 3px #254b6d;
+    }
 
     &:before,
     &:after {
@@ -117,6 +126,11 @@
 
 .sortHeader {
     .headerButton();
+
+    &:focus, &:active {
+        color: #0067C5;
+        text-decoration: underline;
+    }
 
     &:before,
     &:after {

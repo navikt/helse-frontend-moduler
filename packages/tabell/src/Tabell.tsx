@@ -4,6 +4,12 @@ import classNames from 'classnames';
 import { Head, TabellHeader } from './Head';
 import { Sortering } from './sortering';
 import { Filtrering } from './filtrering';
+import { tilTabellrad } from './map';
+
+export interface Tabellrad {
+    celler: ReactNode[];
+    className?: string;
+}
 
 export interface TabellProps {
     /**
@@ -13,7 +19,7 @@ export interface TabellProps {
     /**
      * Radene som skal vises i tabellen.
      */
-    rader: ReactNode[][];
+    rader: (ReactNode[] | Tabellrad)[];
     /**
      * Headere som vises øverst i tabellen.
      */
@@ -36,11 +42,11 @@ export interface TabellProps {
     filtrering?: Filtrering;
 }
 
-const Body = ({ rader }: { rader: ReactNode[][] }) => (
+const Body = ({ rader }: { rader: (ReactNode[] | Tabellrad)[] }) => (
     <tbody>
-        {rader.map((rad, i) => (
-            <tr key={i}>
-                {rad.map((element, i) => (
+        {rader.map(tilTabellrad).map((rad: Tabellrad, i) => (
+            <tr key={i} className={classNames('Tabellrad', rad.className && rad.className)}>
+                {rad.celler.map((element, i) => (
                     <td key={i}>{element}</td>
                 ))}
             </tr>
