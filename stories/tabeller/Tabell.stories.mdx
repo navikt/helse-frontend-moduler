@@ -1,7 +1,7 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import { Tabell } from '../../packages/tabell/src';
 import { withA11y } from '@storybook/addon-a11y';
-import { rader, headere, SorterbarTabell, FiltrerbarTabell } from './exampleData';
+import { rader, headere, SorterbarTabell, FiltrerbarTabell, HeaderOverFlereKolonnerTabell } from './exampleData';
 import { EnSorterbarHeader, EnUseTabell, EnUseTabellOptions, EnSortering, EnFiltrering } from './exampleTypes';
 
 <Meta title="Tabell" component={Tabell} decorators={[withA11y]} />
@@ -127,3 +127,23 @@ kolonner kan kombineres med sorterbare kolonner, men en kolonne kan ikke være b
     ]
 }
 ```
+
+### Headere over flere kolonner
+
+Bruk propertien `kolonner` for headere som skal strekke seg over flere kolonner:
+
+```javascript
+const headere = [
+    {
+        render: 'Dato og gradering',
+        kolonner: 2
+    },
+    'Utbetaling'
+];
+```
+
+<Preview>
+    <Story name="Header over flere kolonner">
+        <HeaderOverFlereKolonnerTabell />
+    </Story>
+</Preview>

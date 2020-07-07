@@ -15,6 +15,10 @@ export interface TabellHeader {
      * Funksjon som kalles når bruker klikker på headeren.
      */
     onClick?: (val?: any) => void;
+    /**
+     * Angir antall kolonner headeren strekker seg over
+     */
+    kolonner?: number;
 }
 
 export interface SorterbarTabellHeader extends TabellHeader {
@@ -29,18 +33,24 @@ export interface FiltrerbarTabellHeader extends TabellHeader {
 
 interface KolonneHeaderProps {
     children: ReactNode | ReactNode[];
+    kolonner?: number;
 }
 
-const KolonneHeader = ({ children }: KolonneHeaderProps) => <th scope="col">{children}</th>;
+const KolonneHeader = ({ children, kolonner = 1 }: KolonneHeaderProps) => (
+    <th scope="col" colSpan={kolonner}>
+        {children}
+    </th>
+);
 
 interface SorterbarHeaderProps {
     children: ReactNode | ReactNode[];
     onSort: () => void;
     direction?: 'ascending' | 'descending' | 'none';
+    kolonner?: number;
 }
 
-const SorterbarHeader = ({ children, direction, onSort }: SorterbarHeaderProps) => (
-    <th scope="col" aria-sort={direction}>
+const SorterbarHeader = ({ children, direction, onSort, kolonner = 1 }: SorterbarHeaderProps) => (
+    <th scope="col" aria-sort={direction} colSpan={kolonner}>
         <button className={classNames(styles.sortHeader, direction && styles[direction])} onClick={onSort}>
             {children}
         </button>
@@ -87,9 +97,10 @@ interface FiltrerbarHeaderProps {
     onFilter: (filter: Filter | Filter[]) => void;
     filtere: Filter[];
     aktiveFiltere: Filter[];
+    kolonner?: number;
 }
 
-const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere }: FiltrerbarHeaderProps) => {
+const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner = 1 }: FiltrerbarHeaderProps) => {
     const [open, setOpen] = useState(false);
     const ref = useRef<HTMLTableHeaderCellElement>(null);
     const onClick = () => setOpen(o => !o);
@@ -99,7 +110,7 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere }: Filtre
     const alleFiltereErAktive = filtere.every(filter => aktiveFiltere.includes(filter));
 
     return (
-        <th scope="col" ref={ref}>
+        <th scope="col" ref={ref} colSpan={kolonner}>
             <button className={classNames(styles.filterHeader, open && styles.open)} onClick={onClick} tabIndex={0}>
                 {children}
             </button>
@@ -154,7 +165,9 @@ export const Head = ({ headere, sortering, filtrering }: HeadProps) => (
                         {header.render}
                     </SorterbarHeader>
                 ) : (
-                    <KolonneHeader key={i}>{header.render}</KolonneHeader>
+                    <KolonneHeader key={i} kolonner={header.kolonner}>
+                        {header.render}
+                    </KolonneHeader>
                 );
             })}
         </tr>

@@ -66,7 +66,7 @@ const filtrerbareHeadere = [
         ]
     },
     sorterbareHeadere[2]
-]
+];
 
 const filtrerbareRader = [...sorterbareRader];
 
@@ -78,7 +78,21 @@ export const FiltrerbarTabell = () => {
         renderer
     });
 
+    return <Tabell beskrivelse="En sorterbar tabell" rader={tabellrader} headere={tabellheadere} {...rest} />;
+};
+
+export const HeaderOverFlereKolonnerTabell = () => {
     return (
-        <Tabell beskrivelse="En sorterbar tabell" rader={tabellrader} headere={tabellheadere} {...rest} />
+        <Tabell
+            beskrivelse="Tabell med en headere som strekker seg over flere kolonnerl"
+            rader={rader}
+            headere={[
+                {
+                    render: 'Dato og gradering',
+                    kolonner: 2
+                },
+                'Utbetaling'
+            ]}
+        />
     );
 };
