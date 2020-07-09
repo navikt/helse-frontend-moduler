@@ -78,6 +78,8 @@ export const FiltrerbarTabell = () => {
         renderer
     });
 
+    console.log(rest.sortering);
+
     return <Tabell beskrivelse="En sorterbar tabell" rader={tabellrader} headere={tabellheadere} {...rest} />;
 };
 

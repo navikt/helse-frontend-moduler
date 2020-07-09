@@ -1,7 +1,15 @@
 import { ReactNode } from 'react';
 
 export interface Filter {
+    /**
+     * Navnet på filteret. Rendres i en liste av alle filtere som kan velges for kolonnen. Må være unik for alle
+     * filtere i samme kolonne.
+     */
     label: ReactNode;
+    /**
+     * Funksjon som brukes for å avgjøre hvilke rader som skal sorteres vekk basert på innholdet i kolonnen filteret
+     * gjelder for.
+     */
     func: (value: ReactNode) => boolean;
 }
 

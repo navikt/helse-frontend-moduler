@@ -18,6 +18,14 @@ export interface UseTabellOptions {
      * Funksjon som tar råverdiene i tabellen og omformer de til det vi ønsker å rendre på skjerm.
      */
     renderer?: (rad: ReactNode[]) => ReactNode[];
+    /**
+     * Beskriver hvordan tabellen skal sorteres ved mount.
+     */
+    defaultSortering?: Sortering;
+    /**
+     * Beskriver hvordan tabellen skal filtreres ved mount.
+     */
+    defaultFiltrering?: Filtrering;
 }
 
 export interface UseTabell {
@@ -40,18 +48,28 @@ export interface UseTabell {
     filtrering: Filtrering;
 }
 
-const defaultSortering: Sortering = { direction: 'none', kolonne: undefined, func: (_a, _b) => -1 };
+const _defaultSortering: Sortering = { direction: 'none', kolonne: undefined, func: (_a, _b) => -1 };
 
-const defaultFiltrering: Filtrering = { filtere: [], kolonne: undefined };
+const _defaultFiltrering: Filtrering = { filtere: [], kolonne: undefined };
 
-export const useTabell = ({ rader, renderer, headere }: UseTabellOptions): UseTabell => {
-    const [sortering, setSortering] = useState<Sortering>(defaultSortering);
-    const [filtrering, setFiltrering] = useState<Filtrering>(defaultFiltrering);
+export const useTabell = ({
+    rader,
+    renderer,
+    headere,
+    defaultFiltrering,
+    defaultSortering
+}: UseTabellOptions): UseTabell => {
+    const [sortering, setSortering] = useState<Sortering>(defaultSortering ?? _defaultSortering);
+    const [filtrering, setFiltrering] = useState<Filtrering>(defaultFiltrering ?? _defaultFiltrering);
 
     const toSortOnClick = (func: (a: ReactNode, b: ReactNode) => number, kolonne: number) => () => {
         const sorterPåNyKolonne = sortering.kolonne !== kolonne;
         if (sorterPåNyKolonne) {
-            setSortering({ direction: endreSorteringsretning(defaultSortering.direction), kolonne, func });
+            setSortering({
+                direction: endreSorteringsretning(_defaultSortering.direction),
+                kolonne,
+                func
+            });
         } else {
             setSortering({ direction: endreSorteringsretning(sortering.direction), kolonne, func });
         }
@@ -73,10 +91,10 @@ export const useTabell = ({ rader, renderer, headere }: UseTabellOptions): UseTa
         const filtrerPåNyKolonne = filtrering.kolonne !== kolonne;
         if (filtrerPåNyKolonne) {
             setFiltrering({ filtere: [nyttFilter], kolonne });
-        } else if (filtrering.filtere.includes(nyttFilter)) {
+        } else if (filtrering.filtere.find(filter => filter.label === nyttFilter.label)) {
             setFiltrering(forrigeFiltere => ({
                 ...forrigeFiltere,
-                filtere: [...forrigeFiltere.filtere.filter(filteret => filteret !== nyttFilter)]
+                filtere: [...forrigeFiltere.filtere.filter(filteret => filteret.label !== nyttFilter.label)]
             }));
         } else {
             setFiltrering({

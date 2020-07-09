@@ -107,7 +107,9 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
 
     useOnInteractOutside({ ref, onInteractOutside: () => setOpen(false), active: open });
 
-    const alleFiltereErAktive = filtere.every(filter => aktiveFiltere.includes(filter));
+    const alleFiltereErAktive = filtere.every(filter =>
+        aktiveFiltere.find(aktivtFilter => aktivtFilter.label === filter.label)
+    );
 
     return (
         <th scope="col" ref={ref} colSpan={kolonner}>
@@ -127,7 +129,9 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
                         <FilterMenuItem
                             key={filter.label as string}
                             onFilter={() => onFilter(filter)}
-                            aktiv={aktiveFiltere.includes(filter)}
+                            aktiv={
+                                aktiveFiltere.find(aktivtFilter => aktivtFilter.label === filter.label) !== undefined
+                            }
                         >
                             {filter.label}
                         </FilterMenuItem>
