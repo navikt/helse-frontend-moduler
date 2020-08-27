@@ -3,7 +3,7 @@ import { FiltrerbarTabellHeader, SorterbarTabellHeader, TabellHeader } from './H
 import { tilTabellHeader } from './map';
 import { endreSorteringsretning, Sortering, tilRetningsstyrtSortering, tilSorterteRader } from './sortering';
 import { Filter, Filtrering } from './filtrering';
-import { Paginering, paginerteRader } from './paginering';
+import { Paginering } from './paginering';
 
 export interface UseTabellOptions {
     /**
@@ -81,11 +81,11 @@ const _defaultSortering: Sortering = { direction: 'none', kolonne: undefined, fu
 
 const _defaultFiltrering: Filtrering = { filtere: [], kolonne: undefined };
 
-const finnFørsteSynligeElement = (paginering: Paginering) =>
-    (paginering.sidenummer - 1) * paginering.antallRaderPerSide + 1;
+const finnFørsteSynligeElement = (rader: ReactNode[][], paginering: Paginering) =>
+    rader.length > 0 ? (paginering.sidenummer - 1) * paginering.antallRaderPerSide + 1 : 0;
 
 const finnSisteSynligeElement = (rader: ReactNode[][], paginering: Paginering) => {
-    const førsteSynligeElement = finnFørsteSynligeElement(paginering) as number;
+    const førsteSynligeElement = finnFørsteSynligeElement(rader, paginering) as number;
     const elementPlassering = førsteSynligeElement + paginering.antallRaderPerSide - 1;
     return elementPlassering > rader.length ? rader.length : elementPlassering;
 };
@@ -182,7 +182,7 @@ export const useTabell = ({
         paginering && {
             ...paginering,
             antallSider: Math.ceil(rader.length / paginering.antallRaderPerSide),
-            førsteSynligeElement: finnFørsteSynligeElement(paginering),
+            førsteSynligeElement: finnFørsteSynligeElement(rader, paginering),
             sisteSynligeElement: finnSisteSynligeElement(rader, paginering),
             set: setPaginering
         };

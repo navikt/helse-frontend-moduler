@@ -167,7 +167,7 @@ export const PaginertTabell = () => {
     const renderer = (rad: ReactNode[]) => [rad[0], `${rad[1]}%`, `${rad[2]} kr`];
 
     const { rader: tabellrader, headere: tabellheadere, paginering, ...rest } = useTabell({
-        rader: pagineringsrader,
+        rader: [],
         headere: filtrerbareHeadere,
         renderer,
         defaultPaginering: _paginering
