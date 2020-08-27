@@ -1,7 +1,14 @@
 import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
 import { Tabell } from '../../packages/tabell/src';
 import { withA11y } from '@storybook/addon-a11y';
-import { rader, headere, SorterbarTabell, FiltrerbarTabell, HeaderOverFlereKolonnerTabell } from './exampleData';
+import {
+    rader,
+    headere,
+    PaginertTabell,
+    SorterbarTabell,
+    FiltrerbarTabell,
+    HeaderOverFlereKolonnerTabell
+} from './exampleData';
 import { EnSorterbarHeader, EnUseTabell, EnUseTabellOptions, EnSortering, EnFiltrering } from './exampleTypes';
 
 <Meta title="Tabell" component={Tabell} decorators={[withA11y]} />
@@ -29,11 +36,7 @@ const rader = [
 
 <Preview withSource="open">
     <Story name="Tabell">
-        <Tabell
-            beskrivelse="en enkel tabell"
-            rader={rader}
-            headere={headere}
-        />
+        <Tabell beskrivelse="en enkel tabell" rader={rader} headere={headere} />
     </Story>
 </Preview>
 
@@ -83,11 +86,7 @@ funksjon som forteller hvordan radene i tabellen skal rendres på skjerm. Følge
 gjøres for tabellen vår:
 
 ```javascript
-const renderer = rad => [
-    dayjs(rad[0]).format('DD.MM.YYYY'),
-    `${rad[1]}%`,
-    `${rad[2]} kr`
-];
+const renderer = rad => [dayjs(rad[0]).format('DD.MM.YYYY'), `${rad[1]}%`, `${rad[2]} kr`];
 
 const rader = [
     ['2019-02-19', 100, 1234],
@@ -99,9 +98,7 @@ const rader = [
 const MinTabell = () => {
     const props = useTabell({ rader, headere, renderer });
 
-    return (
-        <Tabell beskrivelse="En sorterbar tabell" {...props} />
-    );
+    return <Tabell beskrivelse="En sorterbar tabell" {...props} />;
 };
 ```
 
@@ -145,5 +142,13 @@ const headere = [
 <Preview>
     <Story name="Header over flere kolonner">
         <HeaderOverFlereKolonnerTabell />
+    </Story>
+</Preview>
+
+### Paginering
+
+<Preview withSource="open">
+    <Story name="Paginering">
+        <PaginertTabell />
     </Story>
 </Preview>

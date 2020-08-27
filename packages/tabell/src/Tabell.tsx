@@ -5,11 +5,16 @@ import { Head, TabellHeader } from './Head';
 import { Sortering } from './sortering';
 import { Filtrering } from './filtrering';
 import { tilTabellrad } from './map';
+import { Paginering, paginerteRader } from './paginering';
 
 export interface Tabellrad {
     celler: ReactNode[];
     className?: string;
 }
+
+export type Tabellrader = (ReactNode | Tabellrad)[];
+
+export type Tabellheadere = (ReactNode | TabellHeader)[];
 
 export interface TabellProps {
     /**
@@ -19,11 +24,11 @@ export interface TabellProps {
     /**
      * Radene som skal vises i tabellen.
      */
-    rader: (ReactNode[] | Tabellrad)[];
+    rader: Tabellrader;
     /**
      * Headere som vises øverst i tabellen.
      */
-    headere?: (ReactNode | TabellHeader)[];
+    headere?: Tabellheadere;
     /**
      * Footere som vises nederst i tabellen.
      */
@@ -40,19 +45,26 @@ export interface TabellProps {
      * Forteller tabellen hvilke filtere som er aktive.
      */
     filtrering?: Filtrering;
+    /**
+     * Forteller tabellen hvordan tabellen skal pagineres.
+     */
+    paginering?: Paginering;
 }
 
-const Body = ({ rader }: { rader: (ReactNode[] | Tabellrad)[] }) => (
-    <tbody>
-        {rader.map(tilTabellrad).map((rad: Tabellrad, i) => (
-            <tr key={i} className={classNames('Tabellrad', rad.className && rad.className)}>
-                {rad.celler.map((element, i) => (
-                    <td key={i}>{element}</td>
-                ))}
-            </tr>
-        ))}
-    </tbody>
-);
+const Body = ({ rader, paginering }: { rader: Tabellrader; paginering?: Paginering }) => {
+    const tabellrader = paginerteRader(rader, paginering) ?? rader;
+    return (
+        <tbody>
+            {tabellrader.map(tilTabellrad).map((rad: Tabellrad, i) => (
+                <tr key={i} className={classNames('Tabellrad', rad.className && rad.className)}>
+                    {rad.celler.map((element, i) => (
+                        <td key={i}>{element}</td>
+                    ))}
+                </tr>
+            ))}
+        </tbody>
+    );
+};
 
 const Footer = ({ footere }: { footere: ReactNode[] }) => (
     <tfoot>
@@ -71,12 +83,13 @@ export const Tabell = ({
     headere,
     footere,
     sortering,
-    filtrering
+    filtrering,
+    paginering
 }: TabellProps) => (
     <table className={classNames('Tabell', styles.table, className)}>
         {beskrivelse && <caption className={styles.caption}>{beskrivelse}</caption>}
         {headere && <Head headere={headere} sortering={sortering} filtrering={filtrering} />}
-        <Body rader={rader} />
+        <Body rader={rader} paginering={paginering} />
         {footere && <Footer footere={footere} />}
     </table>
 );

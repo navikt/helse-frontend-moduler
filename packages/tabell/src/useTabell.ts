@@ -1,8 +1,9 @@
-import { ReactNode, useState } from 'react';
+import { Dispatch, ReactNode, SetStateAction, useState } from 'react';
 import { FiltrerbarTabellHeader, SorterbarTabellHeader, TabellHeader } from './Head';
 import { tilTabellHeader } from './map';
 import { endreSorteringsretning, Sortering, tilRetningsstyrtSortering, tilSorterteRader } from './sortering';
 import { Filter, Filtrering } from './filtrering';
+import { Paginering, paginerteRader } from './paginering';
 
 export interface UseTabellOptions {
     /**
@@ -26,6 +27,29 @@ export interface UseTabellOptions {
      * Beskriver hvordan tabellen skal filtreres ved mount.
      */
     defaultFiltrering?: Filtrering;
+    /**
+     * Beskriver hvordan tabellen skal pagineres ved mount.
+     */
+    defaultPaginering?: Paginering;
+}
+
+export interface UseTabellPaginering extends Paginering {
+    /**
+     * Antall sider i pagineringen.
+     */
+    antallSider: number;
+    /**
+     * Ordenstallet for det første synlige elementet av alle elementer.
+     */
+    førsteSynligeElement: number;
+    /**
+     * Ordenstallet for det siste synlige elementet av alle elementer.
+     */
+    sisteSynligeElement: number;
+    /**
+     * Oppdaterer paginering.
+     */
+    set: Dispatch<SetStateAction<Paginering>>;
 }
 
 export interface UseTabell {
@@ -46,21 +70,37 @@ export interface UseTabell {
      * Beskriver hvordan tabellen er filtrert for øyeblikket.
      */
     filtrering: Filtrering;
+    /**
+     * Beskriver hvordan tabellen er paginert for øyeblikket. Er kun satt dersom `defaultPaginering`-parametret til
+     * hooken er satt.
+     */
+    paginering?: UseTabellPaginering;
 }
 
 const _defaultSortering: Sortering = { direction: 'none', kolonne: undefined, func: (_a, _b) => -1 };
 
 const _defaultFiltrering: Filtrering = { filtere: [], kolonne: undefined };
 
+const finnFørsteSynligeElement = (paginering: Paginering) =>
+    (paginering.sidenummer - 1) * paginering.antallRaderPerSide + 1;
+
+const finnSisteSynligeElement = (rader: ReactNode[][], paginering: Paginering) => {
+    const førsteSynligeElement = finnFørsteSynligeElement(paginering) as number;
+    const elementPlassering = førsteSynligeElement + paginering.antallRaderPerSide - 1;
+    return elementPlassering > rader.length ? rader.length : elementPlassering;
+};
+
 export const useTabell = ({
     rader,
     renderer,
     headere,
     defaultFiltrering,
-    defaultSortering
+    defaultSortering,
+    defaultPaginering
 }: UseTabellOptions): UseTabell => {
     const [sortering, setSortering] = useState<Sortering>(defaultSortering ?? _defaultSortering);
     const [filtrering, setFiltrering] = useState<Filtrering>(defaultFiltrering ?? _defaultFiltrering);
+    const [paginering, setPaginering] = useState<Paginering | undefined>(defaultPaginering);
 
     const toSortOnClick = (func: (a: ReactNode, b: ReactNode) => number, kolonne: number) => () => {
         const sorterPåNyKolonne = sortering.kolonne !== kolonne;
@@ -138,8 +178,19 @@ export const useTabell = ({
         }
     };
 
+    const applyPaginering = (rader: ReactNode[][]) => (paginering ? paginerteRader(rader, paginering) || rader : rader);
+
+    const constructPaginering = () =>
+        paginering && {
+            ...paginering,
+            antallSider: Math.ceil(rader.length / paginering.antallRaderPerSide),
+            førsteSynligeElement: finnFørsteSynligeElement(paginering),
+            sisteSynligeElement: finnSisteSynligeElement(rader, paginering),
+            set: setPaginering
+        };
+
     return {
-        rader: renderer ? applySort(applyFiltrering(rader)).map(renderer) : rader,
+        rader: renderer ? applyPaginering(applySort(applyFiltrering(rader))).map(renderer) : rader,
         headere: headere?.map((header: TabellHeader, kolonne: number) =>
             header.render
                 ? (header as SorterbarTabellHeader).sortFunction
@@ -150,6 +201,7 @@ export const useTabell = ({
                 : tilTabellHeader(header)
         ),
         sortering,
-        filtrering
+        filtrering,
+        paginering: constructPaginering()
     };
 };

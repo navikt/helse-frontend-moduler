@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     EnkelPeriode,
     Periode,
     Sykepengeperiode,
-    Sykepengetidslinje as _Sykepengetidslinje,
     Tidslinje as _Tidslinje,
-    Vedtaksperiodetilstand
+    Vedtaksperiodetilstand,
+    Sykepengetidslinje as _Sykepengetidslinje
 } from '../../packages/tidslinje/src';
 import './tidslinje.css';
 import { SykepengetidslinjeProps } from '../../packages/tidslinje/src/components/sykepengetidslinje/Sykepengetidslinje';
