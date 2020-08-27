@@ -178,8 +178,6 @@ export const useTabell = ({
         }
     };
 
-    const applyPaginering = (rader: ReactNode[][]) => (paginering ? paginerteRader(rader, paginering) || rader : rader);
-
     const constructPaginering = () =>
         paginering && {
             ...paginering,
@@ -190,7 +188,7 @@ export const useTabell = ({
         };
 
     return {
-        rader: renderer ? applyPaginering(applySort(applyFiltrering(rader))).map(renderer) : rader,
+        rader: renderer ? applySort(applyFiltrering(rader)).map(renderer) : rader,
         headere: headere?.map((header: TabellHeader, kolonne: number) =>
             header.render
                 ? (header as SorterbarTabellHeader).sortFunction
