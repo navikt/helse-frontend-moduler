@@ -1,0 +1,15 @@
+import { Meta, Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { withA11y } from '@storybook/addon-a11y';
+import { Tooltip } from '../packages/tooltip/src';
+
+<Meta title="Tooltip" component={Tooltip} decorators={[withA11y]} />
+
+# Tooltip
+
+<Preview>
+    <Story name="Tooltip">
+        <div style={{position: 'relative', marginTop: '300px'}}>
+            <Tooltip>Hei</Tooltip>
+        </div>
+    </Story>
+</Preview>
