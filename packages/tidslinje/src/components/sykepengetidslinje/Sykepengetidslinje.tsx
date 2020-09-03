@@ -13,6 +13,7 @@ export enum Vedtaksperiodetilstand {
     Venter = 'venter',
     Avslag = 'avslag',
     IngenUtbetaling = 'ingenUtbetaling',
+    KunFerie = 'kunFerie',
     Ukjent = 'ukjent',
     Feilet = 'feilet',
     TilInfotrygd = 'tilInfotrygd',
@@ -58,6 +59,7 @@ export const Sykepengetidslinje = ({
             case Vedtaksperiodetilstand.IngenUtbetaling:
             case Vedtaksperiodetilstand.Annullert:
             case Vedtaksperiodetilstand.UtbetaltIInfotrygd:
+            case Vedtaksperiodetilstand.KunFerie:
             case Vedtaksperiodetilstand.Infotrygdferie:
             case Vedtaksperiodetilstand.Infotrygdukjent:
                 return 'inaktiv';

@@ -164,9 +164,15 @@ export const sykepengerader: Sykepengeperiode[][] = [
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
+            id: '670',
+            fom: new Date('2019-05-15'),
+            tom: new Date('2019-05-30'),
+            status: Vedtaksperiodetilstand.KunFerie
+        },
+        {
             id: '678',
             fom: new Date('2019-05-05'),
-            tom: new Date('2019-05-30'),
+            tom: new Date('2019-05-14'),
             status: Vedtaksperiodetilstand.Utbetalt
         },
         {
