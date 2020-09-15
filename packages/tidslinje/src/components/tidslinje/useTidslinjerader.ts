@@ -8,7 +8,12 @@ import { sistePeriode } from './sort';
 import { useMemo } from 'react';
 import { TidslinjeProps } from './Tidslinje';
 
-const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntallDager: number): PosisjonertPeriode => {
+const posisjonertPeriode = (
+    periode: Periode,
+    tidslinjeSlutt: Dayjs,
+    totaltAntallDager: number,
+    direction: 'left' | 'right' = 'left'
+): PosisjonertPeriode => {
     const fom = dayjs(periode.fom);
     const tom = dayjs(periode.tom);
     const posisjonertPeriode = {
@@ -22,16 +27,17 @@ const posisjonertPeriode = (periode: Periode, tidslinjeSlutt: Dayjs, totaltAntal
     };
     const displayFom = fom.startOf('day');
     const displayTom = tom.endOf('day');
-    const left = breddeMellomDatoer(displayTom, tidslinjeSlutt, totaltAntallDager);
+    const horizontalPosition = breddeMellomDatoer(displayTom, tidslinjeSlutt, totaltAntallDager);
     const width = breddeMellomDatoer(displayFom, displayTom, totaltAntallDager);
-    const cropped = left + width > 100;
-    const outOfBounds = left >= 100;
+    const cropped = horizontalPosition + width > 100;
+    const outOfBounds = horizontalPosition >= 100;
     return {
         ...posisjonertPeriode,
-        left,
-        width: cropped ? 100 - left : width,
-        cropped,
-        outOfBounds
+        direction: direction,
+        horizontalPosition: horizontalPosition,
+        width: cropped ? 100 - horizontalPosition : width,
+        cropped: cropped,
+        outOfBounds: outOfBounds
     };
 };
 
@@ -44,43 +50,33 @@ const medSammenheng = (periode: PosisjonertPeriode, i: number, perioder: Posisjo
     return periode;
 };
 
-export const useTidslinjerader = (rader: Periode[][], startDato: Dayjs, sluttDato: Dayjs): InternalEnkelTidslinje[] =>
+export const useTidslinjerader = (
+    rader: Periode[][],
+    startDato: Dayjs,
+    sluttDato: Dayjs,
+    direction: 'left' | 'right'
+): InternalEnkelTidslinje[] =>
     useMemo(() => {
         const totaltAntallDager = sluttDato.diff(startDato, 'day');
         return rader.map(perioder => ({
             id: nanoid(),
             perioder: perioder
-                .map((periode: Periode) => posisjonertPeriode(periode, sluttDato, totaltAntallDager))
+                .map((periode: Periode) => posisjonertPeriode(periode, sluttDato, totaltAntallDager, direction))
                 .sort(sistePeriode)
                 .map(medSammenheng)
         }));
     }, [rader, startDato, sluttDato]);
 
-export const tidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
-    useMemo(
-        () =>
-            startDato
-                ? dayjs(startDato)
-                : dayjs(
-                      rader
-                          .flat()
-                          .reduce(
-                              (tidligst, perioden) => (perioden.fom < tidligst ? perioden.fom : tidligst),
-                              new Date()
-                          )
-                  ).startOf('day'),
-        [startDato, rader]
-    );
+const tidligsteDato = (tidligst: Date, periode: Periode) => (periode.fom < tidligst ? periode.fom : tidligst);
 
-export const senesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
-    useMemo(
-        () =>
-            sluttDato
-                ? dayjs(sluttDato)
-                : dayjs(
-                      rader
-                          .flat()
-                          .reduce((senest, perioden) => (perioden.tom > senest ? perioden.tom : senest), new Date(0))
-                  ).add(1, 'day'),
-        [sluttDato, rader]
-    );
+const tidligsteFomDato = (rader: Periode[][]) => rader.flat().reduce(tidligsteDato, new Date());
+
+export const useTidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
+    useMemo(() => (startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader)).startOf('day')), [startDato, rader]);
+
+const senesteDato = (senest: Date, periode: Periode) => (periode.tom > senest ? periode.tom : senest);
+
+const senesteTomDato = (rader: Periode[][]) => rader.flat().reduce(senesteDato, new Date(0));
+
+export const useSenesteDato = ({ sluttDato, rader }: TidslinjeProps) =>
+    useMemo(() => (sluttDato ? dayjs(sluttDato) : dayjs(senesteTomDato(rader)).add(1, 'day')), [sluttDato, rader]);

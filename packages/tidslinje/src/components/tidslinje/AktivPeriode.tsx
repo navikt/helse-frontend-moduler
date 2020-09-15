@@ -9,51 +9,57 @@ interface IntervallProps {
     tidslinjestart: Dayjs;
     tidslinjeslutt: Dayjs;
     aktivPeriode?: EnkelPeriode;
+    direction: 'left' | 'right';
 }
 
 interface UsePositionAndSizeOptions {
     aktivPeriode: EnkelPeriode;
     tidslinjestart: Dayjs;
     tidslinjeslutt: Dayjs;
+    direction: 'left' | 'right';
 }
 
 const constrain = (value: number, min: number, max: number) => (value >= max ? max : value < min ? min : value);
 
-const usePositionAndSize = ({ aktivPeriode, tidslinjestart, tidslinjeslutt }: UsePositionAndSizeOptions) => {
+const usePositionAndSize = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: UsePositionAndSizeOptions) => {
     const fom = dayjs(aktivPeriode.fom).startOf('day');
     const tom = dayjs(aktivPeriode.tom).endOf('day');
     const totaltAntallDager = tidslinjeslutt.diff(tidslinjestart, 'day');
 
-    const left = breddeMellomDatoer(tom, tidslinjeslutt, totaltAntallDager);
-    const adjustedLeft = constrain(left, 0, 100);
+    const horizontalPosition = breddeMellomDatoer(tom, tidslinjeslutt, totaltAntallDager);
+    const adjustedHorizontalPosition = constrain(horizontalPosition, 0, 100);
 
     const width = breddeMellomDatoer(fom, tom, totaltAntallDager);
     const adjustedWidth =
-        adjustedLeft + width >= 100 ? 100 - adjustedLeft : adjustedLeft + width !== left + width ? width + left : width;
+        adjustedHorizontalPosition + width >= 100
+            ? 100 - adjustedHorizontalPosition
+            : adjustedHorizontalPosition + width !== horizontalPosition + width
+            ? width + horizontalPosition
+            : width;
 
-    if (left >= 100 || adjustedWidth <= 0) {
+    if (horizontalPosition >= 100 || adjustedWidth <= 0) {
         return {
-            left: 0,
+            [direction]: 0,
             width: 0,
             display: 'none'
         };
-    } else if (left < 0) {
+    } else if (horizontalPosition < 0) {
         return {
-            left: 0,
+            [direction]: 0,
             width: `${adjustedWidth}%`
         };
     } else {
         return {
-            left: `${adjustedLeft}%`,
+            [direction]: `${adjustedHorizontalPosition}%`,
             width: `${adjustedWidth}%`,
-            display: left > 100 ? 'none' : undefined
+            display: horizontalPosition > 100 ? 'none' : undefined
         };
     }
 };
 
-export const AktivPeriodeBorder = ({ aktivPeriode, tidslinjestart, tidslinjeslutt }: IntervallProps) => {
+export const AktivPeriodeBorder = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: IntervallProps) => {
     if (!aktivPeriode) return null;
-    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt });
+    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction });
     return (
         <div className={styles.container}>
             <div className={classNames(styles.aktivPeriodeBorder)} style={style} />
@@ -61,9 +67,9 @@ export const AktivPeriodeBorder = ({ aktivPeriode, tidslinjestart, tidslinjeslut
     );
 };
 
-export const AktivPeriodeBakgrunn = ({ aktivPeriode, tidslinjestart, tidslinjeslutt }: IntervallProps) => {
+export const AktivPeriodeBakgrunn = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: IntervallProps) => {
     if (!aktivPeriode) return null;
-    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt });
+    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction });
     return (
         <div className={styles.container}>
             <div className={classNames(styles.aktivPeriodeBakgrunn)} style={style} />

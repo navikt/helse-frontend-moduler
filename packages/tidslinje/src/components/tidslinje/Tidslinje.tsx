@@ -6,7 +6,7 @@ import Tidslinjerad from './Tidslinjerad';
 import Skalaetiketter from './Skalaetiketter';
 import { Dayjs } from 'dayjs';
 import { EnkelPeriode, Periode } from '../types.external';
-import { senesteDato, tidligsteDato, useTidslinjerader } from './useTidslinjerader';
+import { useSenesteDato, useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
 import { InternalEnkelTidslinje, Intervall, PosisjonertPeriode } from '../types.internal';
 
 export interface TidslinjeProps {
@@ -30,6 +30,10 @@ export interface TidslinjeProps {
      * Perioden som skal være aktiv/valgt.
      */
     aktivPeriode?: EnkelPeriode;
+    /**
+     * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left'.
+     */
+    direction?: 'left' | 'right';
 }
 
 export interface InternalTidslinjeProps {
@@ -38,6 +42,7 @@ export interface InternalTidslinjeProps {
     sluttDato: Dayjs;
     onSelectPeriode?: (periode: Periode) => void;
     aktivPeriode?: EnkelPeriode;
+    direction: 'left' | 'right';
 }
 
 interface TidslinjeContextType {
@@ -51,7 +56,7 @@ export const TidslinjeContext = React.createContext<TidslinjeContextType>({
 });
 
 const _Tidslinje = React.memo(
-    ({ rader, startDato, sluttDato, onSelectPeriode, aktivPeriode }: InternalTidslinjeProps) => {
+    ({ rader, startDato, sluttDato, onSelectPeriode, aktivPeriode, direction }: InternalTidslinjeProps) => {
         const onSelectPeriodeWrapper = useCallback(
             (periode: PosisjonertPeriode) => {
                 onSelectPeriode?.({
@@ -67,12 +72,13 @@ const _Tidslinje = React.memo(
 
         return (
             <div className={classNames('tidslinje', styles.tidslinje)}>
-                <Skalaetiketter start={startDato} slutt={sluttDato} />
+                <Skalaetiketter start={startDato} slutt={sluttDato} direction={direction} />
                 <div className={classNames('tidslinjerader', styles.rader)}>
                     <AktivPeriodeBakgrunn
                         tidslinjestart={startDato}
                         tidslinjeslutt={sluttDato}
                         aktivPeriode={aktivPeriode}
+                        direction={direction}
                     />
                     {rader.map(tidslinje => (
                         <Tidslinjerad
@@ -86,6 +92,7 @@ const _Tidslinje = React.memo(
                         tidslinjestart={startDato}
                         tidslinjeslutt={sluttDato}
                         aktivPeriode={aktivPeriode}
+                        direction={direction}
                     />
                 </div>
             </div>
@@ -94,12 +101,12 @@ const _Tidslinje = React.memo(
 );
 
 export const Tidslinje = React.memo(
-    ({ startDato, sluttDato, rader, onSelectPeriode, aktivPeriode }: TidslinjeProps) => {
+    ({ startDato, sluttDato, rader, onSelectPeriode, aktivPeriode, direction = 'left' }: TidslinjeProps) => {
         if (!rader) throw new Error('Tidslinjen mangler verdi for "rader"-propen.');
 
-        const _startDato = tidligsteDato({ startDato, rader });
-        const _sluttDato = senesteDato({ sluttDato, rader });
-        const _rader = useTidslinjerader(rader, _startDato, _sluttDato);
+        const _startDato = useTidligsteDato({ startDato, rader });
+        const _sluttDato = useSenesteDato({ sluttDato, rader });
+        const _rader = useTidslinjerader(rader, _startDato, _sluttDato, direction);
 
         return (
             <_Tidslinje
@@ -108,6 +115,7 @@ export const Tidslinje = React.memo(
                 sluttDato={_sluttDato}
                 onSelectPeriode={onSelectPeriode}
                 aktivPeriode={aktivPeriode}
+                direction={direction}
             />
         );
     }

@@ -5,7 +5,8 @@ export type Periodestatus = 'suksess' | 'advarsel' | 'feil' | 'inaktiv' | 'ukjen
 export type Percentage = number;
 
 export interface PosisjonertElement {
-    left: number;
+    horizontalPosition: number;
+    direction: 'left' | 'right';
 }
 
 export interface EnkelPeriode {
@@ -34,7 +35,6 @@ export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
 }
 
 export interface Skalaetikett extends PosisjonertElement {
-    left: number;
     label: string;
 }
 

@@ -6,13 +6,14 @@ const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(pluss
 
 const enPeriode = ({ fom = enDato(), tom = enDato() } = {}): EnkelPeriode => ({ fom, tom });
 
-const enPosisjonertPeriode = ({ left = 50 } = {}): PosisjonertPeriode => ({
+const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PosisjonertPeriode => ({
     id: 'id',
     status: 'suksess',
     fom: dayjs(),
     tom: dayjs(),
     width: 123,
-    left
+    horizontalPosition: horizontalPosition,
+    direction: 'left'
 });
 
 test('sisteDato', () => {
@@ -37,19 +38,19 @@ test('sisteDato', () => {
 
 test('sistePeriode', () => {
     const usortert = [
-        enPosisjonertPeriode({ left: 50 }),
-        enPosisjonertPeriode({ left: 0 }),
-        enPosisjonertPeriode({ left: 12 }),
-        enPosisjonertPeriode({ left: 80 }),
-        enPosisjonertPeriode({ left: 33 })
+        enPosisjonertPeriode({ horizontalPosition: 50 }),
+        enPosisjonertPeriode({ horizontalPosition: 0 }),
+        enPosisjonertPeriode({ horizontalPosition: 12 }),
+        enPosisjonertPeriode({ horizontalPosition: 80 }),
+        enPosisjonertPeriode({ horizontalPosition: 33 })
     ];
 
     const sortert = [
-        enPosisjonertPeriode({ left: 0 }),
-        enPosisjonertPeriode({ left: 12 }),
-        enPosisjonertPeriode({ left: 33 }),
-        enPosisjonertPeriode({ left: 50 }),
-        enPosisjonertPeriode({ left: 80 })
+        enPosisjonertPeriode({ horizontalPosition: 0 }),
+        enPosisjonertPeriode({ horizontalPosition: 12 }),
+        enPosisjonertPeriode({ horizontalPosition: 33 }),
+        enPosisjonertPeriode({ horizontalPosition: 50 }),
+        enPosisjonertPeriode({ horizontalPosition: 80 })
     ];
     expect(usortert.sort(sistePeriode)).toEqual(sortert);
 });

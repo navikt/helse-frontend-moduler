@@ -7,7 +7,10 @@ const enDato = ({ plussDager = 0, plussTimer = 0 } = {}): Dayjs =>
         .add(plussDager, 'day')
         .add(plussTimer, 'hour');
 
-const etPosisjonertElement = (left = 50): PosisjonertElement => ({ left });
+const etPosisjonertElement = (horizontalPosition = 50): PosisjonertElement => ({
+    horizontalPosition,
+    direction: 'left'
+});
 
 test('innenEtDøgn', () => {
     expect(innenEtDøgn(enDato(), enDato())).toBeTruthy();

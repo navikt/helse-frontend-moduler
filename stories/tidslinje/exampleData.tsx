@@ -35,6 +35,10 @@ export interface TidslinjeProps {
      * Perioden som skal være aktiv/valgt.
      */
     aktivPeriode?: EnkelPeriode;
+    /**
+     * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left'.
+     */
+    direction?: 'left' | 'right';
 }
 
 export const ExamplePeriode = (_: Periode) => null;
@@ -102,7 +106,11 @@ export const rader: Periode[][] = [
     ]
 ];
 
-export const aktivPeriode = null;
+export const aktivPeriode = {
+    fom: new Date('2019-02-01'),
+    tom: new Date('2019-04-15')
+};
+
 export const onSelectPeriode = (_: EnkelPeriode) => null;
 
 export const Tidslinje = (props: TidslinjeProps) => {
@@ -111,21 +119,15 @@ export const Tidslinje = (props: TidslinjeProps) => {
         setAktivPeriode(periode);
     };
 
-    return <_Tidslinje rader={props.rader} aktivPeriode={aktivPeriode} onSelectPeriode={onSelectPeriode} />;
+    return (
+        <_Tidslinje
+            rader={props.rader}
+            aktivPeriode={aktivPeriode}
+            onSelectPeriode={onSelectPeriode}
+            direction={props.direction}
+        />
+    );
 };
-
-/*
-export interface Sykepengeperiode {
-    id: string;
-    fom: Date;
-    tom: Date;
-    status: Vedtaksperiodetilstand;
-    disabled?: boolean;
-    className?: string;
-    disabledLabel?: ReactNode;
-    active?: boolean;
-}
- */
 
 const enEtikett = (tekst: string) => <p className="tooltip">{tekst}</p>;
 
@@ -275,7 +277,7 @@ export const TilpassetTidslinjespenn = () => {
                     max={maxRange}
                     min={0}
                     onChange={event => {
-                        setStartdato(sluttdato.subtract(+event.target.value, 'day'))
+                        setStartdato(sluttdato.subtract(+event.target.value, 'day'));
                     }}
                 />
             </label>
@@ -288,7 +290,7 @@ export const TilpassetTidslinjespenn = () => {
                     onChange={event => {
                         const nySluttdato = opprinneligSluttdato.subtract(+event.target.value, 'day');
                         setSluttdato(nySluttdato);
-                        setStartdato(nySluttdato.subtract(dagerMellomStartOgSlutt, 'day'))
+                        setStartdato(nySluttdato.subtract(dagerMellomStartOgSlutt, 'day'));
                     }}
                 />
             </label>

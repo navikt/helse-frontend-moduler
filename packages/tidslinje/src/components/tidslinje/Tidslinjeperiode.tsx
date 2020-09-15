@@ -19,13 +19,19 @@ const ariaLabel = (periode: PosisjonertPeriode): string => {
 const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: TidslinjeperiodeProps) => {
     const [visDisabledLabel, setVisDisabledLabel] = useState(false);
 
+    const sammenhengFraHøyre =
+        periode.direction === 'left' ? styles.sammenhengendeFraHøyre : styles.sammenhengendeFraVenstre;
+
+    const sammenhengFraVenstre =
+        periode.direction === 'left' ? styles.sammenhengendeFraVenstre : styles.sammenhengendeFraHøyre;
+
     const className = classNames(
         styles.periode,
         periode.cropped && styles.avkuttet,
         periode.outOfBounds && styles.usynlig,
         periode.sammenheng === 'begge' && styles.sammenhengendeFraBegge,
-        periode.sammenheng === 'høyre' && styles.sammenhengendeFraHøyre,
-        periode.sammenheng === 'venstre' && styles.sammenhengendeFraVenstre,
+        periode.sammenheng === 'høyre' && sammenhengFraHøyre,
+        periode.sammenheng === 'venstre' && sammenhengFraVenstre,
         active && styles.active,
         styles[periode.status],
         periode.className
@@ -54,7 +60,7 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
             onClick={onClick}
             aria-label={ariaLabel(periode)}
             style={{
-                left: `${periode.left}%`,
+                [periode.direction]: `${periode.horizontalPosition}%`,
                 width: `${periode.width}%`
             }}
         >
