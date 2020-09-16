@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb';
 import { Percentage, Skalaetikett } from '../types.internal';
@@ -36,11 +36,12 @@ export const dagsetiketter = (
         .fill(sisteDag)
         .map((denneDagen, i) => {
             if (i % inkrement !== 0) return null;
-            const dag = denneDagen.subtract(i, 'day');
+            const dag: Dayjs = denneDagen.subtract(i, 'day');
             return {
                 direction: direction,
                 horizontalPosition: breddeMellomDatoer(dag, slutt, totaltAntallDager),
-                label: formatertDag(dag)
+                label: formatertDag(dag),
+                dato: dag.toDate()
             };
         })
         .filter(etikett => etikett !== null) as Skalaetikett[];
@@ -57,11 +58,12 @@ export const månedsetiketter = (
     const førsteMåned = startmåned.add(1, 'month');
     const antallMåneder = sluttmåned.diff(startmåned, 'month');
     return new Array(antallMåneder).fill(førsteMåned).map((denneMåneden, i) => {
-        const måned = denneMåneden.add(i, 'month');
+        const måned: Dayjs = denneMåneden.add(i, 'month');
         return {
             direction: direction,
             horizontalPosition: breddeMellomDatoer(måned, slutt, totaltAntallDager),
-            label: formatertMåned(måned)
+            label: formatertMåned(måned),
+            dato: måned.toDate()
         };
     });
 };
@@ -75,11 +77,12 @@ export const årsetiketter = (
     const førsteÅr = start.startOf('year');
     const antallÅr = Math.ceil(slutt.diff(start, 'year', true)) + 1;
     return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
-        const år = detteÅret.add(i, 'year');
+        const år: Dayjs = detteÅret.add(i, 'year');
         return {
             direction: direction,
             horizontalPosition: breddeMellomDatoer(år, slutt, totaltAntallDager),
-            label: formatertÅr(år)
+            label: formatertÅr(år),
+            dato: år.toDate()
         };
     });
 };
@@ -99,21 +102,30 @@ interface SkalaetiketterProps {
     start: Dayjs;
     slutt: Dayjs;
     direction?: 'left' | 'right';
+    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
 }
 
-const Skalaetiketter = ({ start, slutt, direction = 'left' }: SkalaetiketterProps) => {
-    const etiketter = useMemo(() => skalaEtiketter(start, slutt, direction).filter(erSynlig), [start, slutt]);
+const Skalaetiketter = ({ start, slutt, direction = 'left', EtikettKomponent }: SkalaetiketterProps) => {
+    const etiketter = skalaEtiketter(start, slutt, direction).filter(erSynlig);
     return (
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
-            {etiketter.map(etikett => (
-                <div
-                    key={etikett.label}
-                    className={styles.etikett}
-                    style={{ [direction]: `${etikett.horizontalPosition}%` }}
-                >
-                    {etikett.label}
-                </div>
-            ))}
+            {etiketter.map(etikett =>
+                EtikettKomponent ? (
+                    <EtikettKomponent
+                        key={etikett.label}
+                        etikett={etikett}
+                        style={{ [direction]: `${etikett.horizontalPosition}%` }}
+                    />
+                ) : (
+                    <div
+                        key={etikett.label}
+                        className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
+                        style={{ [direction]: `${etikett.horizontalPosition}%` }}
+                    >
+                        {etikett.label}
+                    </div>
+                )
+            )}
         </div>
     );
 };

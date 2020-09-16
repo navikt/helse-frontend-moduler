@@ -36,6 +36,7 @@ export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
 
 export interface Skalaetikett extends PosisjonertElement {
     label: string;
+    dato: Date;
 }
 
 export interface InternalEnkelTidslinje {

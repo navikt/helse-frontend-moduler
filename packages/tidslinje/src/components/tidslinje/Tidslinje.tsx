@@ -7,7 +7,7 @@ import Skalaetiketter from './Skalaetiketter';
 import { Dayjs } from 'dayjs';
 import { EnkelPeriode, Periode } from '../types.external';
 import { useSenesteDato, useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
-import { InternalEnkelTidslinje, Intervall, PosisjonertPeriode } from '../types.internal';
+import { InternalEnkelTidslinje, Intervall, PosisjonertPeriode, Skalaetikett } from '../types.internal';
 
 export interface TidslinjeProps {
     /**
@@ -34,6 +34,10 @@ export interface TidslinjeProps {
      * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left'.
      */
     direction?: 'left' | 'right';
+    /**
+     * Komponent for å rendre etiketter.
+     */
+    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
 }
 
 export interface InternalTidslinjeProps {
@@ -43,6 +47,7 @@ export interface InternalTidslinjeProps {
     onSelectPeriode?: (periode: Periode) => void;
     aktivPeriode?: EnkelPeriode;
     direction: 'left' | 'right';
+    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
 }
 
 interface TidslinjeContextType {
@@ -56,7 +61,15 @@ export const TidslinjeContext = React.createContext<TidslinjeContextType>({
 });
 
 const _Tidslinje = React.memo(
-    ({ rader, startDato, sluttDato, onSelectPeriode, aktivPeriode, direction }: InternalTidslinjeProps) => {
+    ({
+        rader,
+        startDato,
+        sluttDato,
+        onSelectPeriode,
+        aktivPeriode,
+        direction,
+        EtikettKomponent
+    }: InternalTidslinjeProps) => {
         const onSelectPeriodeWrapper = useCallback(
             (periode: PosisjonertPeriode) => {
                 onSelectPeriode?.({
@@ -72,7 +85,12 @@ const _Tidslinje = React.memo(
 
         return (
             <div className={classNames('tidslinje', styles.tidslinje)}>
-                <Skalaetiketter start={startDato} slutt={sluttDato} direction={direction} />
+                <Skalaetiketter
+                    start={startDato}
+                    slutt={sluttDato}
+                    direction={direction}
+                    EtikettKomponent={EtikettKomponent}
+                />
                 <div className={classNames('tidslinjerader', styles.rader)}>
                     <AktivPeriodeBakgrunn
                         tidslinjestart={startDato}
@@ -101,7 +119,15 @@ const _Tidslinje = React.memo(
 );
 
 export const Tidslinje = React.memo(
-    ({ startDato, sluttDato, rader, onSelectPeriode, aktivPeriode, direction = 'left' }: TidslinjeProps) => {
+    ({
+        startDato,
+        sluttDato,
+        rader,
+        onSelectPeriode,
+        aktivPeriode,
+        direction = 'left',
+        EtikettKomponent
+    }: TidslinjeProps) => {
         if (!rader) throw new Error('Tidslinjen mangler verdi for "rader"-propen.');
 
         const _startDato = useTidligsteDato({ startDato, rader });
@@ -116,6 +142,7 @@ export const Tidslinje = React.memo(
                 onSelectPeriode={onSelectPeriode}
                 aktivPeriode={aktivPeriode}
                 direction={direction}
+                EtikettKomponent={EtikettKomponent}
             />
         );
     }

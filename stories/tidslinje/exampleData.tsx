@@ -10,6 +10,7 @@ import {
 import './tidslinje.css';
 import { SykepengetidslinjeProps } from '../../packages/tidslinje/src/components/sykepengetidslinje/Sykepengetidslinje';
 import dayjs from 'dayjs';
+import {Skalaetikett} from "../../packages/tidslinje/src/components/types.internal";
 
 export interface TidslinjeProps {
     /**
@@ -39,6 +40,10 @@ export interface TidslinjeProps {
      * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left'.
      */
     direction?: 'left' | 'right';
+    /**
+     * Komponent for å rendre etiketter.
+     */
+    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
 }
 
 export const ExamplePeriode = (_: Periode) => null;
