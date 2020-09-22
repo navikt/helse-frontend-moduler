@@ -20,7 +20,8 @@
     "lint": "eslint 'packages/**/*.{js,ts,tsx}' --fix",
     "build": "lerna run build",
     "test": "jest",
-    "clean": "rm -rf ./build"
+    "clean": "rm -rf ./build",
+    "create-package": "scaffolding/create-package.sh"
   },
   "dependencies": {
     "@navikt/helse-frontend-tidslinje": "^2.3.1",

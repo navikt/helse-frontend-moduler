@@ -13,11 +13,15 @@ alle avhengigheter pakkene kjør `lerna bootstrap`. Storybook kan startes lokalt
 deployes til https://navikt.github.io/helse-frontend-moduler ved push til master. Storybooken kan også deployes manuelt 
 ved å kjøre `npm run deploy-storybook`.
 
-## Styling
-For å kutte ned på peer dependencies som konsumenter må installere har vi valgt å kompilere less til css og bundle 
-stilarkene med pakkene. Vi bruker [CSS-modules](https://github.com/css-modules/css-modules) for å garantere unike klassenavn slik at vi slipper navnkollisjoner i konsumentapplikasjoner.
+## Opprette pakke
+For å opprette en ny pakke kan du kjøre `npm run create-package <pakkenavn>`. 
+Da genereres det en pakke i `packages/<pakkenavn>` med en tom `index.ts` og en tom `<Pakkenavn>.stories.tsx` med tilhørende `package.json` og config-filer. 
 
 ## Publisering
 Hver enkeltpakke publiseres til npm ved å fra pakkens directory kjøre `npm run build` og så `npm publish`. Før du publiserer
 må du også bumpe pakkeversjonen ved å kjøre `npm version (major|minor|patch)`, avhengig av versjonen du ønsker å bumpe til. 
 Du er også nødt til å logge inn med en npm-bruker som er lagt til som medlem i `@navikt`-orgen på npm.
+
+## Styling
+For å kutte ned på peer dependencies som konsumenter må installere har vi valgt å kompilere less til css og bundle 
+stilarkene med pakkene. Vi bruker [CSS-modules](https://github.com/css-modules/css-modules) for å garantere unike klassenavn slik at vi slipper navnkollisjoner i konsumentapplikasjoner.
