@@ -79,6 +79,7 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "lint-staged": "^10.0.7",
+    "mini-css-extract-plugin": "^0.11.2",
     "prettier": "^1.19.1",
     "react-docgen-typescript-loader": "^3.6.0",
     "react-is": "^16.13.1",
