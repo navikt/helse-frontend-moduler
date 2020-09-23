@@ -82,6 +82,7 @@
     "prettier": "^1.19.1",
     "react-docgen-typescript-loader": "^3.6.0",
     "react-is": "^16.13.1",
+    "storybook-addon-storyout": "^1.0.1",
     "style-loader": "^1.1.3",
     "ts-jest": "^25.2.0",
     "typescript": "^3.7.5"

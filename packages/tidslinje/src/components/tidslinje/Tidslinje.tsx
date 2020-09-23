@@ -11,27 +11,29 @@ import { InternalEnkelTidslinje, Intervall, PosisjonertPeriode, Skalaetikett } f
 
 export interface TidslinjeProps {
     /**
-     * Enkelttidslinjer med tilhørende perioder.
+     * Tidslinjer bestående av perioder. Periodene rendres som egne periodeknapper på tidslinjen. Hver liste av
+     * `Periode`-objekter representerer en egen rad i tidslinjen.
      */
     rader: Periode[][];
     /**
-     * Tidligste dato som skal vises visuelt på tidslinjen.
+     * Bestemmer startpunktet for tidslinjen. Defaulter til tidligste dato blandt alle perioder i tidslinjen.
      */
     startDato?: Date;
     /**
-     * Seneste dato som skal vises visuelt på tidslinjen.
+     * Bestemmer sluttpunktet for tidslinjen. Defaulter til seneste dato blandt alle perioder i tidslinjen.
      */
     sluttDato?: Date;
     /**
-     * Handling som skal skje når en bruker klikker/interagerer med en periodeknapp.
+     * Handling som skal skje når en bruker klikker på/interagerer med en periodeknapp.
      */
     onSelectPeriode?: (periode: Periode) => void;
     /**
-     * Perioden som skal være aktiv/valgt.
+     * Utsnittet av tidslinjen som skal markeres som aktivt.
      */
     aktivPeriode?: EnkelPeriode;
     /**
-     * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left'.
+     * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left', hvor tidligste dato er
+     * til høyre og seneste til venstre.
      */
     direction?: 'left' | 'right';
     /**
@@ -118,6 +120,10 @@ const _Tidslinje = React.memo(
     }
 );
 
+/**
+ * Viser perioder på en horisontal tidslinje. Komponenten er kontrollert ved at den tar imot en prop, `aktivPeriode`,
+ * som forteller den utsnitt av tidslinjen som skal markeres som aktiv.
+ */
 export const Tidslinje = React.memo(
     ({
         startDato,

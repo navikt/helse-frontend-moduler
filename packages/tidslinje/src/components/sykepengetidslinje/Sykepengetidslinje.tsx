@@ -40,6 +40,9 @@ export interface SykepengetidslinjeProps {
     aktivPeriode?: { fom: Date; tom: Date };
 }
 
+/**
+ * Tidslinje tilpasset sykepengeløsningen.
+ */
 export const Sykepengetidslinje = ({
     rader,
     startDato,
