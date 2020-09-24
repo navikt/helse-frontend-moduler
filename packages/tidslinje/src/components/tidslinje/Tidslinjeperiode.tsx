@@ -25,9 +25,11 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
     const sammenhengFraVenstre =
         periode.direction === 'left' ? styles.sammenhengendeFraVenstre : styles.sammenhengendeFraHøyre;
 
+    const avkuttet = periode.direction === 'left' ? styles.avkuttetHøyre : styles.avkuttetVenstre;
+
     const className = classNames(
         styles.periode,
-        periode.cropped && styles.avkuttet,
+        periode.cropped && avkuttet,
         periode.outOfBounds && styles.usynlig,
         periode.sammenheng === 'begge' && styles.sammenhengendeFraBegge,
         periode.sammenheng === 'høyre' && sammenhengFraHøyre,
