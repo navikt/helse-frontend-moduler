@@ -44,7 +44,7 @@ TidslinjeForSykepenger.argTypes = {
                     id: '123',
                     fom: new Date('2020-01-01'),
                     tom: new Date('2020-01-31'),
-                    status: Vedtaksperiodetilstand.Utbetalt
+                    status: Vedtaksperiodetilstand.Annullert
                 },
                 {
                     id: '234',
