@@ -1,9 +1,6 @@
 .colors(@background, @border, @hover) {
     background: @background;
     border: 1px solid @border;
-    &:hover {
-        box-shadow: inset 0 0 0 1px @border;
-    }
     &:hover, &.active, &:focus {
         background: @hover;
     }
@@ -17,15 +14,12 @@
     cursor: pointer;
     border: 1px dashed #59514b;
 
-    &:hover, &.active {
-        border-width: 1px;
-        box-shadow: none;
-    }
-
     &:active,
     &:focus {
         outline: none;
-        box-shadow: none;
+        box-shadow: 0 0 0 2px #254B6D;
+        border-color: #254B6D;
+        z-index: 100;
     }
 }
 
