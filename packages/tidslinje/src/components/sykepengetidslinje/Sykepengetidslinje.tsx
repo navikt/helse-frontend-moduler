@@ -30,6 +30,7 @@ export interface Sykepengeperiode {
     disabled?: boolean;
     className?: string;
     disabledLabel?: ReactNode;
+    active?: boolean;
 }
 
 export interface SykepengetidslinjeProps {
@@ -37,18 +38,18 @@ export interface SykepengetidslinjeProps {
     startDato?: Date;
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
-    aktivPeriode?: { fom: Date; tom: Date };
+    aktivRad?: number;
 }
 
 /**
- * Tidslinje tilpasset sykepengeløsningen.
+ * Tilpasset tidslinje for sykepengeløsningen. Bruker ikke `aktivtUtsnitt` for å markere hvilket utsnitt som er aktivt men heller hvilken rad + periode som er valgt av bruker.
  */
 export const Sykepengetidslinje = ({
     rader,
     startDato,
     sluttDato,
     onSelectPeriode,
-    aktivPeriode
+    aktivRad
 }: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): Periodestatus => {
         switch (tilstand) {
@@ -81,10 +82,11 @@ export const Sykepengetidslinje = ({
             id: periode.id,
             fom: periode.fom,
             tom: periode.tom,
-            status,
+            status: status,
             disabled: periode.disabled || status === 'inaktiv' || status === 'ukjent',
             className: classNames(periode.className, styles[periode.status]),
-            disabledLabel: periode.disabledLabel
+            disabledLabel: periode.disabledLabel,
+            active: periode.active
         };
     };
 
@@ -96,7 +98,7 @@ export const Sykepengetidslinje = ({
             startDato={startDato}
             sluttDato={sluttDato}
             onSelectPeriode={onSelectPeriode}
-            aktivPeriode={aktivPeriode}
+            aktivRad={aktivRad}
         />
     );
 };

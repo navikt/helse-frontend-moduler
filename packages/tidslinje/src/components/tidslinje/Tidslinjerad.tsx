@@ -7,24 +7,19 @@ import { EnkelPeriode } from '../types.external';
 
 interface TidslinjeradProps {
     perioder: PosisjonertPeriode[];
-    aktivPeriode?: EnkelPeriode;
     onSelectPeriode?: (periode: PosisjonertPeriode) => void;
+    erAktiv?: boolean;
 }
 
-const Tidslinjerad = ({ perioder, onSelectPeriode, aktivPeriode }: TidslinjeradProps) => (
-    <div className={classNames('Tidslinjerad', styles.perioder)}>
+const Tidslinjerad = ({ perioder, onSelectPeriode, erAktiv = false }: TidslinjeradProps) => (
+    <div className={classNames('Tidslinjerad', styles.perioder, erAktiv && styles.aktivRad)}>
         <hr />
         {perioder.map(periode => (
             <Tidslinjeperiode
                 key={periode.id}
                 periode={periode}
                 onSelectPeriode={onSelectPeriode}
-                active={
-                    (aktivPeriode &&
-                        aktivPeriode.tom.getTime() === periode.tom.toDate().getTime() &&
-                        aktivPeriode.fom.getTime() === periode.fom.toDate().getTime()) ??
-                    false
-                }
+                active={periode.active}
             />
         ))}
     </div>

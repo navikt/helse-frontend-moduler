@@ -36,4 +36,8 @@ export interface Periode extends EnkelPeriode {
      * om hvorfor perioden er inaktiv i en tooltip over periodeknappen.
      */
     disabledLabel?: ReactNode;
+    /**
+     * Bestemmer om perioden skal markeres som aktiv.
+     */
+    active?: boolean;
 }

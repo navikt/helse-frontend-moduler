@@ -6,7 +6,7 @@ import styles from './Tidslinjeperiode.less';
 
 interface TidslinjeperiodeProps {
     periode: PosisjonertPeriode;
-    active: boolean;
+    active?: boolean;
     onSelectPeriode?: (periode: PosisjonertPeriode) => void;
 }
 

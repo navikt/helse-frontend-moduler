@@ -14,6 +14,7 @@
     cursor: pointer;
     border: 1px dashed #59514b;
 
+    &.active,
     &:active,
     &:focus {
         outline: none;
@@ -48,12 +49,7 @@
 }
 
 .feil {
-    @borderColor: #ba3a26;
     .colors(#f1d8d4, #ba3a26, #e3b0a8);
-    background: repeating-linear-gradient(110deg, @borderColor, @borderColor 1px, #f1d8d4 1px, #f1d8d4 7px);
-    &:hover, &.active, &:focus {
-        background: repeating-linear-gradient(110deg, @borderColor, @borderColor 1px, #e3b0a8 1px, #e3b0a8 7px);
-    }
 }
 
 .inaktiv {

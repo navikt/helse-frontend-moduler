@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React, { ReactNode, useCallback } from 'react';
 import styles from './Tidslinje.less';
 import classNames from 'classnames';
-import { AktivPeriodeBakgrunn, AktivPeriodeBorder } from './AktivPeriode';
+import { AktivtUtsnittBakgrunn, AktivtUtsnittBorder } from './AktivtUtsnitt';
 import Tidslinjerad from './Tidslinjerad';
 import Skalaetiketter from './Skalaetiketter';
 import { Dayjs } from 'dayjs';
@@ -30,16 +30,20 @@ export interface TidslinjeProps {
     /**
      * Utsnittet av tidslinjen som skal markeres som aktivt.
      */
-    aktivPeriode?: EnkelPeriode;
+    aktivtUtsnitt?: EnkelPeriode;
+    /**
+     * Raden som skal markeres som aktiv.
+     */
+    aktivRad?: number;
     /**
      * Retningen tidslinjen beveger seg mot fra tidligste til seneste dato. Default er 'left', hvor tidligste dato er
      * til høyre og seneste til venstre.
      */
     direction?: 'left' | 'right';
     /**
-     * Komponent for å rendre etiketter.
+     * Funksjon som tar en etikett og returnerer det som skal rendres.
      */
-    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
 export interface InternalTidslinjeProps {
@@ -47,9 +51,10 @@ export interface InternalTidslinjeProps {
     startDato: Dayjs;
     sluttDato: Dayjs;
     onSelectPeriode?: (periode: Periode) => void;
-    aktivPeriode?: EnkelPeriode;
+    aktivtUtsnitt?: EnkelPeriode;
+    aktivRad?: number;
     direction: 'left' | 'right';
-    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
 interface TidslinjeContextType {
@@ -68,9 +73,10 @@ const _Tidslinje = React.memo(
         startDato,
         sluttDato,
         onSelectPeriode,
-        aktivPeriode,
+        aktivtUtsnitt,
+        aktivRad,
         direction,
-        EtikettKomponent
+        etikettRender
     }: InternalTidslinjeProps) => {
         const onSelectPeriodeWrapper = useCallback(
             (periode: PosisjonertPeriode) => {
@@ -91,29 +97,33 @@ const _Tidslinje = React.memo(
                     start={startDato}
                     slutt={sluttDato}
                     direction={direction}
-                    EtikettKomponent={EtikettKomponent}
+                    etikettRender={etikettRender}
                 />
                 <div className={classNames('tidslinjerader', styles.rader)}>
-                    <AktivPeriodeBakgrunn
-                        tidslinjestart={startDato}
-                        tidslinjeslutt={sluttDato}
-                        aktivPeriode={aktivPeriode}
-                        direction={direction}
-                    />
-                    {rader.map(tidslinje => (
+                    {aktivtUtsnitt && (
+                        <AktivtUtsnittBakgrunn
+                            tidslinjestart={startDato}
+                            tidslinjeslutt={sluttDato}
+                            aktivtUtsnitt={aktivtUtsnitt}
+                            direction={direction}
+                        />
+                    )}
+                    {rader.map((tidslinje, i) => (
                         <Tidslinjerad
                             key={tidslinje.id}
                             {...tidslinje}
                             onSelectPeriode={onSelectPeriodeWrapper}
-                            aktivPeriode={aktivPeriode}
+                            erAktiv={i === aktivRad}
                         />
                     ))}
-                    <AktivPeriodeBorder
-                        tidslinjestart={startDato}
-                        tidslinjeslutt={sluttDato}
-                        aktivPeriode={aktivPeriode}
-                        direction={direction}
-                    />
+                    {aktivtUtsnitt && (
+                        <AktivtUtsnittBorder
+                            tidslinjestart={startDato}
+                            tidslinjeslutt={sluttDato}
+                            aktivtUtsnitt={aktivtUtsnitt}
+                            direction={direction}
+                        />
+                    )}
                 </div>
             </div>
         );
@@ -121,7 +131,7 @@ const _Tidslinje = React.memo(
 );
 
 /**
- * Viser perioder på en horisontal tidslinje. Komponenten er kontrollert ved at den tar imot en prop, `aktivPeriode`,
+ * Viser perioder på en horisontal tidslinje. Komponenten er kontrollert ved at den tar imot en prop, `aktivtUtsnitt`,
  * som forteller den utsnitt av tidslinjen som skal markeres som aktiv.
  */
 export const Tidslinje = React.memo(
@@ -130,9 +140,10 @@ export const Tidslinje = React.memo(
         sluttDato,
         rader,
         onSelectPeriode,
-        aktivPeriode,
+        aktivtUtsnitt,
+        aktivRad,
         direction = 'left',
-        EtikettKomponent
+        etikettRender
     }: TidslinjeProps) => {
         if (!rader) throw new Error('Tidslinjen mangler verdi for "rader"-propen.');
 
@@ -146,9 +157,10 @@ export const Tidslinje = React.memo(
                 startDato={_startDato}
                 sluttDato={_sluttDato}
                 onSelectPeriode={onSelectPeriode}
-                aktivPeriode={aktivPeriode}
+                aktivtUtsnitt={aktivtUtsnitt}
+                aktivRad={aktivRad}
                 direction={direction}
-                EtikettKomponent={EtikettKomponent}
+                etikettRender={etikettRender}
             />
         );
     }

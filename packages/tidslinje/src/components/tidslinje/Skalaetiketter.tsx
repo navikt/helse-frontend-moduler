@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
 import 'dayjs/locale/nb';
 import { Percentage, Skalaetikett } from '../types.internal';
@@ -102,29 +102,24 @@ interface SkalaetiketterProps {
     start: Dayjs;
     slutt: Dayjs;
     direction?: 'left' | 'right';
-    EtikettKomponent?: React.ComponentType<{ etikett: Skalaetikett; style: { [key: string]: string } }>;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
-const Skalaetiketter = ({ start, slutt, direction = 'left', EtikettKomponent }: SkalaetiketterProps) => {
+const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: SkalaetiketterProps) => {
     const etiketter = skalaEtiketter(start, slutt, direction).filter(erSynlig);
     return (
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
-            {etiketter.map(etikett =>
-                EtikettKomponent ? (
-                    <EtikettKomponent
-                        key={etikett.label}
-                        etikett={etikett}
-                        style={{ [direction]: `${etikett.horizontalPosition}%` }}
-                    />
-                ) : (
-                    <div
-                        key={etikett.label}
-                        className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
-                        style={{ [direction]: `${etikett.horizontalPosition}%` }}
-                    >
-                        {etikett.label}
-                    </div>
-                )
+            {etiketter.map(
+                etikett =>
+                    etikettRender?.(etikett) ?? (
+                        <div
+                            key={etikett.label}
+                            className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
+                            style={{ [direction]: `${etikett.horizontalPosition}%` }}
+                        >
+                            {etikett.label}
+                        </div>
+                    )
             )}
         </div>
     );

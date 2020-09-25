@@ -22,8 +22,9 @@ const posisjonertPeriode = (
         status: periode.status,
         className: periode.className,
         disabledLabel: periode.disabledLabel,
-        fom,
-        tom
+        active: periode.active,
+        fom: fom,
+        tom: tom
     };
     const displayFom = fom.startOf('day');
     const displayTom = tom.endOf('day');

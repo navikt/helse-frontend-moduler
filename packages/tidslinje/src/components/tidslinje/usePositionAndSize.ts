@@ -1,19 +1,9 @@
-import React from 'react';
-import styles from './AktivPeriode.less';
-import classNames from 'classnames';
 import { EnkelPeriode } from '../types.external';
 import dayjs, { Dayjs } from 'dayjs';
 import { breddeMellomDatoer } from './calc';
 
-interface IntervallProps {
-    tidslinjestart: Dayjs;
-    tidslinjeslutt: Dayjs;
-    aktivPeriode?: EnkelPeriode;
-    direction: 'left' | 'right';
-}
-
 interface UsePositionAndSizeOptions {
-    aktivPeriode: EnkelPeriode;
+    periode: EnkelPeriode;
     tidslinjestart: Dayjs;
     tidslinjeslutt: Dayjs;
     direction: 'left' | 'right';
@@ -21,9 +11,14 @@ interface UsePositionAndSizeOptions {
 
 const constrain = (value: number, min: number, max: number) => (value >= max ? max : value < min ? min : value);
 
-const usePositionAndSize = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: UsePositionAndSizeOptions) => {
-    const fom = dayjs(aktivPeriode.fom).startOf('day');
-    const tom = dayjs(aktivPeriode.tom).endOf('day');
+export const usePositionAndSize = ({
+    periode,
+    tidslinjestart,
+    tidslinjeslutt,
+    direction
+}: UsePositionAndSizeOptions) => {
+    const fom = dayjs(periode.fom).startOf('day');
+    const tom = dayjs(periode.tom).endOf('day');
     const totaltAntallDager = tidslinjeslutt.diff(tidslinjestart, 'day');
 
     const horizontalPosition = breddeMellomDatoer(tom, tidslinjeslutt, totaltAntallDager);
@@ -55,24 +50,4 @@ const usePositionAndSize = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, dire
             display: horizontalPosition > 100 ? 'none' : undefined
         };
     }
-};
-
-export const AktivPeriodeBorder = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: IntervallProps) => {
-    if (!aktivPeriode) return null;
-    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction });
-    return (
-        <div className={styles.container}>
-            <div className={classNames(styles.aktivPeriodeBorder)} style={style} />
-        </div>
-    );
-};
-
-export const AktivPeriodeBakgrunn = ({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction }: IntervallProps) => {
-    if (!aktivPeriode) return null;
-    const style = usePositionAndSize({ aktivPeriode, tidslinjestart, tidslinjeslutt, direction });
-    return (
-        <div className={styles.container}>
-            <div className={classNames(styles.aktivPeriodeBakgrunn)} style={style} />
-        </div>
-    );
 };
