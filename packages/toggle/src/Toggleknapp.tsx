@@ -6,9 +6,10 @@ export interface ToggleknappProps {
     children: ReactNode | ReactNode[];
     toggled?: boolean;
     onToggle?: () => void;
+    buttonRef?: React.RefObject<HTMLButtonElement>;
 }
 
-export const Toggleknapp = ({ children, toggled, onToggle }: ToggleknappProps) => {
+export const Toggleknapp = ({ children, toggled, onToggle, buttonRef }: ToggleknappProps) => {
     const [isToggled, setIsToggled] = useState(toggled);
 
     const toggle = () => {
@@ -23,6 +24,7 @@ export const Toggleknapp = ({ children, toggled, onToggle }: ToggleknappProps) =
                 toggled !== undefined ? toggled && styles.toggled : isToggled && styles.toggled
             )}
             onClick={toggle}
+            ref={buttonRef}
         >
             {children}
         </button>

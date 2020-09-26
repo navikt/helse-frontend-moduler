@@ -6,6 +6,7 @@ export type Toggle = {
     render: ReactNode;
     toggled?: boolean;
     onToggle?: () => void;
+    buttonRef?: React.RefObject<HTMLButtonElement>;
 };
 
 export interface TogglegruppeProps {
