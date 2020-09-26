@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Tooltip from './Tooltip';
 import { PosisjonertPeriode } from '../types.internal';
 import classNames from 'classnames';
@@ -17,6 +17,8 @@ const ariaLabel = (periode: PosisjonertPeriode): string => {
 };
 
 const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: TidslinjeperiodeProps) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
+    const [erMini, setErMini] = useState(false);
     const [visDisabledLabel, setVisDisabledLabel] = useState(false);
 
     const sammenhengFraHøyre =
@@ -35,6 +37,7 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
         periode.sammenheng === 'høyre' && sammenhengFraHøyre,
         periode.sammenheng === 'venstre' && sammenhengFraVenstre,
         active && styles.active,
+        erMini && styles.mini,
         styles[periode.status],
         periode.className
     );
@@ -56,8 +59,16 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
         return () => null;
     }, [visDisabledLabel]);
 
+    useLayoutEffect(() => {
+        const currentWidth = buttonRef.current?.offsetWidth;
+        if (currentWidth && currentWidth < 30) {
+            setErMini(true);
+        }
+    }, [buttonRef.current]);
+
     return (
         <button
+            ref={buttonRef}
             className={className}
             onClick={onClick}
             aria-label={ariaLabel(periode)}
