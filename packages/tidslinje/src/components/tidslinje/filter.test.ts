@@ -14,8 +14,10 @@ const etPosisjonertElement = (horizontalPosition = 50): PosisjonertElement => ({
 
 test('innenEtDøgn', () => {
     expect(innenEtDøgn(enDato(), enDato())).toBeTruthy();
-    expect(innenEtDøgn(enDato(), enDato({ plussDager: 1 }))).toBeFalsy();
-    expect(innenEtDøgn(enDato({ plussDager: 1 }), enDato())).toBeFalsy();
+    expect(innenEtDøgn(enDato(), enDato({ plussDager: 1 }))).toBeTruthy();
+    expect(innenEtDøgn(enDato(), enDato({ plussDager: 2 }))).toBeFalsy();
+    expect(innenEtDøgn(enDato({ plussDager: 1 }), enDato())).toBeTruthy();
+    expect(innenEtDøgn(enDato({ plussDager: 2 }), enDato())).toBeFalsy();
     expect(innenEtDøgn(enDato(), enDato({ plussTimer: 1 }))).toBeTruthy();
     expect(innenEtDøgn(enDato({ plussTimer: 1 }), enDato())).toBeTruthy();
 });

@@ -6,7 +6,7 @@ const enPeriode = ({ fom = dayjs('2020-01-01'), tom = dayjs('2020-01-01') } = {}
 test('breddeMellomDatoer', () => {
     expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-01'), 100)).toBe(0);
     expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-02'), 100)).toBe(1);
-    expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-99'), 100)).toBe(98);
+    expect(breddeMellomDatoer(dayjs('2020-01-01'), dayjs('2020-01-99'), 100)).toBe(97.95833333333333);
 });
 
 test('erLike', () => {
