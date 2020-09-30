@@ -66,6 +66,10 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
         }
     }, [buttonRef.current]);
 
+    useEffect(() => {
+        if (active) buttonRef.current?.focus();
+    }, [active]);
+
     return (
         <button
             ref={buttonRef}
