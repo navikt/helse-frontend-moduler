@@ -14,7 +14,7 @@ export interface UseTabellOptions {
      * Liste av kolonneheadere. Kan enten være råverdier (ReactNode) eller objekter som beskriver hvordan kolonnen
      * skal kunne filtreres, sorteres, m.m. (TabellHeader).
      */
-    headere?: (ReactNode | TabellHeader)[];
+    headere?: (ReactNode | TabellHeader | FiltrerbarTabellHeader)[];
     /**
      * Funksjon som tar råverdiene i tabellen og omformer de til det vi ønsker å rendre på skjerm.
      */
@@ -79,7 +79,17 @@ export interface UseTabell {
 
 const _defaultSortering: Sortering = { direction: 'none', kolonne: undefined, func: (_a, _b) => -1 };
 
-const _defaultFiltrering: Filtrering = { filtere: [], kolonne: undefined };
+const _defaultFiltrering: Filtrering = { filtere: [] };
+
+const initialiserTomFiltrering = (headere?: (ReactNode | TabellHeader | FiltrerbarTabellHeader)[]): Filtrering => {
+    if (!headere) return _defaultFiltrering;
+    const filtere = headere
+        .flatMap((header: FiltrerbarTabellHeader, kolonne: number) =>
+            header.filtere ? header.filtere.map(filter => ({ filter, kolonne, active: false })) : null
+        )
+        .filter(filter => !!filter) as { filter: Filter; kolonne: number; active: boolean }[];
+    return { filtere };
+};
 
 const finnFørsteSynligeElement = (rader: ReactNode[][], paginering: Paginering) =>
     rader.length > 0 ? (paginering.sidenummer - 1) * paginering.antallRaderPerSide + 1 : 0;
@@ -99,7 +109,7 @@ export const useTabell = ({
     defaultPaginering
 }: UseTabellOptions): UseTabell => {
     const [sortering, setSortering] = useState<Sortering>(defaultSortering ?? _defaultSortering);
-    const [filtrering, setFiltrering] = useState<Filtrering>(defaultFiltrering ?? _defaultFiltrering);
+    const [filtrering, setFiltrering] = useState<Filtrering>(defaultFiltrering ?? initialiserTomFiltrering(headere));
     const [paginering, setPaginering] = useState<Paginering | undefined>(defaultPaginering);
 
     const toSortOnClick = (func: (a: ReactNode, b: ReactNode) => number, kolonne: number) => () => {
@@ -115,40 +125,25 @@ export const useTabell = ({
         }
     };
 
-    const settNyeFiltere = (nyeFiltere: Filter[], kolonne: number) => {
-        const filtrerPåNyKolonne = filtrering.kolonne !== kolonne;
-        if (filtrerPåNyKolonne) {
-            setFiltrering({ filtere: nyeFiltere, kolonne });
-        } else {
-            setFiltrering(forrige => ({
-                ...forrige,
-                filtere: nyeFiltere
-            }));
-        }
-    };
-
-    const toggleNyttFilter = (nyttFilter: Filter, kolonne: number) => {
-        const filtrerPåNyKolonne = filtrering.kolonne !== kolonne;
-        if (filtrerPåNyKolonne) {
-            setFiltrering({ filtere: [nyttFilter], kolonne });
-        } else if (filtrering.filtere.find(filter => filter.label === nyttFilter.label)) {
-            setFiltrering(forrigeFiltere => ({
-                ...forrigeFiltere,
-                filtere: [...forrigeFiltere.filtere.filter(filteret => filteret.label !== nyttFilter.label)]
-            }));
-        } else {
-            setFiltrering({
-                ...filtrering,
-                filtere: [...filtrering.filtere, nyttFilter]
-            });
-        }
-    };
-
-    const toFilterOnClick = (etEllerFlereFiltere: Filter | Filter[], kolonne: number) => () => {
+    const onToggleFilter = (etEllerFlereFiltere: Filter | Filter[], valgtKolonne: number) => () => {
         if (Array.isArray(etEllerFlereFiltere)) {
-            settNyeFiltere(etEllerFlereFiltere, kolonne);
+            const labels = etEllerFlereFiltere.map(filter => filter.label);
+            setFiltrering(filtrering => ({
+                filtere: filtrering.filtere.map(({ filter, kolonne, active }) =>
+                    kolonne === valgtKolonne && labels.includes(filter.label)
+                        ? { filter, kolonne, active: !active }
+                        : { filter, kolonne, active }
+                )
+            }));
         } else {
-            toggleNyttFilter(etEllerFlereFiltere, kolonne);
+            const etFilter = etEllerFlereFiltere as Filter;
+            setFiltrering(filtrering => ({
+                filtere: filtrering.filtere.map(({ filter, kolonne, active }) =>
+                    kolonne === valgtKolonne && etFilter.label === filter.label
+                        ? { filter, kolonne, active: !active }
+                        : { filter, kolonne, active }
+                )
+            }));
         }
     };
 
@@ -160,13 +155,18 @@ export const useTabell = ({
     const tilFiltrerbarHeader = (header: FiltrerbarTabellHeader, kolonne: number) => ({
         render: header.render,
         filtere: header.filtere,
-        onClick: header.filtere && ((filter: Filter | Filter[]) => toFilterOnClick(filter, kolonne)())
+        onClick: header.filtere && ((filter: Filter | Filter[]) => onToggleFilter(filter, kolonne)())
     });
 
-    const applyFiltrering = (rader: ReactNode[][]) =>
-        filtrering.kolonne !== undefined && filtrering.filtere.length > 0
-            ? rader.filter(rad => filtrering.filtere.find(filter => filter.func(rad[filtrering.kolonne as number])))
-            : rader;
+    const applyFiltrering = (rader: ReactNode[][]) => {
+        let filtrerteRader = rader;
+        filtrering.filtere
+            .filter(({ active }) => active)
+            .forEach(({ filter, kolonne, active }) => {
+                filtrerteRader = filtrerteRader.filter(rad => filter.func(rad[kolonne]));
+            });
+        return filtrerteRader;
+    };
 
     const applySort = (rader: ReactNode[][]) => {
         const ingentingSkalSorteres = sortering.direction === 'none' || sortering.kolonne === undefined;

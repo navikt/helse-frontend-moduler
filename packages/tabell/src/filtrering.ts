@@ -17,9 +17,9 @@ export interface Filtrering {
     /**
      * Aktive filtere som brukes til å filtrere rader i tabellen.
      */
-    filtere: Filter[];
-    /**
-     * Kolonnen det filtreres på. Kan kun filtreres på én om gangen.
-     */
-    kolonne?: number;
+    filtere: {
+        filter: Filter;
+        kolonne: number;
+        active: boolean;
+    }[];
 }

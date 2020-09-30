@@ -118,10 +118,7 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
             </button>
             {open && (
                 <ul className={styles.filterList}>
-                    <FilterMenuItem
-                        onFilter={() => (alleFiltereErAktive ? onFilter([]) : onFilter(filtere))}
-                        aktiv={alleFiltereErAktive}
-                    >
+                    <FilterMenuItem onFilter={() => onFilter(filtere)} aktiv={alleFiltereErAktive}>
                         {alleFiltereErAktive ? 'Opphev alle' : 'Velg alle'}
                     </FilterMenuItem>
                     <hr />
@@ -157,7 +154,9 @@ export const Head = ({ headere, sortering, filtrering }: HeadProps) => (
                         key={i}
                         onFilter={(header as FiltrerbarTabellHeader).onClick}
                         filtere={(header as FiltrerbarTabellHeader).filtere}
-                        aktiveFiltere={filtrering?.filtere ?? []}
+                        aktiveFiltere={
+                            filtrering?.filtere.filter(({ active }) => active).map(({ filter }) => filter) ?? []
+                        }
                     >
                         {header.render}
                     </FiltrerbarHeader>
