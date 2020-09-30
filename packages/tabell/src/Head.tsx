@@ -94,7 +94,7 @@ const FilterMenuItem = ({ children, onFilter, aktiv }: FilterMenuItemProps) => (
 
 interface FiltrerbarHeaderProps {
     children: ReactNode | ReactNode[];
-    onFilter: (filter: Filter | Filter[]) => void;
+    onFilter: (filter: Filter | Filter[], override?: boolean) => void;
     filtere: Filter[];
     aktiveFiltere: Filter[];
     kolonner?: number;
@@ -118,7 +118,10 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
             </button>
             {open && (
                 <ul className={styles.filterList}>
-                    <FilterMenuItem onFilter={() => onFilter(filtere)} aktiv={alleFiltereErAktive}>
+                    <FilterMenuItem
+                        onFilter={() => onFilter(filtere, !alleFiltereErAktive)}
+                        aktiv={alleFiltereErAktive}
+                    >
                         {alleFiltereErAktive ? 'Opphev alle' : 'Velg alle'}
                     </FilterMenuItem>
                     <hr />

@@ -35,8 +35,8 @@
     "nav-frontend-skjema-style": "^2.0.2",
     "nav-frontend-typografi": "^2.0.17",
     "nav-frontend-typografi-style": "^1.0.18",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0"
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.8.4",
@@ -54,6 +54,9 @@
     "@storybook/addon-storysource": "^6.0.21",
     "@storybook/react": "^6.0.21",
     "@storybook/storybook-deployer": "^2.8.6",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.0.4",
+    "@testing-library/user-event": "^12.1.6",
     "@types/classnames": "^2.2.9",
     "@types/events": "^3.0.0",
     "@types/jest": "^25.1.2",
@@ -64,7 +67,7 @@
     "@typescript-eslint/parser": "^2.19.2",
     "awesome-typescript-loader": "^5.2.1",
     "babel-eslint": "^10.0.3",
-    "babel-jest": "^25.1.0",
+    "babel-jest": "^25.5.1",
     "babel-loader": "^8.1.0",
     "babel-plugin-emotion": "^10.0.27",
     "css-loader": "^3.4.2",

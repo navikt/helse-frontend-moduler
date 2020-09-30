@@ -125,13 +125,13 @@ export const useTabell = ({
         }
     };
 
-    const onToggleFilter = (etEllerFlereFiltere: Filter | Filter[], valgtKolonne: number) => () => {
+    const onToggleFilter = (etEllerFlereFiltere: Filter | Filter[], valgtKolonne: number, override?: boolean) => () => {
         if (Array.isArray(etEllerFlereFiltere)) {
             const labels = etEllerFlereFiltere.map(filter => filter.label);
             setFiltrering(filtrering => ({
                 filtere: filtrering.filtere.map(({ filter, kolonne, active }) =>
                     kolonne === valgtKolonne && labels.includes(filter.label)
-                        ? { filter, kolonne, active: !active }
+                        ? { filter, kolonne, active: override ? override : !active }
                         : { filter, kolonne, active }
                 )
             }));
@@ -140,7 +140,7 @@ export const useTabell = ({
             setFiltrering(filtrering => ({
                 filtere: filtrering.filtere.map(({ filter, kolonne, active }) =>
                     kolonne === valgtKolonne && etFilter.label === filter.label
-                        ? { filter, kolonne, active: !active }
+                        ? { filter, kolonne, active: override ? override : !active }
                         : { filter, kolonne, active }
                 )
             }));
@@ -155,17 +155,16 @@ export const useTabell = ({
     const tilFiltrerbarHeader = (header: FiltrerbarTabellHeader, kolonne: number) => ({
         render: header.render,
         filtere: header.filtere,
-        onClick: header.filtere && ((filter: Filter | Filter[]) => onToggleFilter(filter, kolonne)())
+        onClick:
+            header.filtere &&
+            ((filter: Filter | Filter[], override?: boolean) => onToggleFilter(filter, kolonne, override)())
     });
 
     const applyFiltrering = (rader: ReactNode[][]) => {
-        let filtrerteRader = rader;
-        filtrering.filtere
-            .filter(({ active }) => active)
-            .forEach(({ filter, kolonne, active }) => {
-                filtrerteRader = filtrerteRader.filter(rad => filter.func(rad[kolonne]));
-            });
-        return filtrerteRader;
+        const aktiveFiltere = filtrering.filtere.filter(({ active }) => active);
+        return aktiveFiltere.length > 0
+            ? rader.filter(rad => aktiveFiltere.some(({ filter, kolonne }) => filter.func(rad[kolonne])))
+            : rader;
     };
 
     const applySort = (rader: ReactNode[][]) => {
@@ -188,7 +187,7 @@ export const useTabell = ({
         };
 
     return {
-        rader: renderer ? applySort(applyFiltrering(rader)).map(renderer) : rader,
+        rader: applySort(applyFiltrering(rader)).map(renderer ? renderer : rad => rad),
         headere: headere?.map((header: TabellHeader, kolonne: number) =>
             header.render
                 ? (header as SorterbarTabellHeader).sortFunction

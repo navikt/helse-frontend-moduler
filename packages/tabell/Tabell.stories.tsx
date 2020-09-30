@@ -64,35 +64,38 @@ export const MedSortering = () => {
 
 export const MedFiltere = () => {
     const headere = [
-        { render: 'Dato' },
+        { render: 'Name' },
         {
-            render: 'Grad',
+            render: 'Type',
             filtere: [
-                { label: '< 100%', func: (grad: number) => grad < 100 },
-                { label: '< 75%', func: (grad: number) => grad < 75 }
+                { label: 'Electric', func: (type: string) => type === '⚡️' },
+                { label: 'Fire', func: (type: string) => type === '🔥' },
+                { label: 'Water', func: (type: string) => type === '💦' },
+                { label: 'Grass', func: (type: string) => type === '🥬' },
+                { label: 'Ghost', func: (type: string) => type === '👻' },
+                { label: 'Dragon', func: (type: string) => type === '🐉' }
             ]
         },
         {
-            render: 'Utbetaling',
+            render: 'Evolution',
             filtere: [
-                { label: '< 1000kr', func: (utbetaling: number) => utbetaling < 1000 },
-                { label: '< 800kr', func: (utbetaling: number) => utbetaling < 800 }
+                { label: 1, func: (evolution: number) => evolution === 1 },
+                { label: 2, func: (evolution: number) => evolution === 2 },
+                { label: 3, func: (evolution: number) => evolution === 3 }
             ]
         }
     ];
 
     const rader = [
-        ['19.02.2019', 100, 1234],
-        ['20.02.2019', 100, 1234],
-        ['21.02.2019', 50, 617],
-        ['22.02.2019', 50, 617],
-        ['23.02.2019', 80, 987],
-        ['24.02.2019', 80, 987]
+        ['Pikachu', '⚡️', 1],
+        ['Charmander', '🔥', 1],
+        ['Squirtle', '💦', 1],
+        ['Bulbasaur', '🥬', 1],
+        ['Haunter', '👻', 2],
+        ['Dragonite', '🐉', 3]
     ];
 
-    const renderer = (rad: ReactNode[]) => [rad[0], `${rad[1]}%`, `${rad[2]} kr`];
-
-    const tabell = useTabell({ rader, headere, renderer });
+    const tabell = useTabell({ rader, headere });
 
     return <Tabell beskrivelse="En tabell med flere filtere" {...tabell} />;
 };
