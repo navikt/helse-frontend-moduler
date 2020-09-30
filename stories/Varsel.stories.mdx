@@ -85,6 +85,30 @@ Et varsel som indikerer at innholdet allerede har blitt behandlet av en saksbeha
 
 <Props of={BehandletVarsel} />
 
+### Innhold som er automatisk godkjent
+
+Et varsel som indikerer at innholdet allerede har blitt behandlet automatisk.
+
+<Preview>
+    <Story name="automatisk godkjent">
+        <div className="flex-column">
+            <BehandletVarsel
+                tittel="Vilkår godkjent"
+                saksbehandler="null"
+                vurderingsdato="01.05.2017"
+                automatiskBehandlet="true"
+            >
+                <p className="varsel-content">
+                    Dette varselet indikerer at innholdet har blitt vurdert <br />
+                    og behandlet automatisk.
+                </p>
+            </BehandletVarsel>
+        </div>
+    </Story>
+</Preview>
+
+<Props of={BehandletVarsel} />
+
 ### Innhold som er behandlet i Infotrygd
 
 Et varsel som indikerer at innholdet allerede har blitt behandlet av en saksbehandler i Infotrygd.

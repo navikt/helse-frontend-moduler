@@ -37,6 +37,18 @@ export const TidslinjeForSykepenger = () => {
                 id: '567',
                 fom: new Date('2020-08-01'),
                 tom: new Date('2020-08-31'),
+                status: Vedtaksperiodetilstand.UtbetaltAutomatisk
+            },
+            {
+                id: '568',
+                fom: new Date('2020-09-01'),
+                tom: new Date('2020-09-30'),
+                status: Vedtaksperiodetilstand.TilUtbetalingAutomatisk
+            },
+            {
+                id: '569',
+                fom: new Date('2020-10-01'),
+                tom: new Date('2020-10-31'),
                 status: Vedtaksperiodetilstand.Oppgaver
             }
         ],

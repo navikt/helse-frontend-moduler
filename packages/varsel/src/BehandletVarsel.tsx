@@ -4,10 +4,11 @@ import classNames from 'classnames';
 
 export interface BehandletInnholdProps {
     tittel: string;
-    saksbehandler: string;
+    saksbehandler?: string;
     children?: ReactNode | ReactNode[];
     className?: string;
     vurderingsdato?: string;
+    automatiskBehandlet: boolean;
 }
 
 export const BehandletVarsel = ({
@@ -15,12 +16,21 @@ export const BehandletVarsel = ({
     saksbehandler,
     vurderingsdato,
     children,
-    className
+    className,
+    automatiskBehandlet
 }: BehandletInnholdProps) => (
-    <div className={classNames('BehandletVarsel', styles.behandletVarsel, !children && styles.noChildren, className)}>
+    <div
+        className={classNames(
+            'BehandletVarsel',
+            styles.behandletVarsel,
+            !children && styles.noChildren,
+            automatiskBehandlet && styles.automatisk,
+            className
+        )}
+    >
         <p className={styles.tittel}>{tittel}</p>
         <p className={styles.undertekst}>
-            Behandlet av {saksbehandler}
+            {automatiskBehandlet ? 'Automatisk godkjent' : `Behandlet av ${saksbehandler}`}
             {vurderingsdato && ` - ${vurderingsdato}`}
         </p>
         {children}

@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-varsel",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -30,6 +30,6 @@
     "ts-loader": "^6.2.1",
     "typescript": "^3.7.5",
     "webpack": "^4.41.6",
-    "webpack-cli": "^3.3.11"
+    "webpack-cli": "^3.3.12"
   }
 }

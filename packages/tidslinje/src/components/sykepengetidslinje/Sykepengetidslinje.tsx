@@ -19,7 +19,9 @@ export enum Vedtaksperiodetilstand {
     TilInfotrygd = 'tilInfotrygd',
     Annullert = 'annullert',
     Infotrygdferie = 'infotrygdferie',
-    Infotrygdukjent = 'infotrygdukjent'
+    Infotrygdukjent = 'infotrygdukjent',
+    UtbetaltAutomatisk = 'utbetaltAutomatisk',
+    TilUtbetalingAutomatisk = 'tilUtbetalingAutomatisk'
 }
 
 export interface Sykepengeperiode {
@@ -55,6 +57,8 @@ export const Sykepengetidslinje = ({
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
             case Vedtaksperiodetilstand.Utbetalt:
+            case Vedtaksperiodetilstand.UtbetaltAutomatisk:
+            case Vedtaksperiodetilstand.TilUtbetalingAutomatisk:
                 return 'suksess';
             case Vedtaksperiodetilstand.Oppgaver:
                 return 'advarsel';
