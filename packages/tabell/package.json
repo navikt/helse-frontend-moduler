@@ -1,9 +1,9 @@
 {
   "name": "@navikt/helse-frontend-tabell",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "main": "lib/index.js",
   "module": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "types": "lib/src/index.d.ts",
   "scripts": {
     "build": "npm run clean && webpack --config webpack.config.js",
     "clean": "rm -rf ./lib",
