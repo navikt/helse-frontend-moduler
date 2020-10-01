@@ -161,9 +161,25 @@ export const useTabell = ({
     });
 
     const applyFiltrering = (rader: ReactNode[][]) => {
-        const aktiveFiltere = filtrering.filtere.filter(({ active }) => active);
-        return aktiveFiltere.length > 0
-            ? rader.filter(rad => aktiveFiltere.some(({ filter, kolonne }) => filter.func(rad[kolonne])))
+        const aktiveFiltere = filtrering.filtere
+            .filter(({ active }) => active)
+            .reduce(
+                (filterePerKolonne, filter) => ({
+                    ...filterePerKolonne,
+                    [filter.kolonne]: filterePerKolonne[filter.kolonne]
+                        ? [...filterePerKolonne[filter.kolonne], filter]
+                        : [filter]
+                }),
+                {}
+            );
+        const filterePerKolonne = Object.values(aktiveFiltere);
+        console.log(filterePerKolonne);
+        return Object.keys(aktiveFiltere).length > 0
+            ? rader.filter(rad =>
+                  filterePerKolonne.every((filtere: { filter: Filter; kolonne: number }[]) =>
+                      filtere.some(({ filter, kolonne }) => filter.func(rad[kolonne]))
+                  )
+              )
             : rader;
     };
 

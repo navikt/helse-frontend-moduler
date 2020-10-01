@@ -73,10 +73,20 @@ describe('useTabell', () => {
         userEvent.click(screen.getByText('Type'));
         userEvent.click(screen.getByText('Dragon'));
         await waitFor(() => {
-            expect(screen.queryByText('Pikachu')).toBeVisible();
-            expect(screen.queryByText('Charmander')).toBeVisible();
-            expect(screen.queryByText('Squirtle')).toBeVisible();
-            expect(screen.queryByText('Bulbasaur')).toBeVisible();
+            expect(screen.queryByText('Pikachu')).toBeNull();
+            expect(screen.queryByText('Charmander')).toBeNull();
+            expect(screen.queryByText('Squirtle')).toBeNull();
+            expect(screen.queryByText('Bulbasaur')).toBeNull();
+            expect(screen.queryByText('Haunter')).toBeNull();
+            expect(screen.queryByText('Dragonite')).toBeNull();
+        });
+        userEvent.click(screen.getByText('Evolution'));
+        userEvent.click(screen.getAllByText('1')[0]);
+        await waitFor(() => {
+            expect(screen.queryByText('Pikachu')).toBeNull();
+            expect(screen.queryByText('Charmander')).toBeNull();
+            expect(screen.queryByText('Squirtle')).toBeNull();
+            expect(screen.queryByText('Bulbasaur')).toBeNull();
             expect(screen.queryByText('Haunter')).toBeNull();
             expect(screen.queryByText('Dragonite')).toBeVisible();
         });
