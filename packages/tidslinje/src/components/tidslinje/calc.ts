@@ -7,7 +7,7 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 
 export const breddeMellomDatoer = (start: Dayjs, slutt: Dayjs, totaltAntallDatoer: number): Percentage => {
-    const dagerMellomDatoer = slutt.diff(start, 'minute') / 60 / 24;
+    const dagerMellomDatoer = Math.round(slutt.diff(start, 'minute') / 60 / 24);
     return (dagerMellomDatoer / totaltAntallDatoer) * 100;
 };
 

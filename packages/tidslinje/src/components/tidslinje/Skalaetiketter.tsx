@@ -102,7 +102,7 @@ interface SkalaetiketterProps {
     start: Dayjs;
     slutt: Dayjs;
     direction?: 'left' | 'right';
-    etikettRender?: (etikett: Skalaetikett) => ReactNode;
+    etikettRender?: (etikett: Skalaetikett, style: { [key: string]: string }) => ReactNode;
 }
 
 const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: SkalaetiketterProps) => {
@@ -111,7 +111,7 @@ const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: Ska
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
             {etiketter.map(
                 etikett =>
-                    etikettRender?.(etikett) ?? (
+                    etikettRender?.(etikett, { [direction]: `${etikett.horizontalPosition}%` }) ?? (
                         <div
                             key={etikett.label}
                             className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
