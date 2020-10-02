@@ -4,9 +4,9 @@ import { Tabell } from './Tabell';
 import { FiltrerbarTabellHeader, SorterbarTabellHeader, TabellHeader } from './Head';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import '@testing-library/jest-dom/extend-expect';
-import { renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react-hooks';
 import { Paginering } from './paginering';
+import '@testing-library/jest-dom/extend-expect';
 
 interface UseTabellTestProps {
     rader: ReactNode[][];
@@ -130,6 +130,25 @@ describe('useTabell', () => {
                 expect(screen.queryByText('Haunter')).toBeVisible();
                 expect(screen.queryByText('Dragonite')).toBeVisible();
             });
+        });
+        test('kan settes fra utsiden', () => {
+            const { result } = renderHook(() => useTabell({ rader, headere: filtrerbareHeadere }));
+            act(() => {
+                result.current.filtrering.set(f => ({
+                    filtere: f.filtere.map(({ filter, ...rest }) =>
+                        filter.label === 1 ? { filter, ...rest, active: true } : { filter, ...rest }
+                    )
+                }));
+            });
+            expect(result.current.rader.length).toEqual(4);
+            act(() => {
+                result.current.filtrering.set(f => ({
+                    filtere: f.filtere.map(({ filter, ...rest }) =>
+                        filter.label === 1 ? { filter, ...rest, active: false } : { filter, ...rest }
+                    )
+                }));
+            });
+            expect(result.current.rader.length).toEqual(6);
         });
     });
     describe('paginering', () => {

@@ -52,6 +52,13 @@ export interface UseTabellPaginering extends Paginering {
     set: Dispatch<SetStateAction<Paginering>>;
 }
 
+export interface UseTabellFiltrering extends Filtrering {
+    /**
+     * Oppdaterer filtrering.
+     */
+    set: Dispatch<SetStateAction<Filtrering>>;
+}
+
 export interface UseTabell {
     /**
      * Radene som skal vises i tabellen. Ferdig sorterte og filtrerte.
@@ -69,7 +76,7 @@ export interface UseTabell {
     /**
      * Beskriver hvordan tabellen er filtrert for øyeblikket.
      */
-    filtrering: Filtrering;
+    filtrering: UseTabellFiltrering;
     /**
      * Beskriver hvordan tabellen er paginert for øyeblikket. Er kun satt dersom `defaultPaginering`-parametret til
      * hooken er satt.
@@ -192,6 +199,11 @@ export const useTabell = ({
         }
     };
 
+    const constructFiltrering = (): UseTabellFiltrering => ({
+        ...filtrering,
+        set: setFiltrering
+    });
+
     const constructPaginering = (filtrerteRader: ReactNode[][]) =>
         paginering && {
             ...paginering,
@@ -215,7 +227,7 @@ export const useTabell = ({
                     : tilTabellHeader(header)
         ),
         sortering,
-        filtrering,
+        filtrering: constructFiltrering(),
         paginering: constructPaginering(sorterteRader)
     };
 };
