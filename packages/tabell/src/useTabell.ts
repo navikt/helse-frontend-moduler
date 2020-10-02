@@ -173,7 +173,6 @@ export const useTabell = ({
                 {}
             );
         const filterePerKolonne = Object.values(aktiveFiltere);
-        console.log(filterePerKolonne);
         return Object.keys(aktiveFiltere).length > 0
             ? rader.filter(rad =>
                   filterePerKolonne.every((filtere: { filter: Filter; kolonne: number }[]) =>
