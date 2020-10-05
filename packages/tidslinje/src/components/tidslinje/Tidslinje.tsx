@@ -43,7 +43,7 @@ export interface TidslinjeProps {
     /**
      * Funksjon som tar en etikett og returnerer det som skal rendres.
      */
-    etikettRender?: (etikett: Skalaetikett, style: { [key: string]: string }) => ReactNode;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
 export interface InternalTidslinjeProps {
@@ -54,7 +54,7 @@ export interface InternalTidslinjeProps {
     aktivtUtsnitt?: EnkelPeriode;
     aktivRad?: number;
     direction: 'left' | 'right';
-    etikettRender?: (etikett: Skalaetikett, style: { [key: string]: string }) => ReactNode;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
 interface TidslinjeContextType {

@@ -102,25 +102,22 @@ interface SkalaetiketterProps {
     start: Dayjs;
     slutt: Dayjs;
     direction?: 'left' | 'right';
-    etikettRender?: (etikett: Skalaetikett, style: { [key: string]: string }) => ReactNode;
+    etikettRender?: (etikett: Skalaetikett) => ReactNode;
 }
 
 const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: SkalaetiketterProps) => {
     const etiketter = skalaEtiketter(start, slutt, direction).filter(erSynlig);
     return (
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
-            {etiketter.map(
-                etikett =>
-                    etikettRender?.(etikett, { [direction]: `${etikett.horizontalPosition}%` }) ?? (
-                        <div
-                            key={etikett.label}
-                            className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
-                            style={{ [direction]: `${etikett.horizontalPosition}%` }}
-                        >
-                            {etikett.label}
-                        </div>
-                    )
-            )}
+            {etiketter.map(etikett => (
+                <div
+                    key={etikett.label}
+                    className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
+                    style={{ [direction]: `${etikett.horizontalPosition}%` }}
+                >
+                    {etikettRender?.(etikett) ?? etikett.label}
+                </div>
+            ))}
         </div>
     );
 };
