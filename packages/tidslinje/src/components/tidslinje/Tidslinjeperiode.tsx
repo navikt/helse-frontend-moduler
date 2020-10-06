@@ -17,7 +17,7 @@ const ariaLabel = (periode: PosisjonertPeriode): string => {
 };
 
 const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: TidslinjeperiodeProps) => {
-    const buttonRef = useRef<HTMLButtonElement>(null);
+    const ref = useRef<any>(null);
     const [erMini, setErMini] = useState(false);
     const [visDisabledLabel, setVisDisabledLabel] = useState(false);
 
@@ -60,19 +60,19 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
     }, [visDisabledLabel]);
 
     useLayoutEffect(() => {
-        const currentWidth = buttonRef.current?.offsetWidth;
+        const currentWidth = ref.current?.offsetWidth;
         if (currentWidth && currentWidth < 30) {
             setErMini(true);
         }
-    }, [buttonRef.current]);
+    }, [ref.current]);
 
     useEffect(() => {
-        if (active) buttonRef.current?.focus();
+        if (active) ref.current?.focus();
     }, [active]);
 
-    return (
+    return onSelectPeriode ? (
         <button
-            ref={buttonRef}
+            ref={ref}
             className={className}
             onClick={onClick}
             aria-label={ariaLabel(periode)}
@@ -83,6 +83,16 @@ const Tidslinjeperiode = React.memo(({ periode, onSelectPeriode, active }: Tidsl
         >
             {periode.disabledLabel && visDisabledLabel && <Tooltip>{periode.disabledLabel}</Tooltip>}
         </button>
+    ) : (
+        <div
+            ref={ref}
+            className={className}
+            aria-label={ariaLabel(periode)}
+            style={{
+                [periode.direction]: `${periode.horizontalPosition}%`,
+                width: `${periode.width}%`
+            }}
+        />
     );
 });
 

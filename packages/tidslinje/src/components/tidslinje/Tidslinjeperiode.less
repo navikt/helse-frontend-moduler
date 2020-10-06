@@ -6,19 +6,29 @@
     }
 }
 
-.periode {
+button.periode {
+    cursor: pointer;
     .colors(#e7e9e9, #59514b, #c3c3c3);
+
+    &:active,
+    &:focus {
+        outline: none;
+        box-shadow: 0 0 0 2px #254B6D;
+        border-color: #254B6D;
+        z-index: 100;
+    }
+}
+
+.periode {
+    .colors(#e7e9e9, #59514b, #e7e9e9);
     height: 2rem;
     border-radius: 1.5rem;
     position: absolute;
-    cursor: pointer;
     border: 1px dashed #59514b;
     transition: box-shadow 0.1s ease;
     padding: 0;
 
-    &.active,
-    &:active,
-    &:focus {
+    &.active {
         outline: none;
         box-shadow: 0 0 0 2px #254B6D;
         border-color: #254B6D;
@@ -47,18 +57,34 @@
 }
 
 .advarsel {
+    .colors(#ffe9cc, #ff9100, #ffe9cc);
+}
+
+button.advarsel {
     .colors(#ffe9cc, #ff9100, #fed7a3);
 }
 
 .feil {
+    .colors(#f1d8d4, #ba3a26, #f1d8d4);
+}
+
+button.feil {
     .colors(#f1d8d4, #ba3a26, #e3b0a8);
 }
 
 .inaktiv {
+    .colors(#e7e9e9, #78706a, #e7e9e9);
+}
+
+button.inaktiv {
     .colors(#e7e9e9, #78706a, #c3c3c3);
 }
 
 .suksess {
+    .colors(#cde7d8, #117938, #cde7d8);
+}
+
+button.suksess {
     .colors(#cde7d8, #117938, #9bd0b0);
 }
 

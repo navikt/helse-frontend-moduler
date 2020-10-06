@@ -34,7 +34,11 @@ export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
     disabledLabel?: ReactNode;
 }
 
-export interface Skalaetikett extends PosisjonertElement {
+export interface ElementMedBredde {
+    width: number;
+}
+
+export interface Skalaetikett extends PosisjonertElement, ElementMedBredde {
     label: string;
     dato: Date;
 }

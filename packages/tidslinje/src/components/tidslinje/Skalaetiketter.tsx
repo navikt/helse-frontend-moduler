@@ -41,7 +41,8 @@ export const dagsetiketter = (
                 direction: direction,
                 horizontalPosition: breddeMellomDatoer(dag, slutt, totaltAntallDager),
                 label: formatertDag(dag),
-                dato: dag.toDate()
+                dato: dag.toDate(),
+                width: breddeMellomDatoer(dag, dag.add(1, 'day'), totaltAntallDager)
             };
         })
         .filter(etikett => etikett !== null) as Skalaetikett[];
@@ -63,7 +64,8 @@ export const månedsetiketter = (
             direction: direction,
             horizontalPosition: breddeMellomDatoer(måned, slutt, totaltAntallDager),
             label: formatertMåned(måned),
-            dato: måned.toDate()
+            dato: måned.toDate(),
+            width: breddeMellomDatoer(måned, måned.add(1, 'month'), totaltAntallDager)
         };
     });
 };
@@ -82,7 +84,8 @@ export const årsetiketter = (
             direction: direction,
             horizontalPosition: breddeMellomDatoer(år, slutt, totaltAntallDager),
             label: formatertÅr(år),
-            dato: år.toDate()
+            dato: år.toDate(),
+            width: breddeMellomDatoer(år, år.add(1, 'year'), totaltAntallDager)
         };
     });
 };
@@ -109,18 +112,15 @@ const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: Ska
     const etiketter = skalaEtiketter(start, slutt, direction).filter(erSynlig);
     return (
         <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
-            {etiketter.map(
-                etikett =>
-                    etikettRender?.(etikett) ?? (
-                        <div
-                            key={etikett.label}
-                            className={classNames(styles.etikett, direction === 'right' && styles.directionRight)}
-                            style={{ [direction]: `${etikett.horizontalPosition}%` }}
-                        >
-                            {etikett.label}
-                        </div>
-                    )
-            )}
+            {etiketter.map(etikett => (
+                <div
+                    key={etikett.label}
+                    className={classNames(direction === 'right' && styles.directionRight)}
+                    style={{ [direction]: `${etikett.horizontalPosition}%`, width: `${etikett.width}%` }}
+                >
+                    {etikettRender?.(etikett) ?? etikett.label}
+                </div>
+            ))}
         </div>
     );
 };
