@@ -52,6 +52,13 @@ export interface UseTabellPaginering extends Paginering {
     set: Dispatch<SetStateAction<Paginering>>;
 }
 
+export interface UseTabellFiltrering extends Filtrering {
+    /**
+     * Oppdaterer filtrering.
+     */
+    set: Dispatch<SetStateAction<Filtrering>>;
+}
+
 export interface UseTabell {
     /**
      * Radene som skal vises i tabellen. Ferdig sorterte og filtrerte.
@@ -69,7 +76,7 @@ export interface UseTabell {
     /**
      * Beskriver hvordan tabellen er filtrert for øyeblikket.
      */
-    filtrering: Filtrering;
+    filtrering: UseTabellFiltrering;
     /**
      * Beskriver hvordan tabellen er paginert for øyeblikket. Er kun satt dersom `defaultPaginering`-parametret til
      * hooken er satt.
@@ -192,28 +199,35 @@ export const useTabell = ({
         }
     };
 
-    const constructPaginering = () =>
+    const constructFiltrering = (): UseTabellFiltrering => ({
+        ...filtrering,
+        set: setFiltrering
+    });
+
+    const constructPaginering = (filtrerteRader: ReactNode[][]) =>
         paginering && {
             ...paginering,
-            antallSider: Math.ceil(rader.length / paginering.antallRaderPerSide),
-            førsteSynligeElement: finnFørsteSynligeElement(rader, paginering),
-            sisteSynligeElement: finnSisteSynligeElement(rader, paginering),
+            antallSider: Math.ceil(filtrerteRader.length / paginering.antallRaderPerSide),
+            førsteSynligeElement: finnFørsteSynligeElement(filtrerteRader, paginering),
+            sisteSynligeElement: finnSisteSynligeElement(filtrerteRader, paginering),
             set: setPaginering
         };
 
+    const sorterteRader = applySort(applyFiltrering(rader)).map(renderer ? renderer : rad => rad);
     return {
-        rader: applySort(applyFiltrering(rader)).map(renderer ? renderer : rad => rad),
-        headere: headere?.map((header: TabellHeader, kolonne: number) =>
-            header.render
-                ? (header as SorterbarTabellHeader).sortFunction
-                    ? tilSorterbarHeader(header as SorterbarTabellHeader, kolonne)
-                    : (header as FiltrerbarTabellHeader).filtere
-                    ? tilFiltrerbarHeader(header as FiltrerbarTabellHeader, kolonne)
-                    : header
-                : tilTabellHeader(header)
+        rader: sorterteRader,
+        headere: headere?.map(
+            (header: SorterbarTabellHeader | FiltrerbarTabellHeader | TabellHeader, kolonne: number) =>
+                header.render
+                    ? header['sortFunction']
+                        ? tilSorterbarHeader(header as SorterbarTabellHeader, kolonne)
+                        : (header as FiltrerbarTabellHeader).filtere
+                        ? tilFiltrerbarHeader(header as FiltrerbarTabellHeader, kolonne)
+                        : header
+                    : tilTabellHeader(header)
         ),
         sortering,
-        filtrering,
-        paginering: constructPaginering()
+        filtrering: constructFiltrering(),
+        paginering: constructPaginering(sorterteRader)
     };
 };
