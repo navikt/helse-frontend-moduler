@@ -78,18 +78,20 @@ const _Tidslinje = React.memo(
         direction,
         etikettRender
     }: InternalTidslinjeProps) => {
-        const onSelectPeriodeWrapper = useCallback(
-            (periode: PosisjonertPeriode) => {
-                onSelectPeriode?.({
-                    id: periode.id,
-                    fom: periode.fom.toDate(),
-                    tom: periode.tom.toDate(),
-                    disabled: periode.disabled,
-                    status: periode.status
-                });
-            },
-            [onSelectPeriode]
-        );
+        const onSelectPeriodeWrapper =
+            onSelectPeriode &&
+            useCallback(
+                (periode: PosisjonertPeriode) => {
+                    onSelectPeriode?.({
+                        id: periode.id,
+                        fom: periode.fom.toDate(),
+                        tom: periode.tom.toDate(),
+                        disabled: periode.disabled,
+                        status: periode.status
+                    });
+                },
+                [onSelectPeriode]
+            );
 
         return (
             <div className={classNames('tidslinje', styles.tidslinje)}>
