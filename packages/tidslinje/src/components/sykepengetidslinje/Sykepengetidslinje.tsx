@@ -1,9 +1,9 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Periode } from '../types.external';
+import { Etikett, Periode } from '../types.external';
 import { Tidslinje } from '../..';
 import classNames from 'classnames';
 import styles from './Sykepengetidslinje.less';
-import { Periodestatus } from '../types.internal';
+import { PeriodStatus } from '../types.internal';
 
 export enum Vedtaksperiodetilstand {
     TilUtbetaling = 'tilUtbetaling',
@@ -43,8 +43,12 @@ export interface SykepengetidslinjeProps {
     aktivRad?: number;
 }
 
+const etikettRenderer = (etikett: Etikett) => {
+    return <span style={{ transform: 'translateX(50%)' }}>{etikett.label}</span>;
+};
+
 /**
- * Tilpasset tidslinje for sykepengeløsningen. Bruker ikke `aktivtUtsnitt` for å markere hvilket utsnitt som er aktivt men heller hvilken rad + periode som er valgt av bruker.
+ * Tilpasset tidslinje for sykepengeløsningen. Perioder sorteres i synkende rekkefølge (nyeste først).
  */
 export const Sykepengetidslinje = ({
     rader,
@@ -53,7 +57,7 @@ export const Sykepengetidslinje = ({
     onSelectPeriode,
     aktivRad
 }: SykepengetidslinjeProps) => {
-    const periodeStatus = (tilstand: Vedtaksperiodetilstand): Periodestatus => {
+    const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodStatus => {
         switch (tilstand) {
             case Vedtaksperiodetilstand.TilUtbetaling:
             case Vedtaksperiodetilstand.Utbetalt:
@@ -103,6 +107,8 @@ export const Sykepengetidslinje = ({
             sluttDato={sluttDato}
             onSelectPeriode={onSelectPeriode}
             aktivRad={aktivRad}
+            retning="synkende"
+            etikettRender={etikettRenderer}
         />
     );
 };

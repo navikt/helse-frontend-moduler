@@ -1,6 +1,6 @@
 import { EnkelPeriode } from '../types.external';
 import dayjs, { Dayjs } from 'dayjs';
-import { breddeMellomDatoer } from './calc';
+import { breddeMellomDatoer, horizontalPositionAndWidth } from './calc';
 
 interface UsePositionAndSizeOptions {
     periode: EnkelPeriode;
@@ -19,12 +19,10 @@ export const usePositionAndSize = ({
 }: UsePositionAndSizeOptions) => {
     const fom = dayjs(periode.fom).startOf('day');
     const tom = dayjs(periode.tom).endOf('day');
-    const totaltAntallDager = tidslinjeslutt.diff(tidslinjestart, 'day');
 
-    const horizontalPosition = breddeMellomDatoer(tom, tidslinjeslutt, totaltAntallDager);
+    const { horizontalPosition, width } = horizontalPositionAndWidth(fom, tom, tidslinjestart, tidslinjeslutt);
     const adjustedHorizontalPosition = constrain(horizontalPosition, 0, 100);
 
-    const width = breddeMellomDatoer(fom, tom, totaltAntallDager);
     const adjustedWidth =
         adjustedHorizontalPosition + width >= 100
             ? 100 - adjustedHorizontalPosition

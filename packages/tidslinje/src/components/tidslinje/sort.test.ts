@@ -1,16 +1,16 @@
 import { sisteDato, sisteEnklePeriode, sistePeriode } from './sort';
 import dayjs, { Dayjs } from 'dayjs';
-import { EnkelPeriode, PosisjonertPeriode } from '../types.internal';
+import { Period, PositionedPeriod } from '../types.internal';
 
 const enDato = ({ plussDager = 0 } = {}): Dayjs => dayjs('2020-01-01').add(plussDager, 'day');
 
-const enPeriode = ({ fom = enDato(), tom = enDato() } = {}): EnkelPeriode => ({ fom, tom });
+const enPeriode = ({ start = enDato(), endInclusive = enDato() } = {}): Period => ({ start, endInclusive });
 
-const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PosisjonertPeriode => ({
+const enPosisjonertPeriode = ({ horizontalPosition = 50 } = {}): PositionedPeriod => ({
     id: 'id',
     status: 'suksess',
-    fom: dayjs(),
-    tom: dayjs(),
+    start: dayjs(),
+    endInclusive: dayjs(),
     width: 123,
     horizontalPosition: horizontalPosition,
     direction: 'left'
@@ -58,16 +58,16 @@ test('sistePeriode', () => {
 test('sisteEnklePeriode', () => {
     const usortert = [
         enPeriode(),
-        enPeriode({ fom: enDato({ plussDager: 1 }), tom: enDato({ plussDager: 3 }) }),
-        enPeriode({ fom: enDato({ plussDager: 10 }), tom: enDato({ plussDager: 15 }) }),
-        enPeriode({ tom: enDato({ plussDager: 1 }) }),
-        enPeriode({ fom: enDato({ plussDager: 8 }), tom: enDato({ plussDager: 20 }) })
+        enPeriode({ start: enDato({ plussDager: 1 }), endInclusive: enDato({ plussDager: 3 }) }),
+        enPeriode({ start: enDato({ plussDager: 10 }), endInclusive: enDato({ plussDager: 15 }) }),
+        enPeriode({ endInclusive: enDato({ plussDager: 1 }) }),
+        enPeriode({ start: enDato({ plussDager: 8 }), endInclusive: enDato({ plussDager: 20 }) })
     ];
     const sortert = [
-        enPeriode({ fom: enDato({ plussDager: 8 }), tom: enDato({ plussDager: 20 }) }),
-        enPeriode({ fom: enDato({ plussDager: 10 }), tom: enDato({ plussDager: 15 }) }),
-        enPeriode({ fom: enDato({ plussDager: 1 }), tom: enDato({ plussDager: 3 }) }),
-        enPeriode({ tom: enDato({ plussDager: 1 }) }),
+        enPeriode({ start: enDato({ plussDager: 8 }), endInclusive: enDato({ plussDager: 20 }) }),
+        enPeriode({ start: enDato({ plussDager: 10 }), endInclusive: enDato({ plussDager: 15 }) }),
+        enPeriode({ start: enDato({ plussDager: 1 }), endInclusive: enDato({ plussDager: 3 }) }),
+        enPeriode({ endInclusive: enDato({ plussDager: 1 }) }),
         enPeriode()
     ];
 

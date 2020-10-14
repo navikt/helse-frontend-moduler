@@ -1,49 +1,40 @@
 import { Dayjs } from 'dayjs';
 import { ReactNode } from 'react';
 
-export type Periodestatus = 'suksess' | 'advarsel' | 'feil' | 'inaktiv' | 'ukjent';
+export type PeriodStatus = 'suksess' | 'advarsel' | 'feil' | 'inaktiv' | 'ukjent';
 export type Percentage = number;
 
-export interface PosisjonertElement {
+export interface Positioned {
     horizontalPosition: number;
     direction: 'left' | 'right';
 }
 
-export interface EnkelPeriode {
-    fom: Dayjs;
-    tom: Dayjs;
+export interface Period {
+    start: Dayjs;
+    endInclusive: Dayjs;
 }
 
-export interface Intervall extends EnkelPeriode, PosisjonertElement {
+export interface PositionedPeriod extends Period, Positioned {
     id: string;
     width: number;
+    status: PeriodStatus;
     active?: boolean;
-    focusable?: boolean;
-}
-
-export interface PosisjonertPeriode extends EnkelPeriode, PosisjonertElement {
-    id: string;
-    width: number;
-    status: Periodestatus;
-    active?: boolean;
-    cropped?: boolean;
+    cropped?: 'left' | 'right' | 'both';
     disabled?: boolean;
-    outOfBounds?: boolean;
-    sammenheng?: 'venstre' | 'høyre' | 'begge';
     className?: string;
     disabledLabel?: ReactNode;
 }
 
-export interface ElementMedBredde {
+export interface Spatial {
     width: number;
 }
 
-export interface Skalaetikett extends PosisjonertElement, ElementMedBredde {
+export interface AxisLabel extends Positioned, Spatial {
     label: string;
-    dato: Date;
+    date: Date;
 }
 
-export interface InternalEnkelTidslinje {
+export interface InternalSimpleTimeline {
     id: string;
-    perioder: PosisjonertPeriode[];
+    periods: PositionedPeriod[];
 }

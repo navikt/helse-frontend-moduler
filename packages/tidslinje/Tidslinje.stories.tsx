@@ -1,5 +1,5 @@
-import React from 'react';
-import { Sykepengetidslinje, Tidslinje, TidslinjeProps } from './src';
+import React, { useState } from 'react';
+import { Periode, Sykepengeperiode, Sykepengetidslinje, Tidslinje, TidslinjeProps } from './src';
 
 export default {
     title: 'Tidslinje/Tidslinje',
@@ -20,15 +20,27 @@ export default {
                     { id: '789', fom: new Date('2020-03-01'), tom: new Date('2020-03-31'), status: 'inaktiv' }
                 ]
             ]
-        },
-        aktivtUtsnitt: {
-            defaultValue: {
-                fom: new Date('2020-07-01'),
-                tom: new Date('2020-07-31')
-            }
         }
     }
 };
 
-export const Basic = (args: TidslinjeProps) => <Tidslinje {...args} />;
+export const Basic = (args: TidslinjeProps) => {
+    const [rader, setRader] = useState<Periode[][]>(args.rader);
+    const [aktivPeriode, setAktivPeriode] = useState<Periode>();
+
+    const onSelectPeriode = (periode: Periode) => {
+        console.log(periode);
+        setAktivPeriode(periode);
+        setRader(rader => rader.map(rad => rad.map(p => ({ ...p, active: periode.id === p.id }))));
+    };
+
+    const aktivRad =
+        aktivPeriode &&
+        rader.reduce(
+            (radIndex: number, rad: Periode[], i: number) =>
+                rad.find(({ id }) => id === aktivPeriode.id) ? i : radIndex,
+            undefined
+        );
+    return <Tidslinje {...args} aktivRad={aktivRad} onSelectPeriode={onSelectPeriode} />;
+};
 Basic.storyName = 'Enkel tidslinje';

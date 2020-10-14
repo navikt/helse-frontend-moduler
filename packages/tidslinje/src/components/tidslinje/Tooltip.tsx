@@ -5,8 +5,4 @@ interface TooltipProps {
     children: ReactNode | ReactNode[];
 }
 
-const Tooltip = ({ children }: TooltipProps) => {
-    return <div className={styles.tooltip}>{children}</div>;
-};
-
-export default Tooltip;
+export const Tooltip = ({ children }: TooltipProps) => <div className={styles.tooltip}>{children}</div>;

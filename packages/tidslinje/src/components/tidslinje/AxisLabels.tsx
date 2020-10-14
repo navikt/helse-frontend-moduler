@@ -1,19 +1,13 @@
 import React, { ReactNode } from 'react';
 import dayjs, { Dayjs } from 'dayjs';
-import 'dayjs/locale/nb';
-import { Percentage, Skalaetikett } from '../types.internal';
-import styles from './Skalaetiketter.less';
+import styles from './AxisLabels.less';
 import classNames from 'classnames';
-import { breddeMellomDatoer } from './calc';
 import { erSynlig } from './filter';
+import { horizontalPositionAndWidth } from './calc';
+import { AxisLabel } from '../types.internal';
+import 'dayjs/locale/nb';
 
 dayjs.locale('nb');
-
-export const posisjonFraVenstre = (dato: Dayjs, tidslinjeStart: Dayjs, tidslinjeSlutt: Dayjs): Percentage => {
-    const dagerEtterDato = tidslinjeSlutt.diff(dato, 'day');
-    const antallTidslinjedager = tidslinjeSlutt.diff(tidslinjeStart, 'day');
-    return (dagerEtterDato / antallTidslinjedager) * 100;
-};
 
 const formatertDag = (dato: Dayjs): string => dato.format('DD.MM');
 
@@ -29,7 +23,7 @@ export const dagsetiketter = (
     slutt: Dayjs,
     totaltAntallDager: number,
     direction: 'left' | 'right'
-): Skalaetikett[] => {
+): AxisLabel[] => {
     const inkrement = Math.ceil(totaltAntallDager / 10);
     const sisteDag = slutt.startOf('day');
     return new Array(totaltAntallDager)
@@ -37,15 +31,16 @@ export const dagsetiketter = (
         .map((denneDagen, i) => {
             if (i % inkrement !== 0) return null;
             const dag: Dayjs = denneDagen.subtract(i, 'day');
+            const { horizontalPosition, width } = horizontalPositionAndWidth(dag, dag.add(1, 'day'), start, slutt);
             return {
                 direction: direction,
-                horizontalPosition: breddeMellomDatoer(dag, slutt, totaltAntallDager),
+                horizontalPosition: horizontalPosition,
                 label: formatertDag(dag),
-                dato: dag.toDate(),
-                width: breddeMellomDatoer(dag, dag.add(1, 'day'), totaltAntallDager)
+                date: dag.toDate(),
+                width: width
             };
         })
-        .filter(etikett => etikett !== null) as Skalaetikett[];
+        .filter(etikett => etikett !== null) as AxisLabel[];
 };
 
 export const månedsetiketter = (
@@ -53,19 +48,19 @@ export const månedsetiketter = (
     slutt: Dayjs,
     totaltAntallDager: number,
     direction: 'left' | 'right'
-): Skalaetikett[] => {
+): AxisLabel[] => {
     const startmåned = start.startOf('month');
     const sluttmåned = slutt.startOf('month');
-    const førsteMåned = startmåned.add(1, 'month');
     const antallMåneder = sluttmåned.diff(startmåned, 'month');
-    return new Array(antallMåneder).fill(førsteMåned).map((denneMåneden, i) => {
+    return new Array(antallMåneder).fill(startmåned).map((denneMåneden, i) => {
         const måned: Dayjs = denneMåneden.add(i, 'month');
+        const { horizontalPosition, width } = horizontalPositionAndWidth(måned, måned.add(1, 'month'), start, slutt);
         return {
             direction: direction,
-            horizontalPosition: breddeMellomDatoer(måned, slutt, totaltAntallDager),
+            horizontalPosition: horizontalPosition,
             label: formatertMåned(måned),
-            dato: måned.toDate(),
-            width: breddeMellomDatoer(måned, måned.add(1, 'month'), totaltAntallDager)
+            date: måned.toDate(),
+            width: width
         };
     });
 };
@@ -75,22 +70,23 @@ export const årsetiketter = (
     slutt: Dayjs,
     totaltAntallDager: number,
     direction: 'left' | 'right'
-): Skalaetikett[] => {
+): AxisLabel[] => {
     const førsteÅr = start.startOf('year');
     const antallÅr = Math.ceil(slutt.diff(start, 'year', true)) + 1;
     return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
         const år: Dayjs = detteÅret.add(i, 'year');
+        const { horizontalPosition, width } = horizontalPositionAndWidth(år, år.add(1, 'year'), start, slutt);
         return {
             direction: direction,
-            horizontalPosition: breddeMellomDatoer(år, slutt, totaltAntallDager),
+            horizontalPosition: horizontalPosition,
             label: formatertÅr(år),
-            dato: år.toDate(),
-            width: breddeMellomDatoer(år, år.add(1, 'year'), totaltAntallDager)
+            date: år.toDate(),
+            width: width
         };
     });
 };
 
-const skalaEtiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): Skalaetikett[] => {
+const axisLabels = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
     const totaltAntallDager = slutt.diff(start, 'day');
     if (totaltAntallDager < 40) {
         return dagsetiketter(start, slutt, totaltAntallDager, direction);
@@ -101,22 +97,26 @@ const skalaEtiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right')
     }
 };
 
-interface SkalaetiketterProps {
+interface AxisLabelsProps {
     start: Dayjs;
     slutt: Dayjs;
     direction?: 'left' | 'right';
-    etikettRender?: (etikett: Skalaetikett) => ReactNode;
+    etikettRender?: (etikett: AxisLabel) => ReactNode;
 }
 
-const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: SkalaetiketterProps) => {
-    const etiketter = skalaEtiketter(start, slutt, direction).filter(erSynlig);
+export const AxisLabels = ({ start, slutt, direction = 'left', etikettRender }: AxisLabelsProps) => {
+    const labels = axisLabels(start, slutt, direction).filter(erSynlig);
     return (
-        <div className={classNames('skalaetiketter', styles.skalaetiketter)}>
-            {etiketter.map(etikett => (
+        <div className={classNames('etiketter', styles.etiketter)}>
+            {labels.map(etikett => (
                 <div
                     key={etikett.label}
-                    className={classNames(direction === 'right' && styles.directionRight)}
-                    style={{ [direction]: `${etikett.horizontalPosition}%`, width: `${etikett.width}%` }}
+                    style={{
+                        display: 'flex',
+                        justifyContent: direction === 'left' ? 'flex-start' : 'flex-end',
+                        [direction]: `${etikett.horizontalPosition}%`,
+                        width: `${etikett.width}%`
+                    }}
                 >
                     {etikettRender?.(etikett) ?? etikett.label}
                 </div>
@@ -124,5 +124,3 @@ const Skalaetiketter = ({ start, slutt, direction = 'left', etikettRender }: Ska
         </div>
     );
 };
-
-export default Skalaetiketter;

@@ -1,54 +1,71 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { nanoid } from 'nanoid';
-import { InternalEnkelTidslinje, PosisjonertPeriode } from '../types.internal';
+import { InternalSimpleTimeline, PositionedPeriod } from '../types.internal';
 import { Periode } from '../types.external';
-import { breddeMellomDatoer } from './calc';
-import { innenEtDøgn } from './filter';
+import { horizontalPositionAndWidth } from './calc';
+import { innenEtDøgn, invisiblePeriods } from './filter';
 import { sistePeriode } from './sort';
 import { useMemo } from 'react';
 import { TidslinjeProps } from './Tidslinje';
 
-const posisjonertPeriode = (
-    periode: Periode,
-    tidslinjeSlutt: Dayjs,
-    totaltAntallDager: number,
+const spatialPeriod = (
+    period: Periode,
+    timelineStart: Dayjs,
+    timelineEndInclusive: Dayjs,
     direction: 'left' | 'right' = 'left'
-): PosisjonertPeriode => {
-    const fom = dayjs(periode.fom);
-    const tom = dayjs(periode.tom);
-    const posisjonertPeriode = {
-        id: periode.id || nanoid(),
-        disabled: periode.disabled,
-        status: periode.status,
-        className: periode.className,
-        disabledLabel: periode.disabledLabel,
-        active: periode.active,
-        fom: fom,
-        tom: tom
-    };
-    const displayFom = fom.startOf('day');
-    const displayTom = tom.endOf('day');
-    const horizontalPosition = breddeMellomDatoer(displayTom, tidslinjeSlutt, totaltAntallDager);
-    const width = breddeMellomDatoer(displayFom, displayTom, totaltAntallDager);
-    const cropped = horizontalPosition + width > 100;
-    const outOfBounds = horizontalPosition >= 100;
+): PositionedPeriod => {
+    const start = dayjs(period.fom);
+    const endInclusive = dayjs(period.tom);
+    const { horizontalPosition, width } = horizontalPositionAndWidth(
+        start.startOf('day'),
+        endInclusive.endOf('day'),
+        timelineStart,
+        timelineEndInclusive
+    );
     return {
-        ...posisjonertPeriode,
-        direction: direction,
+        id: period.id || nanoid(),
+        start: start,
+        endInclusive: endInclusive,
         horizontalPosition: horizontalPosition,
-        width: cropped ? 100 - horizontalPosition : width,
-        cropped: cropped,
-        outOfBounds: outOfBounds
+        disabledLabel: period.disabledLabel,
+        direction: direction,
+        className: period.className,
+        disabled: period.disabled,
+        status: period.status,
+        active: period.active,
+        width: width
     };
 };
 
-const medSammenheng = (periode: PosisjonertPeriode, i: number, perioder: PosisjonertPeriode[]): PosisjonertPeriode => {
-    const sammenhengFraVenstre = i > 0 && innenEtDøgn(perioder[i - 1].fom, periode.tom);
-    const sammenhengFraHøyre = i < perioder.length - 1 && innenEtDøgn(periode.fom, perioder[i + 1].tom);
-    if (sammenhengFraVenstre && sammenhengFraHøyre) return { ...periode, sammenheng: 'begge' };
-    if (sammenhengFraVenstre) return { ...periode, sammenheng: 'venstre' };
-    if (sammenhengFraHøyre) return { ...periode, sammenheng: 'høyre' };
-    return periode;
+const adjustedEdges = (period: PositionedPeriod, i: number, allPeriods: PositionedPeriod[]): PositionedPeriod => {
+    const left = i > 0 && innenEtDøgn(allPeriods[i - 1].endInclusive, period.start);
+    const right = i < allPeriods.length - 1 && innenEtDøgn(period.endInclusive, allPeriods[i + 1].start);
+    return left && right
+        ? { ...period, cropped: 'both' }
+        : left
+        ? { ...period, cropped: 'left' }
+        : right
+        ? { ...period, cropped: 'right' }
+        : period;
+};
+
+const trimmedPeriods = (period: PositionedPeriod) => {
+    let { horizontalPosition, width, cropped } = period;
+    if (horizontalPosition + width > 100) {
+        width = 100 - horizontalPosition;
+        cropped = cropped === 'left' || cropped === 'both' ? 'both' : 'right';
+    }
+    if (horizontalPosition < 0 && horizontalPosition + width > 0) {
+        width = horizontalPosition + width;
+        horizontalPosition = 0;
+        cropped = cropped === 'right' || cropped === 'both' ? 'both' : 'left';
+    }
+    return {
+        ...period,
+        width: width,
+        horizontalPosition: horizontalPosition,
+        cropped: cropped
+    };
 };
 
 export const useTidslinjerader = (
@@ -56,24 +73,30 @@ export const useTidslinjerader = (
     startDato: Dayjs,
     sluttDato: Dayjs,
     direction: 'left' | 'right'
-): InternalEnkelTidslinje[] =>
-    useMemo(() => {
-        const totaltAntallDager = sluttDato.diff(startDato, 'day');
-        return rader.map(perioder => ({
-            id: nanoid(),
-            perioder: perioder
-                .map((periode: Periode) => posisjonertPeriode(periode, sluttDato, totaltAntallDager, direction))
-                .sort(sistePeriode)
-                .map(medSammenheng)
-        }));
-    }, [rader, startDato, sluttDato]);
+): InternalSimpleTimeline[] =>
+    useMemo(
+        () =>
+            rader.map(perioder => {
+                const tidslinjeperioder = perioder
+                    .map((periode: Periode) => spatialPeriod(periode, startDato, sluttDato, direction))
+                    .sort(sistePeriode)
+                    .map(adjustedEdges)
+                    .map(trimmedPeriods)
+                    .filter(invisiblePeriods);
+                return {
+                    id: nanoid(),
+                    periods: direction === 'left' ? tidslinjeperioder : tidslinjeperioder.reverse()
+                };
+            }),
+        [rader, startDato, sluttDato]
+    );
 
 const tidligsteDato = (tidligst: Date, periode: Periode) => (periode.fom < tidligst ? periode.fom : tidligst);
 
 const tidligsteFomDato = (rader: Periode[][]) => rader.flat().reduce(tidligsteDato, new Date());
 
 export const useTidligsteDato = ({ startDato, rader }: TidslinjeProps) =>
-    useMemo(() => (startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader)).startOf('day')), [startDato, rader]);
+    useMemo(() => (startDato ? dayjs(startDato) : dayjs(tidligsteFomDato(rader))), [startDato, rader]);
 
 const senesteDato = (senest: Date, periode: Periode) => (periode.tom > senest ? periode.tom : senest);
 

@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { AxisLabel } from './types.internal';
 
 export interface EnkelPeriode {
     /**
@@ -18,17 +19,17 @@ export interface Periode extends EnkelPeriode {
     status: 'suksess' | 'feil' | 'advarsel' | 'inaktiv' | 'ukjent';
     /**
      * Brukes for å unikt identifisere perioden, f.eks. om du ønsker å identifisere
-     * perioden du klikker på med `onSelectPeriode`-funksjonen.
+     * perioden du klikker på med `onSelectPeriod`-funksjonen.
      */
     id?: string;
     /**
-     * Gjør at periodeknappen ikke kaller `onSelectPeriode` når den klikkes.
+     * Gjør at periodeknappen ikke kaller `onSelectPeriod` når den klikkes.
      */
     disabled?: boolean;
     /**
      * Legges på periodeknappen og kan brukes for å stilsette knappen, f.eks. om
      * man ønsker forskjellige ikoner på knappene for å visuelt identifisere
-     * forskjellige typer perioder.
+     * forskjellige typer periods.
      */
     className?: string;
     /**
@@ -41,3 +42,5 @@ export interface Periode extends EnkelPeriode {
      */
     active?: boolean;
 }
+
+export type Etikett = AxisLabel;
