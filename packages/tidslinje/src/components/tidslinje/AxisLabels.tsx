@@ -43,15 +43,10 @@ export const dagsetiketter = (
         .filter(etikett => etikett !== null) as AxisLabel[];
 };
 
-export const månedsetiketter = (
-    start: Dayjs,
-    slutt: Dayjs,
-    totaltAntallDager: number,
-    direction: 'left' | 'right'
-): AxisLabel[] => {
+export const månedsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
     const startmåned = start.startOf('month');
-    const sluttmåned = slutt.startOf('month');
-    const antallMåneder = sluttmåned.diff(startmåned, 'month');
+    const sluttmåned = slutt.endOf('month');
+    const antallMåneder = sluttmåned.diff(startmåned, 'month') + 1;
     return new Array(antallMåneder).fill(startmåned).map((denneMåneden, i) => {
         const måned: Dayjs = denneMåneden.add(i, 'month');
         const { horizontalPosition, width } = horizontalPositionAndWidth(måned, måned.add(1, 'month'), start, slutt);
@@ -65,14 +60,10 @@ export const månedsetiketter = (
     });
 };
 
-export const årsetiketter = (
-    start: Dayjs,
-    slutt: Dayjs,
-    totaltAntallDager: number,
-    direction: 'left' | 'right'
-): AxisLabel[] => {
+export const årsetiketter = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): AxisLabel[] => {
     const førsteÅr = start.startOf('year');
-    const antallÅr = Math.ceil(slutt.diff(start, 'year', true)) + 1;
+    const sisteÅr = slutt.endOf('year');
+    const antallÅr = sisteÅr.diff(start, 'year') + 1;
     return new Array(antallÅr).fill(førsteÅr).map((detteÅret, i) => {
         const år: Dayjs = detteÅret.add(i, 'year');
         const { horizontalPosition, width } = horizontalPositionAndWidth(år, år.add(1, 'year'), start, slutt);
@@ -91,9 +82,9 @@ const axisLabels = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): Ax
     if (totaltAntallDager < 40) {
         return dagsetiketter(start, slutt, totaltAntallDager, direction);
     } else if (totaltAntallDager < 370) {
-        return månedsetiketter(start, slutt, totaltAntallDager, direction);
+        return månedsetiketter(start, slutt, direction);
     } else {
-        return årsetiketter(start, slutt, totaltAntallDager, direction);
+        return årsetiketter(start, slutt, direction);
     }
 };
 
