@@ -93,13 +93,5 @@ export const TidslinjeForSykepenger = (args: SykepengetidslinjeProps) => {
             undefined
         );
 
-    return (
-        <Sykepengetidslinje
-            onSelectPeriode={onSelectPeriode}
-            rader={rader}
-            aktivRad={aktivRad}
-            // startDato={new Date('2020-02-15')}
-            // sluttDato={new Date('2020-08-15')}
-        />
-    );
+    return <Sykepengetidslinje onSelectPeriode={onSelectPeriode} rader={rader} aktivRad={aktivRad} />;
 };

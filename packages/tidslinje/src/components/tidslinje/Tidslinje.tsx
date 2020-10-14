@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { Dayjs } from 'dayjs';
 import { AxisLabels } from './AxisLabels';
 import { TimelineRow } from './TimelineRow';
-import { Periode } from '../types.external';
+import { Etikett, Periode } from '../types.external';
 import { AxisLabel, InternalSimpleTimeline, PositionedPeriod } from '../types.internal';
 import { useSenesteDato, useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
 
@@ -38,7 +38,7 @@ export interface TidslinjeProps {
     /**
      * Funksjon som tar en etikett og returnerer det som skal rendres.
      */
-    etikettRender?: (etikett: AxisLabel) => ReactNode;
+    etikettRender?: (etikett: Etikett) => ReactNode;
 }
 
 export interface TimelineProps {
