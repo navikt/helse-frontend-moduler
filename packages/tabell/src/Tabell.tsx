@@ -10,6 +10,7 @@ import { Paginering, paginerteRader } from './paginering';
 export interface Tabellrad {
     celler: ReactNode[];
     className?: string;
+    id?: string;
 }
 
 export type Tabellrader = (ReactNode | Tabellrad)[];
@@ -56,7 +57,7 @@ const Body = ({ rader, paginering }: { rader: Tabellrader; paginering?: Pagineri
     return (
         <tbody>
             {tabellrader.map(tilTabellrad).map((rad: Tabellrad, i) => (
-                <tr key={i} className={classNames('Tabellrad', rad.className && rad.className)}>
+                <tr key={rad.id ?? i} className={classNames('Tabellrad', rad.className && rad.className)}>
                     {rad.celler.map((element, i) => (
                         <td key={i}>{element}</td>
                     ))}
