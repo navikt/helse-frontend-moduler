@@ -9,7 +9,7 @@ export const LoggListe = () => {
     return (
         <ul className={styles.list}>
             {hendelser.filter(aktivtFilter).map((hendelse: HendelseMedId) => (
-                <LoggItem key={hendelse.id} hendelse={hendelse} />
+                <LoggItem key={hendelse.id} hendelse={hendelse} className={hendelse.className} />
             ))}
         </ul>
     );

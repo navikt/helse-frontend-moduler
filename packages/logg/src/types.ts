@@ -34,13 +34,13 @@ export interface Hendelse {
      */
     dato?: string;
     /**
-     * Valgfri status som indikerer alvorlighetsnivået til meldingen.
-     */
-    status?: 'info' | 'advarsel' | 'feil' | 'suksess';
-    /**
      * Valgfri beskrivelse av meldingen. Rendres under navn og dato.
      */
     beskrivelse?: ReactNode;
+    /**
+     * Klassenavn som legges på li-elementet for hendelsen i listen.
+     */
+    className?: string;
 }
 
 export type HendelseMedId = Hendelse & { id: string };

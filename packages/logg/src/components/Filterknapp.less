@@ -1,17 +1,18 @@
 .knapp {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
     background: none;
     border: none;
     -webkit-appearance: none;
     height: 100%;
-    min-height: 50px;
+    min-height: 85px;
     width: 4rem;
     cursor: pointer;
-    transition: box-shadow 0.1s ease-in-out;
 
     > * {
         position: relative;
-        transition: fill 0.1s ease-in-out;
     }
 
     .ikonskygge(@background, @size) {
@@ -21,18 +22,34 @@
         height: @size;
         width: @size;
         top: 50%;
-        transform: translate(-25%, -50%);
+        left: 50%;
+        transform: translate(-50%, -50%);
         border-radius: 50%;
-        transition: all 0.1s ease;
     }
 
     &:before {
         .ikonskygge(transparent, 30px);
     }
 
-    &:hover:before,
-    &:focus:before {
-        .ikonskygge(#e7e9e9, 40px);
+    &:after {
+        position: absolute;
+        content: '';
+        bottom: 0;
+        left: 0;
+        height: 0;
+        width: 100%;
+        border-top-left-radius: 2px;
+        border-top-right-radius: 2px;
+    }
+
+    &:hover:before {
+        .ikonskygge(#e7e9e9, 48px);
+    }
+
+    &:focus-visible:before {
+        height: 48px;
+        width: 48px;
+        box-shadow: 0 0 0 3px #4D3E55;
     }
 
     &:focus, &:active {
@@ -44,14 +61,17 @@
             display: none;
         }
 
-        > * {
-            fill: #e7e9e9;
+        * {
+            fill: #78706a;
         }
     }
 }
 
 .aktivKnapp {
-    box-shadow: inset 0 -5px 0 -1px #0067c5;
+    &:after {
+        height: 4px;
+        background: #0067C5;
+    }
 
     > * {
         fill: #0067c5;

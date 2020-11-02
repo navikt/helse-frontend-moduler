@@ -1,10 +1,14 @@
 import React from 'react';
 import { Ikon, IkonProps } from './Ikon';
 
-export const IkonDokumenter = ({ width = 20, height = 20 }: IkonProps) => {
-    return (
-        <Ikon width={width} height={height} viewBox={24}>
-            <path d="M23.5,6H9.707L7.854,4.146C7.76,4.053,7.633,4,7.5,4h-7C0.225,4,0,4.224,0,4.5v19C0,23.776,0.225,24,0.5,24h23  c0.276,0,0.5-0.224,0.5-0.5v-17C24,6.224,23.776,6,23.5,6z" />
-        </Ikon>
-    );
-};
+export const IkonDokumenter = ({ width = 24, height = 20 }: IkonProps) => (
+    <Ikon width={width} height={height} viewBox="0 0 24 20">
+        <path
+            xmlns="http://www.w3.org/2000/svg"
+            fillRule="evenodd"
+            clipRule="evenodd"
+            d="M21 1V5H22C23.1046 5 24 5.89543 24 7V18C24 19.1046 23.1046 20 22 20H2C0.89543 20 0 19.1046 0 18V2C0 0.89543 0.89543 0 2 0H9.76393C10.4812 0 11.1401 0.383683 11.4958 0.999595L21 1ZM9.76393 2H2V18H22V7H12.2639L9.76393 2ZM19 5V3H12.5L13.5 5H19Z"
+            fill="#3E3832"
+        />
+    </Ikon>
+);

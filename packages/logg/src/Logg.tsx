@@ -12,6 +12,8 @@ export interface LoggProps {
     className?: string;
 }
 
+/** Viser meldinger og hendelser, f.eks. notater fra saksbehandlere, varselmeldinger, eller mottatte sykmeldinger/søknader.
+ */
 export const Logg = <T,>({ hendelser, filtere, className }: LoggProps) => (
     <div className={classNames(styles.container, className)}>
         <LoggProvider hendelser={hendelser} filtere={filtere}>
