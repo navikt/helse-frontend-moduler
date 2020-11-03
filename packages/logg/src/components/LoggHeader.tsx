@@ -2,11 +2,16 @@ import React, { useContext } from 'react';
 import styles from './LoggHeader.less';
 import { Filterknapp } from './Filterknapp';
 import { LoggContext } from '../LoggContext';
+import classNames from 'classnames';
 
-export const LoggHeader = () => {
+interface LoggHeaderProps {
+    className?: string;
+}
+
+export const LoggHeader = ({ className }: LoggHeaderProps) => {
     const { filtere, aktivtFilter, setAktivtFilter } = useContext(LoggContext);
     return (
-        <div className={styles.header}>
+        <div className={classNames(styles.header, className)}>
             {filtere.map((filter, i) => (
                 <Filterknapp
                     key={i}
