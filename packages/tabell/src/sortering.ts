@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Tabellrad } from './index';
 
 export interface Sortering {
     /**
@@ -35,7 +36,7 @@ export const tilRetningsstyrtSortering = (
 };
 
 export const tilSorterteRader = (
-    rader: ReactNode[][],
+    rader: Tabellrad[],
     kolonne: number,
     sortFunction: (a: ReactNode, b: ReactNode) => number
-) => [...rader].sort((a: ReactNode[], b: ReactNode[]) => sortFunction(a[kolonne], b[kolonne]));
+) => [...rader].sort((a: Tabellrad, b: Tabellrad) => sortFunction(a.celler[kolonne], b.celler[kolonne]));

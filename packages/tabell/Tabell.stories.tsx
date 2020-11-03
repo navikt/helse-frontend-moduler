@@ -1,6 +1,5 @@
-import React, { ReactNode } from 'react';
-import { Tabell, useTabell } from './src';
-import { TabellProps } from './src/Tabell';
+import React from 'react';
+import { Tabell, Tabellrad, useTabell, TabellProps } from './src';
 import { SorterbarTabellHeader, TabellHeader } from './src/Head';
 import dayjs from 'dayjs';
 
@@ -46,16 +45,19 @@ export const MedSortering = () => {
         }
     ];
 
-    const rader = [
-        ['2019-02-19', 100, 1234],
-        ['2019-02-20', 100, 1234],
-        ['2019-02-21', 50, 617],
-        ['2019-02-22', 50, 617],
-        ['2019-02-23', 80, 987],
-        ['2019-02-24', 80, 987]
+    const rader: Tabellrad[] = [
+        { celler: ['2019-02-19', 100, 1234], id: '1' },
+        { celler: ['2019-02-20', 100, 1234], id: '2' },
+        { celler: ['2019-02-21', 50, 617], id: '3' },
+        { celler: ['2019-02-22', 50, 617], id: '4' },
+        { celler: ['2019-02-23', 80, 987], id: '5' },
+        { celler: ['2019-02-24', 80, 987], id: '6' }
     ];
 
-    const renderer = (rad: ReactNode[]) => [dayjs(rad[0] as string).format('DD.MM.YYYY'), `${rad[1]}%`, `${rad[2]} kr`];
+    const renderer = (rad: Tabellrad) => ({
+        ...rad,
+        celler: [dayjs(rad.celler[0] as string).format('DD.MM.YYYY'), `${rad.celler[1]}%`, `${rad.celler[2]} kr`]
+    });
 
     const tabell = useTabell({ rader, headere, renderer });
 
@@ -87,12 +89,12 @@ export const MedFiltere = () => {
     ];
 
     const rader = [
-        ['Pikachu', '⚡️', 1],
-        ['Charmander', '🔥', 1],
-        ['Squirtle', '💦', 1],
-        ['Bulbasaur', '🥬', 1],
-        ['Haunter', '👻', 2],
-        ['Dragonite', '🐉', 3]
+        { celler: ['Pikachu', '⚡️', 1], id: '1' },
+        { celler: ['Charmander', '🔥', 1], id: '2' },
+        { celler: ['Squirtle', '💦', 1], id: '3' },
+        { celler: ['Bulbasaur', '🥬', 1], id: '4' },
+        { celler: ['Haunter', '👻', 2], id: '5' },
+        { celler: ['Dragonite', '🐉', 3], id: '6' }
     ];
 
     const tabell = useTabell({ rader, headere });

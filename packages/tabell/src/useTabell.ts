@@ -4,12 +4,13 @@ import { tilTabellHeader } from './map';
 import { endreSorteringsretning, Sortering, tilRetningsstyrtSortering, tilSorterteRader } from './sortering';
 import { Filter, Filtrering } from './filtrering';
 import { Paginering } from './paginering';
+import { Tabellrad } from './index';
 
 export interface UseTabellOptions {
     /**
      * Radene som skal vises i tabellen.
      */
-    rader: ReactNode[][];
+    rader: Tabellrad[];
     /**
      * Liste av kolonneheadere. Kan enten være råverdier (ReactNode) eller objekter som beskriver hvordan kolonnen
      * skal kunne filtreres, sorteres, m.m. (TabellHeader).
@@ -18,7 +19,7 @@ export interface UseTabellOptions {
     /**
      * Funksjon som tar råverdiene i tabellen og omformer de til det vi ønsker å rendre på skjerm.
      */
-    renderer?: (rad: ReactNode[]) => ReactNode[];
+    renderer?: (rad: Tabellrad) => Tabellrad;
     /**
      * Beskriver hvordan tabellen skal sorteres ved mount.
      */
@@ -63,7 +64,7 @@ export interface UseTabell {
     /**
      * Radene som skal vises i tabellen. Ferdig sorterte og filtrerte.
      */
-    rader: ReactNode[][];
+    rader: Tabellrad[];
     /**
      * Liste av kolonneheadere. Kan enten være råverdier (ReactNode) eller objekter som beskriver hvordan kolonnen
      * skal kunne filtreres, sorteres, m.m. (TabellHeader).
@@ -98,10 +99,10 @@ const initialiserTomFiltrering = (headere?: (ReactNode | TabellHeader | Filtrerb
     return { filtere };
 };
 
-const finnFørsteSynligeElement = (rader: ReactNode[][], paginering: Paginering) =>
+const finnFørsteSynligeElement = (rader: Tabellrad[], paginering: Paginering) =>
     rader.length > 0 ? (paginering.sidenummer - 1) * paginering.antallRaderPerSide + 1 : 0;
 
-const finnSisteSynligeElement = (rader: ReactNode[][], paginering: Paginering) => {
+const finnSisteSynligeElement = (rader: Tabellrad[], paginering: Paginering) => {
     const førsteSynligeElement = finnFørsteSynligeElement(rader, paginering) as number;
     const elementPlassering = førsteSynligeElement + paginering.antallRaderPerSide - 1;
     return elementPlassering > rader.length ? rader.length : elementPlassering;
@@ -167,7 +168,7 @@ export const useTabell = ({
             ((filter: Filter | Filter[], override?: boolean) => onToggleFilter(filter, kolonne, override)())
     });
 
-    const applyFiltrering = (rader: ReactNode[][]) => {
+    const applyFiltrering = (rader: Tabellrad[]) => {
         const aktiveFiltere = filtrering.filtere
             .filter(({ active }) => active)
             .reduce(
@@ -183,13 +184,13 @@ export const useTabell = ({
         return Object.keys(aktiveFiltere).length > 0
             ? rader.filter(rad =>
                   filterePerKolonne.every((filtere: { filter: Filter; kolonne: number }[]) =>
-                      filtere.some(({ filter, kolonne }) => filter.func(rad[kolonne]))
+                      filtere.some(({ filter, kolonne }) => filter.func(rad.celler[kolonne]))
                   )
               )
             : rader;
     };
 
-    const applySort = (rader: ReactNode[][]) => {
+    const applySort = (rader: Tabellrad[]) => {
         const ingentingSkalSorteres = sortering.direction === 'none' || sortering.kolonne === undefined;
         if (ingentingSkalSorteres) {
             return rader;
@@ -204,7 +205,7 @@ export const useTabell = ({
         set: setFiltrering
     });
 
-    const constructPaginering = (filtrerteRader: ReactNode[][]) =>
+    const constructPaginering = (filtrerteRader: Tabellrad[]) =>
         paginering && {
             ...paginering,
             antallSider: Math.ceil(filtrerteRader.length / paginering.antallRaderPerSide),

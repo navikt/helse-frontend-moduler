@@ -1,6 +1,6 @@
-import React, { ReactNode } from 'react';
+import React from 'react';
 import { useTabell } from './useTabell';
-import { Tabell } from './Tabell';
+import { Tabell, Tabellrad } from './Tabell';
 import { FiltrerbarTabellHeader, SorterbarTabellHeader, TabellHeader } from './Head';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -9,7 +9,7 @@ import { Paginering } from './paginering';
 import '@testing-library/jest-dom/extend-expect';
 
 interface UseTabellTestProps {
-    rader: ReactNode[][];
+    rader: Tabellrad[];
     headere: (TabellHeader | SorterbarTabellHeader | FiltrerbarTabellHeader)[];
     defaultPaginering?: Paginering;
 }
@@ -48,12 +48,12 @@ const filtrerbareHeadere = [
 ];
 
 const rader = [
-    ['Pikachu', '⚡️', 1],
-    ['Charmander', '🔥', 1],
-    ['Squirtle', '💦', 1],
-    ['Bulbasaur', '🥬', 1],
-    ['Haunter', '👻', 2],
-    ['Dragonite', '🐉', 3]
+    { celler: ['Pikachu', '⚡️', 1] },
+    { celler: ['Charmander', '🔥', 1] },
+    { celler: ['Squirtle', '💦', 1] },
+    { celler: ['Bulbasaur', '🥬', 1] },
+    { celler: ['Haunter', '👻', 2] },
+    { celler: ['Dragonite', '🐉', 3] }
 ];
 
 describe('useTabell', () => {
