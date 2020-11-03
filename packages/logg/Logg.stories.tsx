@@ -22,7 +22,8 @@ export default {
                 },
                 {
                     filterFunction: (hendelse: Hendelse) => hendelse.type === Hendelsetype.Meldinger,
-                    renderProp: <IkonDialog />
+                    renderProp: <IkonDialog />,
+                    disabled: true
                 }
             ]
         },

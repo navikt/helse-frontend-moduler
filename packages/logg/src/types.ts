@@ -12,6 +12,10 @@ export interface Filter {
      * Dette er det som rendres i filterknappen øverst i loggen.
      */
     renderProp: ReactNode;
+    /**
+     * Bestemmer om filterknappen er disabled.
+     */
+    disabled?: boolean;
 }
 
 export enum Hendelsetype {

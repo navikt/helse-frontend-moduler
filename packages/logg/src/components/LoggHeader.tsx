@@ -17,6 +17,7 @@ export const LoggHeader = ({ className }: LoggHeaderProps) => {
                     key={i}
                     aktiv={aktivtFilter == filter.filterFunction}
                     onClick={() => setAktivtFilter(() => filter.filterFunction)}
+                    disabled={filter.disabled}
                 >
                     {filter.renderProp}
                 </Filterknapp>
