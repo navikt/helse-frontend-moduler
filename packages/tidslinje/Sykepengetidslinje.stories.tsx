@@ -80,7 +80,6 @@ export const TidslinjeForSykepenger = (args: SykepengetidslinjeProps) => {
     const [aktivPeriode, setAktivPeriode] = useState<Periode>();
 
     const onSelectPeriode = (periode: Periode) => {
-        console.log(periode);
         setAktivPeriode(periode);
         setRader(rader => rader.map(rad => rad.map(p => ({ ...p, active: periode.id === p.id }))));
     };
