@@ -6,7 +6,7 @@ import styled from '@emotion/styled';
 export default {
     title: 'Toggleknapp',
     component: Toggleknapp,
-    subcomponents: { Togglegruppe }
+    subcomponents: { Togglegruppe },
 };
 
 export const Basic = (args: React.PropsWithChildren<ToggleknappProps>) => (
@@ -82,18 +82,18 @@ export const MedRefs = () => {
                     {
                         render: '🔥🔥🔥🔥🔥',
                         buttonRef: buttonRef1,
-                        onToggle: () => setActiveButton(activeButton === 0 ? undefined : 0)
+                        onToggle: () => setActiveButton(activeButton === 0 ? undefined : 0),
                     },
                     {
                         render: '🍔🍔🍔',
                         buttonRef: buttonRef2,
-                        onToggle: () => setActiveButton(activeButton === 1 ? undefined : 1)
+                        onToggle: () => setActiveButton(activeButton === 1 ? undefined : 1),
                     },
                     {
                         render: '🌈',
                         buttonRef: buttonRef3,
-                        onToggle: () => setActiveButton(activeButton === 2 ? undefined : 2)
-                    }
+                        onToggle: () => setActiveButton(activeButton === 2 ? undefined : 2),
+                    },
                 ]}
             />
             <Flex style={{ transform: 'translateX(1px)' }}>

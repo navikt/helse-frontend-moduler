@@ -1,5 +1,5 @@
 import React, { ReactNode, useState } from 'react';
-import { togglegruppe } from './Togglegruppe.less';
+import styles from './Togglegruppe.less';
 import { Toggleknapp } from './Toggleknapp';
 
 export type Toggle = {
@@ -17,14 +17,14 @@ export interface TogglegruppeProps {
 export const Togglegruppe = ({ toggles, multi = false }: TogglegruppeProps) => {
     const [toggled, setToggled] = useState<number>();
     return (
-        <span className={togglegruppe}>
+        <span className={styles.togglegruppe}>
             {toggles.map(({ render, ...rest }, i) => (
                 <Toggleknapp
                     key={i}
                     toggled={multi ? undefined : toggled === i}
                     {...rest}
                     onToggle={() => {
-                        setToggled(t => (t === i ? undefined : i));
+                        setToggled((t) => (t === i ? undefined : i));
                         rest.onToggle?.();
                     }}
                 >
