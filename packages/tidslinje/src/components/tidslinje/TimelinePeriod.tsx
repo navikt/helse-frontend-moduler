@@ -1,4 +1,4 @@
-import React, { CSSProperties, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { CSSProperties, ReactNode, RefObject, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import styles from './TimelinePeriod.less';
 import classNames from 'classnames';
 import { Tooltip } from './Tooltip';
@@ -6,13 +6,13 @@ import { PositionedPeriod } from '../types.internal';
 
 interface NonClickablePeriodProps {
     period: PositionedPeriod;
-    divRef: React.RefObject<HTMLDivElement>;
+    divRef: RefObject<HTMLDivElement>;
     className?: string;
 }
 
 interface ClickablePeriodProps {
     period: PositionedPeriod;
-    buttonRef: React.RefObject<HTMLButtonElement>;
+    buttonRef: RefObject<HTMLButtonElement>;
     onSelectPeriod: (period: PositionedPeriod) => void;
     className?: string;
 }
@@ -21,6 +21,7 @@ interface TimelinePeriodProps {
     period: PositionedPeriod;
     active?: boolean;
     onSelectPeriod?: (period: PositionedPeriod) => void;
+    onHoverPeriod?: ReactNode;
 }
 
 const ariaLabel = (period: PositionedPeriod): string => {
@@ -31,38 +32,47 @@ const ariaLabel = (period: PositionedPeriod): string => {
 
 const style = (period: PositionedPeriod): CSSProperties => ({
     [period.direction]: `${period.horizontalPosition}%`,
-    width: `${period.width}%`
+    width: `${period.width}%`,
 });
 
 const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
-    const [showDisabledLabel, setShowDisabledLabel] = useState(false);
+    const [showClickLabel, setShowClickLabel] = useState(false);
+    const [showHoverLabel, setShowHoverLabel] = useState(false);
 
     const onClick = () => {
-        if (period.disabledLabel) {
-            setShowDisabledLabel(!showDisabledLabel);
-        } else {
+        if (!period.disabled) {
             onSelectPeriod?.(period);
+        }
+        if (period.clickLabel) {
+            setShowClickLabel(!showClickLabel);
         }
     };
 
     useEffect(() => {
-        if (showDisabledLabel) {
-            const clickHandler = () => setShowDisabledLabel(false);
+        if (showClickLabel) {
+            const clickHandler = () => setShowClickLabel(false);
             document.addEventListener('click', clickHandler);
             return () => document.removeEventListener('click', clickHandler);
         }
         return () => null;
-    }, [showDisabledLabel]);
+    }, [showClickLabel]);
+
+    const onHover = () => {
+        setShowHoverLabel((prevState) => !prevState);
+    };
 
     return (
         <button
             ref={buttonRef}
             className={className}
             onClick={onClick}
+            onMouseEnter={period.hoverLabel ? onHover : undefined}
+            onMouseLeave={period.hoverLabel ? onHover : undefined}
             aria-label={ariaLabel(period)}
             style={style(period)}
         >
-            {period.disabledLabel && showDisabledLabel && <Tooltip>{period.disabledLabel}</Tooltip>}
+            {period.clickLabel && showClickLabel && <Tooltip>{period.clickLabel}</Tooltip>}
+            {period.hoverLabel && showHoverLabel && <Tooltip>{period.hoverLabel}</Tooltip>}
         </button>
     );
 };
@@ -72,7 +82,7 @@ const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodPro
 );
 
 export const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelinePeriodProps) => {
-    const ref = useRef<any>(null);
+    const ref = useRef<HTMLButtonElement | HTMLDivElement>(null);
     const [isMini, setIsMini] = useState(false);
 
     const className = classNames(
@@ -101,8 +111,13 @@ export const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: Ti
     }, [active]);
 
     return onSelectPeriod ? (
-        <ClickablePeriod buttonRef={ref} period={period} onSelectPeriod={onSelectPeriod} className={className} />
+        <ClickablePeriod
+            buttonRef={ref as RefObject<HTMLButtonElement>}
+            period={period}
+            onSelectPeriod={onSelectPeriod}
+            className={className}
+        />
     ) : (
-        <NonClickablePeriod divRef={ref} period={period} className={className} />
+        <NonClickablePeriod divRef={ref as RefObject<HTMLDivElement>} period={period} className={className} />
     );
 });

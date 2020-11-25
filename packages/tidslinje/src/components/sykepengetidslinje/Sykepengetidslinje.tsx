@@ -33,8 +33,9 @@ export interface Sykepengeperiode {
     status: Vedtaksperiodetilstand;
     disabled?: boolean;
     className?: string;
-    disabledLabel?: ReactNode;
     active?: boolean;
+    clickLabel?: ReactNode;
+    hoverLabel?: ReactNode;
 }
 
 export interface SykepengetidslinjeProps {
@@ -97,8 +98,9 @@ export const Sykepengetidslinje = ({
             status: status,
             disabled: periode.disabled || status === 'inaktiv' || status === 'ukjent',
             className: classNames(periode.className, styles[periode.status]),
-            disabledLabel: periode.disabledLabel,
-            active: periode.active
+            active: periode.active,
+            clickLabel: periode.clickLabel,
+            hoverLabel: periode.hoverLabel
         };
     };
 

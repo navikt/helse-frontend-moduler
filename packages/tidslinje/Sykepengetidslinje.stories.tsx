@@ -58,16 +58,17 @@ export default {
                         fom: new Date('2020-02-01'),
                         tom: new Date('2020-02-29'),
                         disabled: true,
-                        disabledLabel: 'Dette er en ferieperiode fra Infotrygd',
-                        status: Vedtaksperiodetilstand.Infotrygdferie
+                        status: Vedtaksperiodetilstand.Infotrygdferie,
+                        hoverLabel: <div>Dette er en ferieperiode fra Infotrygd hover </div>
+
                     },
                     {
                         id: '789',
                         fom: new Date('2020-03-01'),
                         tom: new Date('2020-03-31'),
                         disabled: true,
-                        disabledLabel: 'Dette er en ferieperiode fra Infotrygd',
-                        status: Vedtaksperiodetilstand.Infotrygdferie
+                        status: Vedtaksperiodetilstand.Infotrygdferie,
+                        clickLabel: 'Dette er en ferieperiode fra Infotrygd'
                     }
                 ]
             ]

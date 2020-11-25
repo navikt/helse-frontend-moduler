@@ -33,14 +33,17 @@ export interface Periode extends EnkelPeriode {
      */
     className?: string;
     /**
-     * Dersom perioden har `disabled` satt til true kan denne brukes for å informere
-     * om hvorfor perioden er inaktiv i en tooltip over periodeknappen.
-     */
-    disabledLabel?: ReactNode;
-    /**
      * Bestemmer om perioden skal markeres som aktiv.
      */
     active?: boolean;
+    /**
+     * Dersom perioden har clickLabel satt, vises en tooltip med clickLabel-innholdet på klikk over periodeknappen
+     */
+    clickLabel?: ReactNode;
+    /**
+     * Dersom perioden har hoverLabel satt, vises en tooltip med hoverLabel-innholdet på hover over periodeknappen
+     */
+    hoverLabel?: ReactNode;
 }
 
 export type Etikett = AxisLabel;
