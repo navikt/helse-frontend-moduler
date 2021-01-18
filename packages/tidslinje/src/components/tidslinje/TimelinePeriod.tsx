@@ -35,30 +35,21 @@ const style = (period: PositionedPeriod): CSSProperties => ({
     width: `${period.width}%`
 });
 
-const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
-    const [showClickLabel, setShowClickLabel] = useState(false);
+const ClickablePeriod = React.memo(({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
     const [showHoverLabel, setShowHoverLabel] = useState(false);
 
     const onClick = () => {
         if (!period.disabled) {
             onSelectPeriod?.(period);
         }
-        if (period.clickLabel) {
-            setShowClickLabel(!showClickLabel);
-        }
     };
 
-    useEffect(() => {
-        if (showClickLabel) {
-            const clickHandler = () => setShowClickLabel(false);
-            document.addEventListener('click', clickHandler);
-            return () => document.removeEventListener('click', clickHandler);
-        }
-        return () => null;
-    }, [showClickLabel]);
+    const enableHoverLabel = () => {
+        period.hoverLabel && setShowHoverLabel(true);
+    };
 
-    const onHover = () => {
-        setShowHoverLabel(prevState => !prevState);
+    const disableHoverLabel = () => {
+        period.hoverLabel && setShowHoverLabel(false);
     };
 
     return (
@@ -66,17 +57,16 @@ const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: Click
             ref={buttonRef}
             className={className}
             onClick={onClick}
-            onMouseEnter={period.hoverLabel ? onHover : undefined}
-            onMouseLeave={period.hoverLabel ? onHover : undefined}
+            onMouseEnter={enableHoverLabel}
+            onMouseLeave={disableHoverLabel}
             aria-label={ariaLabel(period)}
             style={style(period)}
         >
-            {period.clickLabel && showClickLabel && <Tooltip>{period.clickLabel}</Tooltip>}
             {period.hoverLabel && showHoverLabel && <Tooltip>{period.hoverLabel}</Tooltip>}
             {period.infoPin && <div className={styles.infoPin} />}
         </button>
     );
-};
+});
 
 const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => (
     <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)}>

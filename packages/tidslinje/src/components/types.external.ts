@@ -37,10 +37,6 @@ export interface Periode extends EnkelPeriode {
      */
     active?: boolean;
     /**
-     * Dersom perioden har clickLabel satt, vises en tooltip med clickLabel-innholdet på klikk over periodeknappen
-     */
-    clickLabel?: ReactNode;
-    /**
      * Dersom perioden har hoverLabel satt, vises en tooltip med hoverLabel-innholdet på hover over periodeknappen
      */
     hoverLabel?: ReactNode;

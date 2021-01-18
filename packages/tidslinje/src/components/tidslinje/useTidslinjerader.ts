@@ -27,7 +27,6 @@ const spatialPeriod = (
         start: start,
         endInclusive: endInclusive,
         horizontalPosition: horizontalPosition,
-        clickLabel: period.clickLabel,
         hoverLabel: period.hoverLabel,
         direction: direction,
         className: period.className,

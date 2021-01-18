@@ -22,7 +22,6 @@ export interface PositionedPeriod extends Period, Positioned {
     cropped?: 'left' | 'right' | 'both';
     disabled?: boolean;
     className?: string;
-    clickLabel?: ReactNode;
     hoverLabel?: ReactNode;
     infoPin?: boolean;
 }

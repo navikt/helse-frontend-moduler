@@ -38,7 +38,8 @@ export default {
                         id: '567',
                         fom: new Date('2020-08-01'),
                         tom: new Date('2020-08-31'),
-                        status: Vedtaksperiodetilstand.UtbetaltAutomatisk
+                        status: Vedtaksperiodetilstand.UtbetaltAutomatisk,
+                        hoverLabel: <p>Test</p>
                     },
                     {
                         id: '568',
