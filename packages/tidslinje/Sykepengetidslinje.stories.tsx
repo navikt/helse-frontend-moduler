@@ -74,7 +74,7 @@ export default {
         },
         maksdato: {
             defaultValue: {
-                date: new Date('2020-08-15'),
+                date: new Date('2020-02-15'),
                 render: 'Dette er der maksdato er på tidslinjen.'
             }
         }
@@ -103,7 +103,7 @@ export const TidslinjeForSykepenger = (args: SykepengetidslinjeProps) => {
             onSelectPeriode={onSelectPeriode}
             rader={rader}
             aktivRad={aktivRad}
-            maksdato={{ date: new Date('2020-08-15'), render: 'Dette er der maksdato havner på tidslinjen.' }}
+            maksdato={{ date: new Date('2020-02-15'), render: 'Dette er der maksdato havner på tidslinjen.' }}
         />
     );
 };
