@@ -24,6 +24,7 @@ export interface PositionedPeriod extends Period, Positioned {
     className?: string;
     clickLabel?: ReactNode;
     hoverLabel?: ReactNode;
+    infoPin?: boolean;
 }
 
 export interface Spatial {

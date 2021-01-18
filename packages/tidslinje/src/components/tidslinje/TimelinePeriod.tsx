@@ -32,7 +32,7 @@ const ariaLabel = (period: PositionedPeriod): string => {
 
 const style = (period: PositionedPeriod): CSSProperties => ({
     [period.direction]: `${period.horizontalPosition}%`,
-    width: `${period.width}%`,
+    width: `${period.width}%`
 });
 
 const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: ClickablePeriodProps) => {
@@ -58,7 +58,7 @@ const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: Click
     }, [showClickLabel]);
 
     const onHover = () => {
-        setShowHoverLabel((prevState) => !prevState);
+        setShowHoverLabel(prevState => !prevState);
     };
 
     return (
@@ -73,12 +73,15 @@ const ClickablePeriod = ({ buttonRef, period, className, onSelectPeriod }: Click
         >
             {period.clickLabel && showClickLabel && <Tooltip>{period.clickLabel}</Tooltip>}
             {period.hoverLabel && showHoverLabel && <Tooltip>{period.hoverLabel}</Tooltip>}
+            {period.infoPin && <div className={styles.infoPin} />}
         </button>
     );
 };
 
 const NonClickablePeriod = ({ divRef, period, className }: NonClickablePeriodProps) => (
-    <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)} />
+    <div ref={divRef} className={className} aria-label={ariaLabel(period)} style={style(period)}>
+        {period.infoPin && <div className={styles.infoPin} />}
+    </div>
 );
 
 export const TimelinePeriod = React.memo(({ period, onSelectPeriod, active }: TimelinePeriodProps) => {

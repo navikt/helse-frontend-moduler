@@ -34,6 +34,7 @@ const spatialPeriod = (
         disabled: period.disabled,
         status: period.status,
         active: period.active,
+        infoPin: period.infoPin,
         width: width
     };
 };

@@ -13,7 +13,8 @@ export default {
                         id: '123',
                         fom: new Date('2020-01-01'),
                         tom: new Date('2020-01-31'),
-                        status: Vedtaksperiodetilstand.Annullert
+                        status: Vedtaksperiodetilstand.Annullert,
+                        infoPin: true
                     },
                     {
                         id: '234',

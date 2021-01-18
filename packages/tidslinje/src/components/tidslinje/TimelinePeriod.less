@@ -19,6 +19,27 @@ button.periode {
     }
 }
 
+.infoPin {
+    position: absolute;
+    background: #0067c5;
+    height: 6px;
+    width: 2px;
+    top: 0;
+    left: 50%;
+    transform: translate(-1px, -7px);
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 10px;
+        height: 10px;
+        background: #0067c5;
+        transform: translate(-5px, -100%);
+        border-radius: 50%;
+    }
+}
+
 .periode {
     .colors(#e7e9e9, #59514b, #e7e9e9);
     height: 1.5rem;

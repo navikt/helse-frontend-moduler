@@ -44,6 +44,10 @@ export interface Periode extends EnkelPeriode {
      * Dersom perioden har hoverLabel satt, vises en tooltip med hoverLabel-innholdet på hover over periodeknappen
      */
     hoverLabel?: ReactNode;
+    /**
+     * Indikerer om det skal rendres en blå markering over perioden.
+     */
+    infoPin?: boolean;
 }
 
 export interface Pin {
