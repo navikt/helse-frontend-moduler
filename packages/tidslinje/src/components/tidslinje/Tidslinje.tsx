@@ -3,10 +3,11 @@ import styles from './Tidslinje.less';
 import classNames from 'classnames';
 import { Dayjs } from 'dayjs';
 import { AxisLabels } from './AxisLabels';
-import { TimelineRow } from './TimelineRow';
-import { Etikett, Periode } from '../types.external';
+import { EmptyTimelineRow, TimelineRow } from './TimelineRow';
+import { Etikett, Periode, Pin } from '../types.external';
 import { AxisLabel, InternalSimpleTimeline, PositionedPeriod } from '../types.internal';
 import { useSenesteDato, useTidligsteDato, useTidslinjerader } from './useTidslinjerader';
+import { Pins } from './Pins';
 
 export interface TidslinjeProps {
     /**
@@ -39,6 +40,10 @@ export interface TidslinjeProps {
      * Funksjon som tar en etikett og returnerer det som skal rendres.
      */
     etikettRender?: (etikett: Etikett) => ReactNode;
+    /**
+     * Markeringer for enkeltdager på tidslinjen.
+     */
+    pins?: Pin[];
 }
 
 export interface TimelineProps {
@@ -49,10 +54,11 @@ export interface TimelineProps {
     activeRow?: number;
     onSelectPeriod?: (periode: Periode) => void;
     axisLabelRenderer?: (etikett: AxisLabel) => ReactNode;
+    pins?: Pin[];
 }
 
 const Timeline = React.memo(
-    ({ rows, start, endInclusive, onSelectPeriod, activeRow, direction, axisLabelRenderer }: TimelineProps) => {
+    ({ pins, rows, start, endInclusive, onSelectPeriod, activeRow, direction, axisLabelRenderer }: TimelineProps) => {
         const onSelectPeriodeWrapper =
             onSelectPeriod &&
             useCallback(
@@ -77,6 +83,12 @@ const Timeline = React.memo(
                     etikettRender={axisLabelRenderer}
                 />
                 <div className={classNames('tidslinjerader', styles.rader)}>
+                    <div className={classNames(styles.emptyRows)}>
+                        {rows.map((_, i) => (
+                            <EmptyTimelineRow key={i} />
+                        ))}
+                    </div>
+                    {pins && <Pins pins={pins} start={start} slutt={endInclusive} direction={direction} />}
                     {rows.map((tidslinje, i) => (
                         <TimelineRow
                             key={tidslinje.id}
@@ -96,6 +108,7 @@ const Timeline = React.memo(
  */
 export const Tidslinje = React.memo(
     ({
+        pins,
         rader,
         aktivRad,
         startDato,
@@ -120,6 +133,7 @@ export const Tidslinje = React.memo(
                 endInclusive={endInclusive}
                 onSelectPeriod={onSelectPeriode}
                 axisLabelRenderer={etikettRender}
+                pins={pins}
             />
         );
     }

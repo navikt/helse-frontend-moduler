@@ -10,9 +10,10 @@ interface TimelineRowProps {
     active?: boolean;
 }
 
+export const EmptyTimelineRow = () => <hr className={styles.emptyRow} />;
+
 export const TimelineRow = ({ periods, onSelectPeriod, active = false }: TimelineRowProps) => (
     <div className={classNames('tidslinjerad', styles.perioder, active && styles.aktivRad)}>
-        <hr />
         {periods.map(period => (
             <TimelinePeriod key={period.id} period={period} onSelectPeriod={onSelectPeriod} active={period.active} />
         ))}

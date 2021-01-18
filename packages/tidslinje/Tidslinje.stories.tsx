@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Periode, Sykepengeperiode, Sykepengetidslinje, Tidslinje, TidslinjeProps } from './src';
+import { Periode, Sykepengetidslinje, Tidslinje, TidslinjeProps } from './src';
 
 export default {
     title: 'Tidslinje/Tidslinje',
@@ -20,6 +20,9 @@ export default {
                     { id: '789', fom: new Date('2020-03-01'), tom: new Date('2020-03-31'), status: 'inaktiv' }
                 ]
             ]
+        },
+        pins: {
+            defaultValue: [{ date: new Date('2020-03-15'), render: 'Dette er en pin' }]
         }
     }
 };

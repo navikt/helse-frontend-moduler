@@ -60,7 +60,6 @@ export default {
                         disabled: true,
                         status: Vedtaksperiodetilstand.Infotrygdferie,
                         hoverLabel: <div>Dette er en ferieperiode fra Infotrygd hover </div>
-
                     },
                     {
                         id: '789',
@@ -72,6 +71,12 @@ export default {
                     }
                 ]
             ]
+        },
+        maksdato: {
+            defaultValue: {
+                date: new Date('2020-08-15'),
+                render: 'Dette er der maksdato er på tidslinjen.'
+            }
         }
     }
 };
@@ -93,5 +98,12 @@ export const TidslinjeForSykepenger = (args: SykepengetidslinjeProps) => {
             undefined
         );
 
-    return <Sykepengetidslinje onSelectPeriode={onSelectPeriode} rader={rader} aktivRad={aktivRad} />;
+    return (
+        <Sykepengetidslinje
+            onSelectPeriode={onSelectPeriode}
+            rader={rader}
+            aktivRad={aktivRad}
+            maksdato={{ date: new Date('2020-08-15'), render: 'Dette er der maksdato havner på tidslinjen.' }}
+        />
+    );
 };

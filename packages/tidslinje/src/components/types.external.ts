@@ -46,4 +46,15 @@ export interface Periode extends EnkelPeriode {
     hoverLabel?: ReactNode;
 }
 
+export interface Pin {
+    /**
+     * Dato objektet gjelder for og datoen den skal plasseres på i tidslinja.
+     */
+    date: Date;
+    /**
+     * Innhold som rendres ved hover.
+     */
+    render?: ReactNode;
+}
+
 export type Etikett = AxisLabel;

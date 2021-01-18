@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Etikett, Periode } from '../types.external';
+import { Etikett, Periode, Pin } from '../types.external';
 import { Tidslinje } from '../..';
 import classNames from 'classnames';
 import styles from './Sykepengetidslinje.less';
@@ -44,6 +44,7 @@ export interface SykepengetidslinjeProps {
     sluttDato?: Date;
     onSelectPeriode?: (periode: Periode) => void;
     aktivRad?: number;
+    maksdato?: Pin;
 }
 
 const etikettRenderer = (etikett: Etikett) => {
@@ -58,7 +59,8 @@ export const Sykepengetidslinje = ({
     startDato,
     sluttDato,
     onSelectPeriode,
-    aktivRad
+    aktivRad,
+    maksdato
 }: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodStatus => {
         switch (tilstand) {
@@ -106,6 +108,8 @@ export const Sykepengetidslinje = ({
 
     const _rader: Periode[][] = useMemo(() => rader.map((rad: Sykepengeperiode[]) => rad.map(toPeriode)), [rader]);
 
+    const pins = maksdato && [maksdato];
+
     return (
         <Tidslinje
             rader={_rader}
@@ -115,6 +119,7 @@ export const Sykepengetidslinje = ({
             aktivRad={aktivRad}
             retning="synkende"
             etikettRender={etikettRenderer}
+            pins={pins}
         />
     );
 };
