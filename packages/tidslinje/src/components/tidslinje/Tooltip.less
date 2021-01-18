@@ -1,13 +1,14 @@
 .tooltip {
     position: absolute;
     padding: 0.5rem 1rem;
-    background: #59514b;
+    background: #ffffff;
     border-radius: 4px;
-    color: #fff;
+    border: 1px solid #78706a;
+    color: #3e3832;
     top: 0;
     left: 50%;
     transform: translateX(-50%) translateY(calc(-100% - 10px));
-    box-shadow: 0 1px 2px 0 rgba(0,0,0,0.5);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.25);
     animation-timing-function: ease-out;
     animation-duration: 0.05s;
     animation-name: fadeIn;
@@ -19,11 +20,13 @@
         position: absolute;
         width: 10px;
         height: 10px;
-        background: #59514b;
+        background: #ffffff;
         left: 50%;
-        bottom: 0;
+        bottom: -1px;
+        border-bottom: 1px solid #78706A;
+        border-right: 1px solid #78706A;
+        box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.25);
         transform: translateX(-50%) translateY(50%) rotate(45deg);
-        box-shadow: 1px 1px 2px 0 rgba(0,0,0,0.5);
     }
 }
 
