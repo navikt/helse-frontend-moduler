@@ -51,7 +51,7 @@ interface SorterbarHeaderProps {
 
 const SorterbarHeader = ({ children, direction, onSort, kolonner = 1 }: SorterbarHeaderProps) => (
     <th scope="col" aria-sort={direction} colSpan={kolonner}>
-        <button className={classNames(styles.sortHeader, direction && styles[direction])} onClick={onSort}>
+        <button className={classNames('sortknapp', styles.sortHeader, direction && styles[direction])} onClick={onSort}>
             {children}
         </button>
     </th>
@@ -113,7 +113,11 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
 
     return (
         <th scope="col" ref={ref} colSpan={kolonner}>
-            <button className={classNames(styles.filterHeader, open && styles.open)} onClick={onClick} tabIndex={0}>
+            <button
+                className={classNames('filterknapp', styles.filterHeader, open && styles.open)}
+                onClick={onClick}
+                tabIndex={0}
+            >
                 {children}
             </button>
             {open && (

@@ -87,7 +87,7 @@ export const Tabell = ({
     filtrering,
     paginering
 }: TabellProps) => (
-    <table className={classNames('Tabell', styles.table, className)}>
+    <table className={classNames('tabell', styles.table, className)}>
         {beskrivelse && <caption className={styles.caption}>{beskrivelse}</caption>}
         {headere && <Head headere={headere} sortering={sortering} filtrering={filtrering} />}
         <Body rader={rader} paginering={paginering} />
