@@ -98,7 +98,7 @@ export const Sykepengetidslinje = ({
             fom: periode.fom,
             tom: periode.tom,
             status: status,
-            disabled: periode.disabled || status === 'inaktiv' || status === 'ukjent',
+            disabled: periode.disabled,
             className: classNames(periode.className, styles[periode.status]),
             active: periode.active,
             hoverLabel: periode.hoverLabel,
