@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-timeline",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/src/index.d.ts",
