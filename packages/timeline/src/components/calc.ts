@@ -69,6 +69,7 @@ export const getPositionedPeriods = (
             const borderRadiusLeft = getBorderRadiusLeft(it, i, allPeriods, direction);
             const borderRadiusRight = getBorderRadiusRight(it, i, allPeriods, direction);
             return {
+                ...it,
                 id: it.id,
                 start: it.start,
                 end: it.end,

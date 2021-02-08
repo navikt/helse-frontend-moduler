@@ -10,8 +10,15 @@ export interface PeriodProps {
     className?: string;
 }
 
-export const Period: React.FC<PeriodProps> = ({ className, children, style, onClick, id }) => (
-    <button style={style} className={classNames('period', className, styles.period)} onClick={() => onClick?.(id)}>
-        {children}
-    </button>
+export const Period: React.FC<PeriodProps> = React.forwardRef(
+    ({ className, children, style, onClick, id }, ref: React.RefObject<HTMLButtonElement>) => (
+        <button
+            ref={ref}
+            style={style}
+            className={classNames('period', className, styles.period)}
+            onClick={() => onClick?.(id)}
+        >
+            {children}
+        </button>
+    )
 );
