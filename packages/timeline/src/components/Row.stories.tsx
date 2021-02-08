@@ -12,10 +12,15 @@ export default {
 export const Basic = (args: RowProps) => {
     const start = new Date(2020, 0, 1);
     const end = new Date(2020, 0, 31);
-    const periods = getPositionedPeriods(start, end, [
-        { id: '123', start: new Date(2020, 0, 5), end: new Date(2020, 0, 15) },
-        { id: '124', start: new Date(2020, 0, 16), end: new Date(2020, 0, 25) }
-    ]);
+    const periods = getPositionedPeriods(
+        start,
+        end,
+        [
+            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 15) },
+            { id: '124', start: new Date(2020, 0, 16), end: new Date(2020, 0, 25) }
+        ],
+        'left'
+    );
     return (
         <Row {...args}>
             {periods.map(({ id, style }) => (
