@@ -62,6 +62,7 @@ export const getPositionedPeriods = (
             start: dayjs(it.start).startOf('day'),
             end: dayjs(it.end).endOf('day')
         }))
+        .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
         .map((it, i, allPeriods) => {
             const left = position(it.start, rowStart, rowEnd);
             const width = position(it.end, rowStart, rowEnd) - left;
