@@ -6,7 +6,7 @@ import { getPositionedPeriods } from './calc';
 
 export default {
     title: 'Timeline/Row',
-    component: Row
+    component: Row,
 };
 
 export const Basic = (args: RowProps) => {
@@ -16,8 +16,9 @@ export const Basic = (args: RowProps) => {
         start,
         end,
         [
-            { id: '124', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
-            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) }
+            { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
+            { id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) },
+            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
         ],
         'right'
     );

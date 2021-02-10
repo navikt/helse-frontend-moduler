@@ -3,16 +3,18 @@ import { InternalPeriodObject, PeriodObject, PositionedPeriod } from './types';
 
 type Direction = 'left' | 'right';
 
-const withinADay = (a: Dayjs, b: Dayjs): boolean => Math.abs(a.diff(b, 'day')) <= 1;
+export const withinADay = (a: Dayjs, b: Dayjs): boolean => {
+    return Math.abs(a.diff(b, 'day')) < 1;
+};
 
 const flatEdgeLeft = {
     borderBottomLeftRadius: 0,
-    borderTopLeftRadius: 0
+    borderTopLeftRadius: 0,
 };
 
 const flatEdgeRight = {
     borderBottomRightRadius: 0,
-    borderTopRightRadius: 0
+    borderTopRightRadius: 0,
 };
 
 const getBorderRadiusLeft = (
@@ -57,10 +59,10 @@ export const getPositionedPeriods = (
     const rowStart = dayjs(start).startOf('day');
     const rowEnd = dayjs(end).endOf('day');
     return periods
-        .map(it => ({
+        .map((it) => ({
             ...it,
             start: dayjs(it.start).startOf('day'),
-            end: dayjs(it.end).endOf('day')
+            end: dayjs(it.end).endOf('day'),
         }))
         .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
         .map((it, i, allPeriods) => {
@@ -77,8 +79,8 @@ export const getPositionedPeriods = (
                     ...borderRadiusLeft,
                     ...borderRadiusRight,
                     [direction]: `${left}%`,
-                    width: `${width}%`
-                }
+                    width: `${width}%`,
+                },
             };
         });
 };
