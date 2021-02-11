@@ -6,4 +6,5 @@ export {
     PeriodObject,
     PositionedPeriod,
     AxisLabels,
+    Pins
 } from './components';

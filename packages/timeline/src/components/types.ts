@@ -1,5 +1,5 @@
 import { Dayjs } from 'dayjs';
-import { CSSProperties } from 'react';
+import { CSSProperties, ReactNode } from 'react';
 
 export interface PeriodObject {
     id: string;
@@ -26,4 +26,15 @@ export interface AxisLabel {
     width: number;
     label: string;
     date: Date;
+}
+
+export interface Pin {
+    /**
+     * Dato objektet gjelder for og datoen den skal plasseres på i tidslinja.
+     */
+    date: Date;
+    /**
+     * Innhold som rendres ved hover.
+     */
+    render?: ReactNode;
 }
