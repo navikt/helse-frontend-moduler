@@ -41,7 +41,7 @@ const getBorderRadiusRight = (
             : flatEdgeLeft
         : undefined;
 
-const position = (date: Dayjs, start: Dayjs, end: Dayjs) => {
+export const position = (date: Dayjs, start: Dayjs, end: Dayjs) => {
     const diff = end.diff(start);
     return (date.diff(start) / diff) * 100;
 };

@@ -1,1 +1,9 @@
-export { Period, Row, getPosition, getPositionedPeriods, PeriodObject, PositionedPeriod } from './components';
+export {
+    Period,
+    Row,
+    getPosition,
+    getPositionedPeriods,
+    PeriodObject,
+    PositionedPeriod,
+    AxisLabels,
+} from './components';

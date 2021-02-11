@@ -19,3 +19,11 @@ export interface PositionedPeriod {
     start: Dayjs;
     end: Dayjs;
 }
+
+export interface AxisLabel {
+    horizontalPosition: number;
+    direction: 'left' | 'right';
+    width: number;
+    label: string;
+    date: Date;
+}
