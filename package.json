@@ -1,7 +1,7 @@
 {
   "name": "helse-frontend-moduler",
   "author": "Stephen Ramthun <stephen.ramthun@nav.no>",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "React-komponenter for interne flater i PO Helse",
   "repository": {
