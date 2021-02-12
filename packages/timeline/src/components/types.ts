@@ -37,4 +37,9 @@ export interface Pin {
      * Innhold som rendres ved hover.
      */
     render?: ReactNode;
+
+    /**
+     * Egendefinerte stiler for objektet
+     */
+    style?: CSSProperties;
 }

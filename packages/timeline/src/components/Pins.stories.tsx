@@ -20,6 +20,10 @@ export default {
                 {
                     date: new Date('2020-01-01'),
                     render: 'Dette er der maksdato er på tidslinjen.',
+                    style: {
+                        color: 'red',
+                        backgroundColor: 'red',
+                    },
                 },
                 {
                     date: new Date('2020-01-20'),
