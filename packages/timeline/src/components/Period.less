@@ -13,12 +13,13 @@
     background: var(--period-background-color);
     cursor: pointer;
     outline: none;
+    z-index: 10;
 
     &:active,
     &:focus-visible {
         box-shadow: 0 0 0 2px var(--period-focus-color);
         border-color: var(--period-focus-color);
-        z-index: 100;
+        z-index: 20;
     }
 
     &:hover, &:active, &:focus-visible {
