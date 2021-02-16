@@ -40,6 +40,10 @@ const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProps) => {
             date: new Date('2020-01-20'),
             render: 'Dette er der maksdato er på tidslinjen.',
         },
+        {
+            date: new Date('2019-12-31'),
+            render: 'Dette er der maksdato er på tidslinjen.',
+        },
     ];
 
     const periods = getPositionedPeriods(
@@ -49,6 +53,7 @@ const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProps) => {
             { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
             { id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) },
             { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
+            { id: '1223', start: new Date(2020, 5, 1), end: new Date(2020, 5, 31) },
         ],
         direction
     );
@@ -86,10 +91,10 @@ export default {
     component: ExampleTimeline,
     argTypes: {
         start: {
-            defaultValue: new Date('2019-12-31'),
+            defaultValue: new Date('2020-01-01'),
         },
         slutt: {
-            defaultValue: new Date('2020-06-30'),
+            defaultValue: new Date('2020-06-29'),
         },
         direction: {
             defaultValue: 'left',

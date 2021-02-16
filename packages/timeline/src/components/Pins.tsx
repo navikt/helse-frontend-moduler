@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Pin } from './types';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { position } from './calc';
 import styles from './Pins.less';
 
@@ -25,20 +25,27 @@ export interface PinsProps {
     direction: 'left' | 'right';
 }
 
+const withinInterval = (pin: Pin, start: Dayjs, slutt: Dayjs) => {
+    const pinDate = dayjs(pin.date);
+    return pinDate >= start && pinDate <= slutt;
+};
+
 export const Pins = ({ pins, start, slutt, direction = 'left' }: PinsProps) => {
     const _start = dayjs(start).startOf('day');
     const _slutt = dayjs(slutt).endOf('day');
     return (
         <div className={styles.pins}>
-            {pins.map(({ date, render, style }, i) => (
-                <span
-                    key={i}
-                    className={styles.container}
-                    style={{ [direction]: `calc(9px + ${position(dayjs(date), _start, _slutt)}%)` }}
-                >
-                    <PinView render={render} style={style} />
-                </span>
-            ))}
+            {pins
+                .filter((pin) => withinInterval(pin, _start, _slutt))
+                .map(({ date, render, style }, i) => (
+                    <span
+                        key={i}
+                        className={styles.container}
+                        style={{ [direction]: `${position(dayjs(date), _start, _slutt)}%` }}
+                    >
+                        <PinView render={render} style={style} />
+                    </span>
+                ))}
         </div>
     );
 };

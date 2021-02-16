@@ -50,6 +50,31 @@ export const getPosition = (date: Date, start: Date, end: Date) => {
     return position(dayjs(date), dayjs(start), dayjs(end));
 };
 
+const getAdjustedPeriod = (
+    it: { start: dayjs.Dayjs; end: dayjs.Dayjs; id: string },
+    rowStart: dayjs.Dayjs,
+    rowEnd: dayjs.Dayjs,
+    allPeriods: { start: dayjs.Dayjs; end: dayjs.Dayjs; id: string }[],
+    i: number,
+    direction: Direction
+) => {
+    let left = position(it.start, rowStart, rowEnd);
+    let width = position(it.end, rowStart, rowEnd) - left;
+    let borderRadiusLeft = getBorderRadiusLeft(it, i, allPeriods, direction);
+    let borderRadiusRight = getBorderRadiusRight(it, i, allPeriods, direction);
+
+    if (left + width > 100) {
+        width = 100 - left;
+        borderRadiusRight = direction === 'left' ? flatEdgeRight : flatEdgeLeft;
+    }
+    if (left < 0 && left + width > 0) {
+        width = left + width;
+        left = 0;
+        borderRadiusLeft = direction === 'left' ? flatEdgeLeft : flatEdgeRight;
+    }
+    return { left, width, borderRadiusLeft, borderRadiusRight };
+};
+
 export const getPositionedPeriods = (
     start: Date,
     end: Date,
@@ -66,10 +91,15 @@ export const getPositionedPeriods = (
         }))
         .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
         .map((it, i, allPeriods) => {
-            const left = position(it.start, rowStart, rowEnd);
-            const width = position(it.end, rowStart, rowEnd) - left;
-            const borderRadiusLeft = getBorderRadiusLeft(it, i, allPeriods, direction);
-            const borderRadiusRight = getBorderRadiusRight(it, i, allPeriods, direction);
+            const { left, width, borderRadiusLeft, borderRadiusRight } = getAdjustedPeriod(
+                it,
+                rowStart,
+                rowEnd,
+                allPeriods,
+                i,
+                direction
+            );
+
             return {
                 ...it,
                 id: it.id,
