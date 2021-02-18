@@ -105,7 +105,9 @@ export const AxisLabels: React.FC<AxisLabelsProps> = ({
     direction = 'left',
     etikettRender,
 }: AxisLabelsProps): JSX.Element => {
-    const labels = axisLabels(start, slutt, direction).filter(erSynlig);
+    const _start = dayjs(start).startOf('day');
+    const _slutt = dayjs(slutt).endOf('day');
+    const labels = axisLabels(_start, _slutt, direction).filter(erSynlig);
     return (
         <div className={classNames('etiketter', styles.etiketter)}>
             {labels.map((etikett) => (
