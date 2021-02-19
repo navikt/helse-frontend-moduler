@@ -8,9 +8,9 @@ export default {
     component: Period,
     argTypes: {
         style: {
-            defaultValue: { width: '100%' }
-        }
-    }
+            defaultValue: { width: '100%' },
+        },
+    },
 };
 
 const Container = styled.div`
@@ -22,7 +22,7 @@ const Container = styled.div`
 export const Basic = (args: PeriodProps) => {
     return (
         <Container>
-            <Period {...args}></Period>
+            <Period {...args} />
         </Container>
     );
 };
