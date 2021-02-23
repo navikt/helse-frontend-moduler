@@ -11,6 +11,7 @@ export enum Vedtaksperiodetilstand {
     UtbetaltIInfotrygd = 'utbetaltIInfotrygd',
     Oppgaver = 'oppgaver',
     Venter = 'venter',
+    VenterPåKiling = 'venterPåkiling',
     Avslag = 'avslag',
     IngenUtbetaling = 'ingenUtbetaling',
     KunFerie = 'kunFerie',
@@ -23,7 +24,7 @@ export enum Vedtaksperiodetilstand {
     UtbetaltAutomatisk = 'utbetaltAutomatisk',
     TilUtbetalingAutomatisk = 'tilUtbetalingAutomatisk',
     TilAnnullering = 'tilAnnullering',
-    AnnulleringFeilet = 'annulleringFeilet'
+    AnnulleringFeilet = 'annulleringFeilet',
 }
 
 export interface Sykepengeperiode {
@@ -60,7 +61,7 @@ export const Sykepengetidslinje = ({
     sluttDato,
     onSelectPeriode,
     aktivRad,
-    maksdato
+    maksdato,
 }: SykepengetidslinjeProps) => {
     const periodeStatus = (tilstand: Vedtaksperiodetilstand): PeriodStatus => {
         switch (tilstand) {
@@ -72,6 +73,7 @@ export const Sykepengetidslinje = ({
             case Vedtaksperiodetilstand.Oppgaver:
                 return 'advarsel';
             case Vedtaksperiodetilstand.Venter:
+            case Vedtaksperiodetilstand.VenterPåKiling:
             case Vedtaksperiodetilstand.TilInfotrygd:
             case Vedtaksperiodetilstand.IngenUtbetaling:
             case Vedtaksperiodetilstand.UtbetaltIInfotrygd:
@@ -102,7 +104,7 @@ export const Sykepengetidslinje = ({
             className: classNames(periode.className, styles[periode.status]),
             active: periode.active,
             hoverLabel: periode.hoverLabel,
-            infoPin: periode.infoPin
+            infoPin: periode.infoPin,
         };
     };
 
