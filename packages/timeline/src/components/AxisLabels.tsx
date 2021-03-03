@@ -93,8 +93,8 @@ const axisLabels = (start: Dayjs, slutt: Dayjs, direction: 'left' | 'right'): Ax
 };
 
 export interface AxisLabelsProps {
-    start: Dayjs;
-    slutt: Dayjs;
+    start: Date;
+    slutt: Date;
     direction?: 'left' | 'right';
     etikettRender?: (etikett: AxisLabel) => ReactNode;
 }

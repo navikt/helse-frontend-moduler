@@ -1,9 +1,6 @@
 import React from 'react';
 import styled from '@emotion/styled';
-
-import { Period, PeriodProps } from './Period';
 import { AxisLabels } from './AxisLabels';
-import dayjs from 'dayjs';
 
 export default {
     title: 'Timeline/AxisLabels',
@@ -20,10 +17,10 @@ export const Basic = () => {
     return (
         <div>
             <Container>
-                <AxisLabels start={dayjs('2018-01-01')} slutt={dayjs('2020-02-02')}></AxisLabels>
+                <AxisLabels start={new Date('2018-01-01')} slutt={new Date('2020-02-02')} />
             </Container>
             <Container>
-                <AxisLabels start={dayjs('2018-01-01')} slutt={dayjs('2020-02-02')} direction={'right'}></AxisLabels>
+                <AxisLabels start={new Date('2018-01-01')} slutt={new Date('2020-02-02')} direction={'right'} />
             </Container>
         </div>
     );
