@@ -1,8 +1,7 @@
-import { Pins, PinsProps } from './Pins';
+import { Pins } from './Pins';
 import styled from '@emotion/styled';
 import React from 'react';
 import { AxisLabels } from './AxisLabels';
-import dayjs from 'dayjs';
 import { getPositionedPeriods } from './calc';
 import { Row } from './Row';
 import { Period } from './Period';
@@ -26,7 +25,7 @@ export interface ExampleTimelineProps {
     direction: 'left' | 'right';
 }
 
-const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProps) => {
+export const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProps) => {
     const pins = [
         {
             date: new Date('2020-01-01'),
@@ -50,17 +49,18 @@ const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProps) => {
         start,
         slutt,
         [
+            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
             { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
             { id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) },
-            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
             { id: '1223', start: new Date(2020, 5, 1), end: new Date(2020, 5, 31) },
+            { id: '1226', start: new Date(2020, 7, 1), end: new Date(2020, 7, 31) },
         ],
         direction
     );
 
     return (
         <Container>
-            <AxisLabels start={dayjs(start)} slutt={dayjs(slutt)} />
+            <AxisLabels start={start} slutt={slutt} direction={direction} />
             <Pins start={start} slutt={slutt} direction={direction} pins={pins} />
             <StyledRow>
                 {periods.map(({ id, style }) => (
@@ -102,8 +102,4 @@ export default {
     },
 };
 
-export const Basic = (args: ExampleTimelineProps) => {
-    return <ExampleTimeline {...args} />;
-};
-
-Basic.storyName = 'Example Timeline';
+ExampleTimeline.storyName = 'Example Timeline';

@@ -1,5 +1,7 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { InternalPeriodObject, PeriodObject, PositionedPeriod } from './types';
+import 'dayjs/plugin/isSameOrAfter';
+import 'dayjs/plugin/isSameOrBefore';
 
 type Direction = 'left' | 'right';
 
@@ -90,6 +92,7 @@ export const getPositionedPeriods = (
             end: dayjs(it.end).endOf('day'),
         }))
         .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
+        .filter(({ end, start }) => rowStart.isSameOrBefore(end) && rowEnd.isSameOrAfter(start))
         .map((it, i, allPeriods) => {
             const { left, width, borderRadiusLeft, borderRadiusRight } = getAdjustedPeriod(
                 it,
