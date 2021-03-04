@@ -1,7 +1,9 @@
 import dayjs, { Dayjs } from 'dayjs';
 import { InternalPeriodObject, PeriodObject, PositionedPeriod } from './types';
-import 'dayjs/plugin/isSameOrAfter';
-import 'dayjs/plugin/isSameOrBefore';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
 
 type Direction = 'left' | 'right';
 
