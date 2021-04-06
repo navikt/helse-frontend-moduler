@@ -3,6 +3,7 @@ import styles from './Progresjonsbar.less';
 import classNames from 'classnames';
 
 export interface ProgresjonsbarProps {
+    className?: string;
     upperBound: number;
     currentValue: number;
     foregroundColor?: string;
@@ -14,6 +15,7 @@ const currentValueToPercentage = (currentValue: number, lowerBound: number, uppe
 };
 
 export const Progresjonsbar = ({
+    className,
     upperBound,
     currentValue,
     foregroundColor = '#3385D1',
@@ -24,7 +26,7 @@ export const Progresjonsbar = ({
 
     return (
         <div
-            className={classNames(styles.progresjonsbar)}
+            className={classNames(styles.progresjonsbar, className && className)}
             style={{
                 background: `linear-gradient(90deg, ${foregroundColor} ${currentValuePercentage}%, ${backgroundColor} ${currentValuePercentage}%)`,
             }}

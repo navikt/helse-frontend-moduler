@@ -15,15 +15,11 @@ export default {
     },
 };
 
-const Container = styled.div`
+const Container = styled(Progresjonsbar)`
     width: 200px;
     height: 50px;
 `;
 
-export const Basic = (args: ProgresjonsbarProps) => (
-    <Container>
-        <Progresjonsbar {...args} />
-    </Container>
-);
+export const Basic = (args: ProgresjonsbarProps) => <Container {...args} />;
 
 Basic.storyName = 'Progresjonsbar';
