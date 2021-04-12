@@ -25,7 +25,6 @@ export const Meatball = ({
             {...args}
             className={classNames(styles.meatball_button, className)}
             style={{ ...style, width: diameter, height: diameter }}
-            data-tip={'Hello world'}
         >
             <svg fill="none" viewBox="0 0 20 20" height="20" width="20">
                 <path

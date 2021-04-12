@@ -17,6 +17,6 @@ export default {
     },
 };
 
-export const Basic = (args: MeatballProps) => <Meatball {...args} data-tip={'Hello world'} />;
+export const Basic = (args: MeatballProps) => <Meatball {...args} />;
 
 Basic.storyName = 'Meatball';
