@@ -1,0 +1,37 @@
+{
+  "name": "@navikt/helse-frontend-meatball",
+  "version": "0.0.1",
+  "main": "lib/index.js",
+  "module": "lib/index.js",
+  "types": "lib/src/index.d.ts",
+  "scripts": {
+    "build": "npm run clean && webpack --config webpack.config.js -p",
+    "clean": "rm -rf ./lib",
+    "tsc": "tsc -p tsconfig.json"
+  },
+  "author": "NAV",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "lib",
+    "src"
+  ],
+  "dependencies": {
+    "react": "^17.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
+  },
+  "devDependencies": {
+    "css-loader": "^3.4.2",
+    "less-loader": "^5.0.0",
+    "mini-css-extract-plugin": "^0.9.0",
+    "style-loader": "^1.1.3",
+    "ts-loader": "^6.2.1",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.6",
+    "webpack-cli": "^3.3.11"
+  }
+}
