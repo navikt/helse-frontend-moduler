@@ -7,14 +7,12 @@ export interface PeriodProps {
     id: string;
     style?: CSSProperties;
     onClick?: (id: string) => void;
-    tabIndex?: number;
     className?: string;
 }
 
 export const Period: React.FC<PeriodProps> = React.forwardRef<HTMLButtonElement, PeriodProps>(
-    ({ className, children, style, onClick, id, tabIndex = 0}, ref) => (
+    ({ className, children, style, onClick, id}, ref) => (
         <button
-            tabIndex={tabIndex}
             ref={ref}
             style={style}
             className={classNames('period', className, styles.period)}
