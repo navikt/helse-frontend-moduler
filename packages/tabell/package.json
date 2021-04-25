@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-tabell",
-  "version": "2.0.2",
+  "version": "3.0.0",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/src/index.d.ts",
@@ -20,12 +20,21 @@
     "src"
   ],
   "dependencies": {
-    "react": "^17.0.1"
+    "nav-frontend-chevron": "^1.0.28",
+    "nav-frontend-chevron-style": "^1.0.4",
+    "nav-frontend-popover": "^1.1.1",
+    "nav-frontend-popover-style": "^1.1.1"
   },
   "peerDependencies": {
-    "react": "^17.0.1"
+    "classnames": "^2.3.1",
+    "lodash.throttle": "^4.1.1",
+    "nav-frontend-core": "^5.1.1",
+    "nav-frontend-js-utils": "^1.0.17",
+    "prop-types": "^15.7.2",
+    "react": "^17"
   },
   "devDependencies": {
+    "@types/uuid": "^8.3.0",
     "css-loader": "^5.0.1",
     "less-loader": "^7.1.0",
     "mini-css-extract-plugin": "^1.3.1",

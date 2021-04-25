@@ -17,8 +17,10 @@
 
 .filterHeader {
     .headerButton();
+    display: flex;
+    align-items: center;
     border: 1px solid #78706a;
-    padding: 0 1.75rem 0 0.5rem;
+    padding: 0 0.5rem 0 0.5rem;
     height: 2rem;
     border-radius: 0.25rem;
     transition: box-shadow 0.1s ease;
@@ -27,47 +29,17 @@
         box-shadow: 0 0 0 3px #254b6d;
     }
 
-    &:before,
-    &:after {
-        content: '';
-        position: absolute;
-        width: 0.5rem;
-        border-radius: 2px;
-        height: 2px;
-        background: #59514b;
-        right: 0.5rem;
-        top: 50%;
-        transition: transform 0.1s ease;
-    }
-
-    &:before {
-        transform: translateX(-3px) translateY(-50%) rotate(45deg);
-    }
-
-    &:after {
-        transform: translateX(1.5px) translateY(-50%) rotate(-45deg);
-    }
-
-    &.open {
-        &:before {
-            transform: translateX(-3px) translateY(-50%) rotate(-45deg);
-        }
-
-        &:after {
-            transform: translateX(1.5px) translateY(-50%) rotate(45deg);
-        }
+    & > .filterHeaderChevron {
+        flex: 1;
+        justify-self: flex-end;
+        margin-left: 0.5rem;
     }
 }
 
 .filterList {
-    position: absolute;
     list-style: none;
     margin: 0;
     padding: 0.5rem 1rem 0.5rem 0.75rem;
-    border-radius: 0.25rem;
-    background: #fff;
-    border: 1px solid #c6c2bf;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
 
     li {
         padding: 0;

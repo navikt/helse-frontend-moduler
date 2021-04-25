@@ -1,10 +1,14 @@
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useState } from 'react';
 import classNames from 'classnames';
 import styles from './Head.less';
 import { tilTabellHeader } from './map';
 import { Header } from './types';
 import { Sortering } from './sortering';
 import { Filter, Filtrering } from './filtrering';
+import Popover, { PopoverOrientering } from 'nav-frontend-popover';
+import NavFrontendChevron from 'nav-frontend-chevron';
+import 'nav-frontend-popover-style/dist/main.css';
+import 'nav-frontend-chevron-style/dist/main.css';
 
 export interface TabellHeader {
     /**
@@ -57,26 +61,6 @@ const SorterbarHeader = ({ children, direction, onSort, kolonner = 1 }: Sorterba
     </th>
 );
 
-interface UseOnInteractOutsideParameters {
-    ref: React.RefObject<HTMLElement>;
-    onInteractOutside: () => void;
-    active: boolean;
-}
-
-const useOnInteractOutside = ({ ref, onInteractOutside, active }: UseOnInteractOutsideParameters) => {
-    useEffect(() => {
-        const onInteractWrapper = (event: FocusEvent | MouseEvent) => {
-            if (active && !ref.current?.contains(event.target as HTMLElement)) onInteractOutside();
-        };
-        document.addEventListener('focusin', onInteractWrapper);
-        document.addEventListener('click', onInteractWrapper);
-        return () => {
-            document.removeEventListener('focusin', onInteractWrapper);
-            document.removeEventListener('click', onInteractWrapper);
-        };
-    }, [ref.current, active]);
-};
-
 interface FilterMenuItemProps {
     children: ReactNode | ReactNode[];
     onFilter: () => void;
@@ -101,29 +85,36 @@ interface FiltrerbarHeaderProps {
 }
 
 const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner = 1 }: FiltrerbarHeaderProps) => {
-    const [open, setOpen] = useState(false);
-    const ref = useRef<HTMLTableHeaderCellElement>(null);
-    const onClick = () => setOpen(o => !o);
+    const [anchor, setAnchor] = useState<HTMLElement | undefined>(undefined);
 
-    useOnInteractOutside({ ref, onInteractOutside: () => setOpen(false), active: open });
-
-    const alleFiltereErAktive = filtere.every(filter =>
-        aktiveFiltere.find(aktivtFilter => aktivtFilter.label === filter.label)
+    const alleFiltereErAktive = filtere.every((filter) =>
+        aktiveFiltere.find((aktivtFilter) => aktivtFilter.label === filter.label)
     );
 
     return (
-        <th scope="col" ref={ref} colSpan={kolonner}>
+        <th scope="col" colSpan={kolonner}>
             <button
                 className={classNames('filterknapp', styles.filterHeader, open && styles.open)}
-                onClick={onClick}
+                onClick={(e) => (!anchor ? setAnchor(e.currentTarget) : setAnchor(undefined))}
                 tabIndex={0}
             >
                 {children}
+                <NavFrontendChevron className={styles.filterHeaderChevron} type={anchor ? 'opp' : 'ned'} />
             </button>
-            {open && (
+            <Popover
+                tabIndex={-1}
+                orientering={PopoverOrientering.UnderVenstre}
+                autoFokus={false}
+                utenPil
+                ankerEl={anchor}
+                onRequestClose={() => setAnchor(undefined)}
+            >
                 <ul className={styles.filterList}>
                     <FilterMenuItem
-                        onFilter={() => onFilter(filtere, !alleFiltereErAktive)}
+                        onFilter={() => {
+                            onFilter(filtere, !alleFiltereErAktive);
+                            setAnchor(undefined);
+                        }}
                         aktiv={alleFiltereErAktive}
                     >
                         {alleFiltereErAktive ? 'Opphev alle' : 'Velg alle'}
@@ -132,16 +123,18 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
                     {filtere.map((filter, i) => (
                         <FilterMenuItem
                             key={filter.label as string}
-                            onFilter={() => onFilter(filter)}
+                            onFilter={() => {
+                                onFilter(filter);
+                            }}
                             aktiv={
-                                aktiveFiltere.find(aktivtFilter => aktivtFilter.label === filter.label) !== undefined
+                                aktiveFiltere.find((aktivtFilter) => aktivtFilter.label === filter.label) !== undefined
                             }
                         >
                             {filter.label}
                         </FilterMenuItem>
                     ))}
                 </ul>
-            )}
+            </Popover>
         </th>
     );
 };
