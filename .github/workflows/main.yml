@@ -24,6 +24,6 @@ jobs:
             ${{ runner.os }}-build-
             ${{ runner.os }}-
       - run: npm ci
-      - run: npm run deploy-storybook -- --ci
+      - run: npx lerna bootstrap && npm run deploy-storybook -- --ci
         env: 
           GH_TOKEN: navikt:${{ secrets.GITHUB_TOKEN }}
