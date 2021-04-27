@@ -94,7 +94,7 @@ const FiltrerbarHeader = ({ children, filtere, onFilter, aktiveFiltere, kolonner
     return (
         <th scope="col" colSpan={kolonner}>
             <button
-                className={classNames('filterknapp', styles.filterHeader, open && styles.open)}
+                className={classNames('filterknapp', styles.filterHeader, anchor && styles.open)}
                 onClick={(e) => (!anchor ? setAnchor(e.currentTarget) : setAnchor(undefined))}
                 tabIndex={0}
             >

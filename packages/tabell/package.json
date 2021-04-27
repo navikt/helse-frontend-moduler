@@ -22,15 +22,15 @@
   "dependencies": {
     "nav-frontend-chevron": "^1.0.28",
     "nav-frontend-chevron-style": "^1.0.4",
-    "nav-frontend-popover": "^1.1.1",
-    "nav-frontend-popover-style": "^1.1.1"
-  },
-  "peerDependencies": {
-    "classnames": "^2.3.1",
-    "lodash.throttle": "^4.1.1",
+    "nav-frontend-popover": "^1.1.2",
+    "nav-frontend-popover-style": "^1.1.1",
     "nav-frontend-core": "^5.1.1",
     "nav-frontend-js-utils": "^1.0.17",
     "prop-types": "^15.7.2",
+    "classnames": "^2.3.1",
+    "lodash.throttle": "^4.1.1"
+  },
+  "peerDependencies": {
     "react": "^17"
   },
   "devDependencies": {
