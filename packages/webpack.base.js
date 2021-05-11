@@ -22,6 +22,7 @@ module.exports = {
     output: {
         filename: 'index.js',
         libraryTarget: 'umd',
+        globalObject: 'this',
         umdNamedDefine: true
     },
     externals: {
