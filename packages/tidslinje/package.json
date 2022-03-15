@@ -1,6 +1,6 @@
 {
   "name": "@navikt/helse-frontend-tidslinje",
-  "version": "6.1.8",
+  "version": "6.1.9",
   "main": "lib/index.js",
   "module": "lib/index.js",
   "types": "lib/src/index.d.ts",
@@ -20,7 +20,7 @@
     "src"
   ],
   "dependencies": {
-    "nanoid": "^3.1.18"
+    "nanoid": "^3.1.22"
   },
   "peerDependencies": {
     "react": "^17.0.1"
