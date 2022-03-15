@@ -49,11 +49,26 @@ export const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProp
         start,
         slutt,
         [
-            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
-            { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
-            { id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) },
-            { id: '1223', start: new Date(2020, 5, 1), end: new Date(2020, 5, 31) },
-            { id: '1226', start: new Date(2020, 7, 1), end: new Date(2020, 7, 31) },
+            [
+                { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
+                { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
+            ],
+            [{ id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) }],
+            [{ id: '1223', start: new Date(2020, 5, 1), end: new Date(2020, 5, 31) }],
+            [{ id: '1226', start: new Date(2020, 7, 1), end: new Date(2020, 7, 31) }],
+        ],
+        direction
+    );
+
+    const periods2 = getPositionedPeriods(
+        start,
+        slutt,
+        [
+            [{ id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) }],
+            [{ id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) }],
+            [{ id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) }],
+            [{ id: '1223', start: new Date(2020, 5, 1), end: new Date(2020, 5, 31) }],
+            [{ id: '1226', start: new Date(2020, 7, 1), end: new Date(2020, 7, 31) }],
         ],
         direction
     );
@@ -63,24 +78,28 @@ export const ExampleTimeline = ({ start, slutt, direction }: ExampleTimelineProp
             <AxisLabels start={start} slutt={slutt} direction={direction} />
             <Pins start={start} slutt={slutt} direction={direction} pins={pins} />
             <StyledRow>
-                {periods.map(({ id, style }) => (
-                    <Period
-                        key={id}
-                        id={id}
-                        style={style}
-                        onClick={(id: string) => console.log('klikket på periode med id', id)}
-                    />
-                ))}
+                {periods.flatMap((t) => {
+                    return t.map(({ id, style }) => (
+                        <Period
+                            key={id}
+                            id={id}
+                            style={style}
+                            onClick={(id: string) => console.log('klikket på periode med id', id)}
+                        />
+                    ));
+                })}
             </StyledRow>
             <StyledRow>
-                {periods.map(({ id, style }) => (
-                    <Period
-                        key={id}
-                        id={id}
-                        style={style}
-                        onClick={(id: string) => console.log('klikket på periode med id', id)}
-                    />
-                ))}
+                {periods2.flatMap((t) => {
+                    return t.map(({ id, style }) => (
+                        <Period
+                            key={id}
+                            id={id}
+                            style={style}
+                            onClick={(id: string) => console.log('klikket på periode med id', id)}
+                        />
+                    ));
+                })}
             </StyledRow>
         </Container>
     );

@@ -82,40 +82,41 @@ const getAdjustedPeriod = (
 export const getPositionedPeriods = (
     start: Date,
     end: Date,
-    periods: PeriodObject[],
+    groupedPeriods: PeriodObject[][],
     direction: Direction = 'left'
-): PositionedPeriod[] => {
+): PositionedPeriod[][] => {
     const rowStart = dayjs(start).startOf('day');
     const rowEnd = dayjs(end).endOf('day');
-    return periods
-        .map((it) => ({
-            ...it,
-            start: dayjs(it.start).startOf('day'),
-            end: dayjs(it.end).endOf('day'),
-        }))
-        .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
-        .filter(({ end, start }) => rowStart.isSameOrBefore(end) && rowEnd.isSameOrAfter(start))
-        .map((it, i, allPeriods) => {
-            const { left, width, borderRadiusLeft, borderRadiusRight } = getAdjustedPeriod(
-                it,
-                rowStart,
-                rowEnd,
-                allPeriods,
-                i,
-                direction
-            );
+    return groupedPeriods.map((group) => {
+        return group
+            .map((period) => ({
+                ...period,
+                start: dayjs(period.start).startOf('day'),
+                end: dayjs(period.end).endOf('day'),
+            }))
+            .sort((a, b) => (a.end.isAfter(b.end) ? 1 : -1))
+            .map((it, i, allPeriods) => {
+                const { left, width, borderRadiusLeft, borderRadiusRight } = getAdjustedPeriod(
+                    it,
+                    rowStart,
+                    rowEnd,
+                    allPeriods,
+                    i,
+                    direction
+                );
 
-            return {
-                ...it,
-                id: it.id,
-                start: it.start,
-                end: it.end,
-                style: {
-                    ...borderRadiusLeft,
-                    ...borderRadiusRight,
-                    [direction]: `${left}%`,
-                    width: `${width}%`,
-                },
-            };
-        });
+                return {
+                    ...it,
+                    id: it.id,
+                    start: it.start,
+                    end: it.end,
+                    style: {
+                        ...borderRadiusLeft,
+                        ...borderRadiusRight,
+                        [direction]: `${left}%`,
+                        width: `${width}%`,
+                    },
+                };
+            });
+    });
 };

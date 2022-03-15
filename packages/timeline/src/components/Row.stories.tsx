@@ -16,22 +16,26 @@ export const Basic = (args: RowProps) => {
         start,
         end,
         [
-            { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
-            { id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) },
-            { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
+            [
+                { id: '123', start: new Date(2020, 0, 1), end: new Date(2020, 0, 31) },
+                { id: '1241', start: new Date(2020, 1, 1), end: new Date(2020, 1, 20) },
+            ],
+            [{ id: '124', start: new Date(2020, 1, 22), end: new Date(2020, 1, 28) }],
         ],
         'right'
     );
     return (
         <Row {...args}>
-            {periods.map(({ id, style }) => (
-                <Period
-                    key={id}
-                    id={id}
-                    style={style}
-                    onClick={(id: string) => console.log('klikket på periode med id', id)}
-                />
-            ))}
+            {periods.flatMap((t) => {
+                return t.map(({ id, style }) => (
+                    <Period
+                        key={id}
+                        id={id}
+                        style={style}
+                        onClick={(id: string) => console.log('klikket på periode med id', id)}
+                    />
+                ));
+            })}
         </Row>
     );
 };
