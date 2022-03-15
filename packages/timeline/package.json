@@ -20,7 +20,7 @@
     "src"
   ],
   "dependencies": {
-    "nanoid": "^3.1.22"
+    "nanoid": "^3.1.31"
   },
   "peerDependencies": {
     "react": "^17.0.1"
